@@ -118,7 +118,7 @@ rules:
 
 ## Constraints
 
-- NEVER auto-classify a transaction over $1,000 without human confirmation
+- NEVER approve a transaction over $1,000 without human confirmation
 - NEVER change a previously reconciled transaction
 - ALWAYS flag transactions that could be personal vs business
 - ALWAYS apply tax treatment when classifying
