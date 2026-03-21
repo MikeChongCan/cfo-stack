@@ -841,6 +841,7 @@ async function runBeanQuery(ledgerPath: string, query: string): Promise<CsvRecor
     columns: true,
     skip_empty_lines: true,
     trim: false,
+    relax_column_count: true,
   }) as CsvRecord[];
 }
 
@@ -858,8 +859,8 @@ function inferProfile(accounts: string[]): DashboardProfile {
   return businessScore >= householdScore ? 'business' : 'household';
 }
 
-function parseAmount(raw: string): AmountParts {
-  const trimmed = raw.trim();
+function parseAmount(raw: string | undefined | null): AmountParts {
+  const trimmed = (raw ?? '').trim();
   if (!trimmed) {
     return {amount: 0, currency: 'USD'};
   }

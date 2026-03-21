@@ -5,6 +5,7 @@ import type {
   DashboardData,
   MetricCard,
   MonthlyPoint,
+  DashboardVariant,
   StatementRow,
   StatementSection,
   StatementSummary,
@@ -15,15 +16,24 @@ const pageShell = 'mx-auto w-full max-w-[1360px] px-4 py-4 sm:px-6 lg:px-8 lg:py
 const panel =
   'rounded-[24px] border border-white/70 bg-white/84 shadow-[0_12px_40px_rgba(11,29,26,0.1)] backdrop-blur';
 
-export function renderDashboardHtml(data: DashboardData): string {
-  const markup = renderToStaticMarkup(<DashboardPage data={data} />);
+export function renderDashboardHtml(
+  data: DashboardData,
+  options: {
+    variant?: DashboardVariant;
+  } = {},
+): string {
+  const variant = options.variant ?? 'full';
+  const titleLabel = variant === 'social' ? ' Social Dashboard' : ' Dashboard';
+  const markup = renderToStaticMarkup(
+    variant === 'social' ? <SocialDashboardPage data={data} /> : <DashboardPage data={data} />,
+  );
   return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${escapeHtml(data.meta.title)} Dashboard</title>
-    <meta name="description" content="Deterministic CFO Stack dashboard generated from Beancount data." />
+    <title>${escapeHtml(data.meta.title)}${titleLabel}</title>
+    <meta name="description" content="${variant === 'social' ? 'Share-safe CFO Stack dashboard with redacted values.' : 'Deterministic CFO Stack dashboard generated from Beancount data.'}" />
     <link rel="stylesheet" href="./dashboard.css" />
   </head>
   <body class="min-h-screen bg-[#f7f7f2] text-[#10211d]">
@@ -186,6 +196,75 @@ function DashboardPage({data}: {data: DashboardData}) {
   );
 }
 
+function SocialDashboardPage({data}: {data: DashboardData}) {
+  const isBusiness = data.meta.profile === 'business';
+  return (
+    <div className={pageShell} style={{fontFamily: '"Avenir Next", "IBM Plex Sans", "Segoe UI", sans-serif'}}>
+      <header className={`${panel} overflow-hidden`}>
+        <div className="grid gap-5 px-5 py-5 sm:px-6 lg:grid-cols-[1.35fr_0.65fr] lg:px-7 lg:py-6">
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#0f766e]">
+              <span>{isBusiness ? 'Finance operating system' : 'Household operating system'}</span>
+              <span className="rounded-full bg-[#10211d] px-3 py-1 text-[0.68rem] tracking-[0.22em] text-white">
+                {data.meta.profile}
+              </span>
+              <span className="rounded-full border border-[#10211d]/10 bg-white/70 px-3 py-1 text-[0.68rem] tracking-[0.18em] text-[#10211d]">
+                Share-safe view
+              </span>
+            </div>
+            <div className="space-y-2">
+              <h1
+                className="max-w-4xl text-3xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#10211d] sm:text-4xl lg:text-[3.15rem]"
+                style={{fontFamily: '"Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif'}}
+              >
+                {data.meta.title}
+              </h1>
+              <p className="max-w-3xl text-sm leading-6 text-[#42504b] sm:text-[0.98rem]">
+                Relative shapes and category mix stay visible. Exact amounts, statement totals, and transaction figures are redacted for social sharing.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#fbf8f1] px-4 py-3">
+              <MetaPill label="Window" value="Recent periods" />
+              <MetaPill label="Visibility" value="Amounts redacted" />
+              <MetaPill label="Focus" value="Trend, cash movement, mix" />
+            </div>
+          </div>
+          <aside className="flex flex-col justify-between gap-4 rounded-[20px] bg-[#10211d] p-5 text-white shadow-[0_12px_35px_rgba(16,33,29,0.22)]">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#92d7cc]">Designed for sharing</div>
+              <ul className="mt-3 space-y-2 text-sm leading-5 text-white/80">
+                <li className="border-l-2 border-[#92d7cc]/60 pl-3">Visual trends stay intact without exposing exact money figures.</li>
+                <li className="border-l-2 border-[#92d7cc]/60 pl-3">Category mix and directionality remain readable in screenshots and embeds.</li>
+                <li className="border-l-2 border-[#92d7cc]/60 pl-3">Statement tables and activity rows are intentionally removed from this share-safe view.</li>
+              </ul>
+            </div>
+            <div className="grid grid-cols-3 gap-2 rounded-[18px] border border-white/8 bg-white/6 px-3 py-3 text-center">
+              <MiniStat label="Trends" value="Live" />
+              <MiniStat label="Values" value="Hidden" />
+              <MiniStat label="Currency" value={data.meta.currency} />
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main className="mt-4 space-y-4">
+        <div className="grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
+          <TrendPanel currency={data.meta.currency} monthly={data.monthly} profile={data.meta.profile} redactedValues />
+          <FlowPanel currency={data.meta.currency} monthly={data.monthly} redactedValues />
+        </div>
+        <div className="grid gap-6 xl:grid-cols-2">
+          <BreakdownCard currency={data.meta.currency} block={data.mixes.primary} tone="emerald" redactedValues />
+          <BreakdownCard currency={data.meta.currency} block={data.mixes.secondary} tone="amber" redactedValues />
+        </div>
+        <div className="grid gap-6 xl:grid-cols-2">
+          <BreakdownCard currency={data.meta.currency} block={data.mixes.assets} tone="ink" redactedValues />
+          <BreakdownCard currency={data.meta.currency} block={data.mixes.liabilities} tone="slate" redactedValues />
+        </div>
+      </main>
+    </div>
+  );
+}
+
 function MetaPill({label, value}: {label: string; value: string}) {
   return (
     <div className="flex items-center gap-2 text-xs leading-5">
@@ -258,10 +337,12 @@ function TrendPanel({
   currency,
   monthly,
   profile,
+  redactedValues = false,
 }: {
   currency: string;
   monthly: MonthlyPoint[];
   profile: DashboardData['meta']['profile'];
+  redactedValues?: boolean;
 }) {
   const max = Math.max(
     1,
@@ -277,7 +358,7 @@ function TrendPanel({
           </h2>
         </div>
         <div className="rounded-full bg-[#10211d]/5 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#50615b]">
-          {monthWindowLabel(monthly.length)}
+          {redactedValues ? 'Recent periods' : monthWindowLabel(monthly.length)}
         </div>
       </div>
       <div className="relative">
@@ -289,20 +370,20 @@ function TrendPanel({
           <div className="grid gap-3" style={monthGridStyle(monthly.length, 220)}>
             {monthly.map((point) => (
               <div key={point.key} className="rounded-[18px] bg-[#fbf8f1] p-3">
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a756f]">{point.label}</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a756f]">{displayPeriodLabel(point.label, point.key, monthly, redactedValues)}</div>
                 <div className="mt-3 flex h-36 items-end gap-1.5">
-                  <TrendBar color="bg-[#0f766e]" height={Math.max(12, (point.revenue / max) * 120)} value={point.revenue} currency={currency} label="Revenue" />
-                  <TrendBar color="bg-[#d97706]" height={Math.max(12, (point.expenses / max) * 120)} value={point.expenses} currency={currency} label="Expenses" />
-                  <TrendBar color={point.netIncome >= 0 ? 'bg-[#10211d]' : 'bg-[#9a3412]'} height={Math.max(12, (Math.abs(point.netIncome) / max) * 120)} value={point.netIncome} currency={currency} label="Net" />
+                  <TrendBar color="bg-[#0f766e]" height={Math.max(12, (point.revenue / max) * 120)} value={point.revenue} currency={currency} label="Revenue" redactedValues={redactedValues} />
+                  <TrendBar color="bg-[#d97706]" height={Math.max(12, (point.expenses / max) * 120)} value={point.expenses} currency={currency} label="Expenses" redactedValues={redactedValues} />
+                  <TrendBar color={point.netIncome >= 0 ? 'bg-[#10211d]' : 'bg-[#9a3412]'} height={Math.max(12, (Math.abs(point.netIncome) / max) * 120)} value={point.netIncome} currency={currency} label="Net" redactedValues={redactedValues} />
                 </div>
                 <div className="mt-3 space-y-1.5 text-[0.7rem] text-[#50615b]">
                   <div className="flex items-center justify-between gap-3">
                     <span>Ending cash</span>
-                    <span className="text-right font-semibold text-[#10211d]">{money(point.cashBalance, currency)}</span>
+                    <span className="text-right font-semibold text-[#10211d]">{displayMoney(point.cashBalance, currency, redactedValues)}</span>
                   </div>
                   <div className="flex items-center justify-between gap-3">
                     <span>Net worth</span>
-                    <span className="text-right font-semibold text-[#10211d]">{money(point.netWorth, currency)}</span>
+                    <span className="text-right font-semibold text-[#10211d]">{displayMoney(point.netWorth, currency, redactedValues)}</span>
                   </div>
                 </div>
               </div>
@@ -320,27 +401,37 @@ function TrendBar({
   value,
   currency,
   label,
+  redactedValues = false,
 }: {
   color: string;
   height: number;
   value: number;
   currency: string;
   label: string;
+  redactedValues?: boolean;
 }) {
   return (
     <div className="flex flex-1 flex-col items-center justify-end gap-1.5">
       <div className="text-[0.62rem] font-semibold text-[#6a756f]">{label}</div>
       <div
-        title={`${label}: ${money(value, currency)}`}
+        title={redactedValues ? `${label}: redacted` : `${label}: ${money(value, currency)}`}
         className={`w-full rounded-t-[14px] ${color} shadow-[0_8px_22px_rgba(16,33,29,0.12)]`}
         style={{height}}
       />
-      <div className="text-[0.66rem] font-medium text-[#10211d]">{compactMoney(value, currency)}</div>
+      <div className="text-[0.66rem] font-medium text-[#10211d]">{redactedValues ? redactedValueLabel() : compactMoney(value, currency)}</div>
     </div>
   );
 }
 
-function FlowPanel({currency, monthly}: {currency: string; monthly: MonthlyPoint[]}) {
+function FlowPanel({
+  currency,
+  monthly,
+  redactedValues = false,
+}: {
+  currency: string;
+  monthly: MonthlyPoint[];
+  redactedValues?: boolean;
+}) {
   return (
     <section className={`${panel} px-5 py-4`}>
       <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#0f766e]">Cash movement</div>
@@ -358,7 +449,7 @@ function FlowPanel({currency, monthly}: {currency: string; monthly: MonthlyPoint
               <div className="flex items-center justify-between gap-3">
                 <div className="text-sm font-semibold text-[#10211d]">{flow.label}</div>
                 <div className="text-sm font-semibold text-[#10211d]">
-                  {money(values.reduce((total, value) => total + value, 0), currency)}
+                  {displayMoney(values.reduce((total, value) => total + value, 0), currency, redactedValues)}
                 </div>
               </div>
               <div className="mt-3 grid gap-2" style={monthGridStyle(monthly.length, 92)}>
@@ -368,10 +459,10 @@ function FlowPanel({currency, monthly}: {currency: string; monthly: MonthlyPoint
                   const barTone = value < 0 ? 'bg-[#b45309]' : flow.tone;
                   return (
                     <div key={`${flow.key}:${point.key}`} className="space-y-1.5">
-                      <div className="text-[0.62rem] uppercase tracking-[0.16em] text-[#6a756f]">{point.label}</div>
+                      <div className="text-[0.62rem] uppercase tracking-[0.16em] text-[#6a756f]">{displayPeriodLabel(point.label, point.key, monthly, redactedValues)}</div>
                       <div className="h-2 rounded-full bg-[#10211d]/8">
                         <div
-                          title={`${flow.label}: ${money(value, currency)}`}
+                          title={redactedValues ? `${flow.label}: redacted` : `${flow.label}: ${money(value, currency)}`}
                           className={`h-2 rounded-full ${barTone}`}
                           style={{width}}
                         />
@@ -392,10 +483,12 @@ function BreakdownCard({
   block,
   currency,
   tone,
+  redactedValues = false,
 }: {
   block: BreakdownBlock;
   currency: string;
   tone: 'emerald' | 'amber' | 'ink' | 'slate';
+  redactedValues?: boolean;
 }) {
   const toneClass =
     tone === 'emerald'
@@ -420,7 +513,7 @@ function BreakdownCard({
           <div key={row.label} className="space-y-1.5">
             <div className="flex items-center justify-between gap-3">
               <div className="text-[0.92rem] font-medium text-[#10211d]">{row.label}</div>
-              <div className="text-[0.92rem] font-semibold text-[#10211d]">{money(row.amount, currency)}</div>
+              <div className="text-[0.92rem] font-semibold text-[#10211d]">{displayMoney(row.amount, currency, redactedValues)}</div>
             </div>
             <div className="h-2 rounded-full bg-[#10211d]/8">
               <div className={`h-2 rounded-full ${toneClass}`} style={{width: `${Math.max(8, (row.share ?? 0) * 100)}%`}} />
@@ -599,6 +692,31 @@ function compactMoney(value: number, currency: string): string {
     maximumFractionDigits: 0,
     notation: 'compact',
   }).format(value);
+}
+
+function displayMoney(value: number, currency: string, redactedValues: boolean): string {
+  return redactedValues ? redactedValueLabel() : money(value, currency);
+}
+
+function redactedValueLabel(): string {
+  return '••••';
+}
+
+function displayPeriodLabel(
+  label: string,
+  key: string,
+  monthly: MonthlyPoint[],
+  redactedValues: boolean,
+): string {
+  if (!redactedValues) {
+    return label;
+  }
+  if (monthly.length <= 1) {
+    return 'Current';
+  }
+  const index = monthly.findIndex((point) => point.key === key);
+  const letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.max(index, 0)] ?? 'Z';
+  return `Period ${letter}`;
 }
 
 function percent(value: number): string {

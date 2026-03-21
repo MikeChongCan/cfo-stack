@@ -1,7 +1,7 @@
 import path from 'node:path';
 import {extractDashboardData, discoverSampleLedgers, findRepoRoot} from './extract';
 import {renderDashboardHtml} from './render';
-import type {DashboardProfile} from './types';
+import type {DashboardProfile, DashboardVariant} from './types';
 
 const packageRoot = path.resolve(import.meta.dir, '..');
 
@@ -10,6 +10,7 @@ interface CliOptions {
   outputDir?: string;
   sampleSet?: 'all';
   profile?: DashboardProfile;
+  variant?: DashboardVariant;
 }
 
 const options = parseArgs(Bun.argv.slice(2));
@@ -25,6 +26,7 @@ if (options.sampleSet === 'all') {
       ledgerPath,
       outputDir,
       profile: options.profile,
+      variant: options.variant,
     });
   }
   process.exit(0);
@@ -34,16 +36,19 @@ await generateDashboard({
   ledgerPath: options.ledgerPath,
   outputDir: resolveOutputDir(options.outputDir, repoRoot),
   profile: options.profile,
+  variant: options.variant,
 });
 
 async function generateDashboard({
   ledgerPath,
   outputDir,
   profile,
+  variant,
 }: {
   ledgerPath?: string;
   outputDir: string;
   profile?: DashboardProfile;
+  variant?: DashboardVariant;
 }) {
   const data = await extractDashboardData({
     ledgerPath,
@@ -51,13 +56,18 @@ async function generateDashboard({
     forcedProfile: profile,
   });
   const finalOutputDir = ledgerPath ? path.resolve(outputDir) : outputDir;
+  const resolvedVariant = variant ?? 'full';
   await Bun.$`mkdir -p ${finalOutputDir}`;
   await buildCss(finalOutputDir);
-  await Bun.write(path.join(finalOutputDir, 'dashboard-data.json'), JSON.stringify(data, null, 2));
-  await Bun.write(path.join(finalOutputDir, 'index.html'), renderDashboardHtml(data));
+  if (resolvedVariant === 'full') {
+    await Bun.write(path.join(finalOutputDir, 'dashboard-data.json'), JSON.stringify(data, null, 2));
+  } else {
+    await Bun.$`rm -f ${path.join(finalOutputDir, 'dashboard-data.json')}`;
+  }
+  await Bun.write(path.join(finalOutputDir, 'index.html'), renderDashboardHtml(data, {variant: resolvedVariant}));
 
   const relativeOutput = path.relative(process.cwd(), finalOutputDir) || '.';
-  console.log(`${data.meta.title}: ${relativeOutput}`);
+  console.log(`${data.meta.title} [${resolvedVariant}]: ${relativeOutput}`);
 }
 
 async function buildCss(outputDir: string) {
@@ -88,6 +98,9 @@ function parseArgs(args: string[]): CliOptions {
         break;
       case '--profile':
         options.profile = parseProfile(args[++index]);
+        break;
+      case '--variant':
+        options.variant = parseVariant(args[++index]);
         break;
       case '--sample-set':
         if (args[index + 1] === 'all') {
@@ -136,6 +149,7 @@ Options:
   --ledger <path>       Explicit ledger entrypoint.
   --output <dir>        Output directory, or output root when used with --sample-set all.
   --profile <type>      Force profile: business or household.
+  --variant <type>      Render variant: full or social.
   --sample-set all      Generate dashboards for every repo example ledger.
 `);
 }
@@ -145,5 +159,13 @@ function parseProfile(value: string | undefined): DashboardProfile {
     return value;
   }
   console.error(`Invalid --profile value: ${value ?? '(missing)'}. Expected "business" or "household".`);
+  process.exit(1);
+}
+
+function parseVariant(value: string | undefined): DashboardVariant {
+  if (value === undefined || value === 'full' || value === 'social') {
+    return value ?? 'full';
+  }
+  console.error(`Invalid --variant value: ${value}. Expected "full" or "social".`);
   process.exit(1);
 }

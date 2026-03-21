@@ -33,6 +33,7 @@ From the repo root, after `./setup`:
 ```bash
 ./bin/cfo-dashboard examples/canadian-company/main.beancount
 ./bin/cfo-dashboard examples/canadian-family/main.beancount --profile household
+./bin/cfo-dashboard examples/usa-company/main.beancount --variant social --output reports/social-share/usa-company
 ./bin/cfo-dashboard --sample-set all
 ```
 
@@ -49,6 +50,7 @@ bun run generate -- --ledger ../../../examples/usa-company/main.beancount
 - `index.html` — standalone dashboard shell
 - `dashboard.css` — compiled Tailwind stylesheet
 - `dashboard-data.json` — extracted structured data for traceability
+- Social variant: `--variant social` emits a share-safe HTML view and intentionally omits raw JSON output.
 
 ## Constraints
 
