@@ -51,7 +51,7 @@ Use `/statement-export` when:
 
 When statement export requires live browser help, use:
 
-`./.agents/skills/cfo-playwright-download-statements/SKILL.md`
+`./.agents/skills/cfo-chrome-download-statements/SKILL.md`
 
 That workflow stays LLM-driven and human-in-the-loop.
 

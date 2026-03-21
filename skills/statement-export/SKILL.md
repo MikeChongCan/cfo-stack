@@ -2,8 +2,8 @@
 name: statement-export
 description: |
   Human-in-the-loop browser-assisted statement export for banks, cards, brokerages,
-  and payment platforms. Uses Playwright with Chrome-family browsers and a dedicated
-  reusable profile to download CSV/PDF statements without bank APIs.
+  and payment platforms. Uses Chrome DevTools MCP against the user's current Chrome
+  session to download CSV/PDF statements without bank APIs.
   Use when account files are not on disk yet.
   CLEAR step: C (Capture)
 ---
@@ -21,9 +21,9 @@ store credentials in the repo. You help the user open the right portal, use a sa
 browser profile, confirm the right account/date range, and download the raw CSV/PDF
 evidence needed for bookkeeping.
 
-Detailed live-browser guidance for Playwright-assisted statement downloads lives in:
+Detailed live-browser guidance for Chrome-session statement downloads lives in:
 
-`./.agents/skills/cfo-playwright-download-statements/SKILL.md`
+`./.agents/skills/cfo-chrome-download-statements/SKILL.md`
 
 ## Configuration
 
@@ -36,7 +36,7 @@ That file should declare:
 - Which ledger accounts map to which portal labels
 - Which export formats are preferred for each account
 - Which archive subdirectory should hold the downloaded evidence
-- Which Playwright + Chrome profile should be reused for repeat exports
+- Which Chrome session or browser context the human plans to use for repeat exports
 
 If the file does not exist, inventory accounts from the ledger and ask the user whether
 to scaffold it from `templates/shared/statement-export.yaml`.
@@ -59,15 +59,26 @@ If an account is missing from the export plan, call it out before launching the 
 
 ### Step 2: Choose browser mode
 
-Use Playwright with a Chrome-family browser and a persistent profile:
-- Prefer `channel: chrome` with a dedicated `user_data_dir`
-- Reuse the same dedicated export profile across months so the user does not reconfigure
-  the session every time
-- If the user wants to bootstrap from an existing Chrome profile, copy it into a
-  dedicated export profile first instead of pointing automation at the live daily-use
-  profile
+Prefer the user's current Chrome session via Chrome DevTools MCP remote debugging:
+- Ask the human to enable remote debugging in `chrome://inspect/#remote-debugging`
+- Use the current signed-in Chrome session instead of launching a separate automation browser
+- Keep downloads in a known directory before export starts
+- Only fall back to a separate browser instance when the current Chrome session is unavailable
 
-Always configure a known downloads directory before the session starts.
+Recommended MCP config example:
+
+```json
+"chrome-devtools": {
+  "command": "npx",
+  "args": [
+    "chrome-devtools-mcp@latest",
+    "--autoConnect",
+    "--channel=beta"
+  ]
+}
+```
+
+Adjust the channel for the user's actual Chrome build instead of forcing beta everywhere.
 
 ### Step 3: Run human-in-the-loop export
 
@@ -85,7 +96,7 @@ Human responsibilities:
 - confirm each download action when the portal wording is ambiguous
 
 Agent responsibilities:
-- open the browser with the configured profile
+- connect to the user's current Chrome session when available
 - use web search on official institution domains when the login or export page is unclear
 - help navigate to the transaction or statements area
 - confirm which raw files were downloaded
@@ -128,7 +139,7 @@ After downloads complete:
 ## Constraints
 
 - NEVER store credentials, security answers, or OTP codes in the repo
-- NEVER point automation at the user's live default Chrome profile
+- NEVER ask the user to disable Chrome's remote debugging safety prompts
 - NEVER assume the portal selected the correct account or statement period
 - NEVER rename or overwrite the only copy of a raw downloaded file
 - ALWAYS keep a manifest that ties each download back to a ledger account

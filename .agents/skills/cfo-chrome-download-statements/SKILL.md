@@ -1,4 +1,4 @@
-# CFO Playwright Download Statements
+# CFO Chrome Download Statements
 
 Use this skill when statement files are not on disk yet and the agent needs to guide a
 human through downloading CSV or PDF evidence from a bank, credit card, brokerage, or
@@ -11,10 +11,36 @@ Keep this workflow LLM-driven and human-in-the-loop:
 - The LLM decides how to navigate based on the live site, prior manifests, and user input.
 - The human logs in, completes MFA, confirms the correct account, confirms the date range,
   and confirms each ambiguous download action.
-- The agent may use Playwright or browser automation tools to open pages, inspect the DOM,
-  and assist with navigation.
+- The agent should prefer controlling the user's current Chrome session through Chrome DevTools MCP.
 - The agent should not rely on deterministic site-specific scripts, brittle selector packs,
   or hardcoded month-selection logic.
+
+## Preferred Browser Control
+
+Prefer Chrome DevTools MCP attached to the user's current Chrome browser.
+
+Ask the user to enable remote debugging in:
+
+`chrome://inspect/#remote-debugging`
+
+Recommended MCP config example:
+
+```json
+"chrome-devtools": {
+  "command": "npx",
+  "args": [
+    "chrome-devtools-mcp@latest",
+    "--autoConnect",
+    "--channel=beta"
+  ]
+}
+```
+
+Notes:
+- `--autoConnect` helps the MCP attach to the active Chrome session.
+- `--channel=beta` is a practical recommendation when the user is running Chrome Beta.
+- If the user is on stable Chrome, adjust the channel instead of forcing beta.
+- Do not tell the user to launch a separate browser instance unless the current Chrome session cannot be used.
 
 ## Inputs
 
@@ -33,8 +59,8 @@ Use those as context only. They are not a deterministic execution plan.
 3. Treat prior manifests as historical context, not as a deterministic rule for "next month".
 4. Ask the human to confirm the exact account and date range before any download click.
 5. Preserve raw filenames and archive copies before any normalization or import.
-6. Never store credentials, OTP codes, security answers, or copied session cookies in the repo.
-7. Never point automation at the user's daily browser profile. Use a dedicated profile or an isolated session.
+6. Never store credentials, OTP codes, security answers, or copied session data in the repo.
+7. Prefer the user's current Chrome session over spawning a separate automation browser.
 
 ## Workflow
 
@@ -68,11 +94,12 @@ Good examples:
 - `Interactive Brokers activity statements csv site:interactivebrokers.com`
 - `Wealthsimple monthly statement download site:wealthsimple.com`
 
-### 3. Use Playwright as a live assistant
+### 3. Use Chrome DevTools MCP as a live assistant
 
-Use Playwright or the available browser tool to:
+Use Chrome DevTools MCP or the available Chrome browser tool to:
 
-- open the official login page
+- connect to the user's current Chrome session
+- open or inspect the official login page
 - keep the session visible to the human
 - inspect page structure after login
 - help find likely statement or activity sections

@@ -21,8 +21,9 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 11. Do not require deterministic accounting classification, posting, or reporting as a product goal.
     CFO Stack may use non-deterministic, human-reviewed AI workflows for accounting decisions.
 12. For browser-assisted statement downloads, prefer the repo-local skill
-    `./.agents/skills/cfo-playwright-download-statements/SKILL.md` over deterministic helper scripts.
-    Let the LLM drive navigation and use web search on official institution domains when needed.
+    `./.agents/skills/cfo-chrome-download-statements/SKILL.md` over deterministic helper scripts.
+    Let the LLM drive navigation through the user's current Chrome session and use web search
+    on official institution domains when needed.
 13. Setup installs are path-agnostic at machine scope. Do not require this repo to live under
     `~/.claude/skills/` or `~/.agents/skills/`; `./setup` registers Claude skills in
     `~/.claude/skills/`, Codex skills in `~/.agents/skills/`, OpenClaw skills in

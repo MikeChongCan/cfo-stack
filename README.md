@@ -174,8 +174,9 @@ account/date confirmation, and CSV/PDF download.
 
 The statement download pattern is intentionally LLM-driven and human-in-the-loop.
 This repo does not depend on deterministic bank-site scripts. The repo-local skill
-`./.agents/skills/cfo-playwright-download-statements/SKILL.md` is the preferred pattern
-for Playwright-assisted navigation, official-domain web search, and download guidance.
+`./.agents/skills/cfo-chrome-download-statements/SKILL.md` is the preferred pattern
+for Chrome DevTools MCP navigation through the user's current Chrome session, plus
+official-domain web search and download guidance.
 
 ### 2. Set up your ledger
 
@@ -199,7 +200,7 @@ use:
 /statement-export
 ```
 
-That workflow is human-in-the-loop: Chrome-family browser, dedicated reusable profile,
+That workflow is human-in-the-loop: current Chrome session with remote debugging enabled,
 manual login/MFA, agent-guided navigation, and raw CSV/PDF downloads preserved for archive.
 When the correct login or export page is unclear, the agent should use web search against
 official institution domains before navigating.
@@ -251,7 +252,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 | Skill | Role | What It Does |
 |---|---|---|
 | `/capture` | Data Clerk | Inventory local files and route them into import/OCR flows |
-| `/statement-export` | Export Clerk | Guided Chrome + Playwright export for bank, card, brokerage, and platform statements |
+| `/statement-export` | Export Clerk | Guided Chrome DevTools MCP export for bank, card, brokerage, and platform statements |
 | `/capture-dedupe` | Import Provenance Clerk | Prevent duplicate imports across repeated capture runs |
 | `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive |
 | `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
