@@ -34,7 +34,7 @@ Find transactions marked with `classify: pending` or using `Expenses:Uncategoriz
 
 ### Step 2: Apply rules (in priority order)
 
-1. **Exact match:** Payee matches a known rule in `rules/classify-rules.yaml` → auto-classify
+1. **Exact match:** Payee matches a known rule in `rules/classify-rules.yaml` → propose a rule-based classification
 2. **Pattern match:** Regex on payee/narration → suggest classification
 3. **Historical:** Check if similar transactions were previously classified by the user
 4. **AI inference:** Analyze payee name, amount, date pattern, narration to suggest account
@@ -89,7 +89,7 @@ When the human approves or corrects a classification:
 
 Report:
 - Total transactions classified
-- Auto-classified (high confidence)
+- High-confidence proposals approved
 - Human-confirmed
 - Still unclassified (skipped)
 - New rules learned
