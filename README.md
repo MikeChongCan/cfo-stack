@@ -385,7 +385,7 @@ Fork it, improve it, make it yours. Priority contributions:
 - Bank importers (especially Canadian and US banks)
 - Tax rule packs for additional jurisdictions
 - Multi-region invoice templates
-- Beancount plugins for common tax scenarios
+- LLM-reviewed accounting and tax workflows
 
 ---
 
