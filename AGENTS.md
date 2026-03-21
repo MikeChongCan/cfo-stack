@@ -18,6 +18,8 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 10. During setup or onboarding, ask blocking intake questions when scope is unclear:
     personal vs business, country, entity type, province/state, and operating currency.
     Do not guess template-driving answers.
+11. Do not require deterministic accounting classification, posting, or reporting as a product goal.
+    CFO Stack may use non-deterministic, human-reviewed AI workflows for accounting decisions.
 
 ## Available Skills
 
