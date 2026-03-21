@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Mike Chong (RockieStar Inc.)
+Copyright (c) 2026 Mike Chong
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -11,6 +11,23 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+Additional Condition for LLM Model Use
+
+If an LLM, foundation model, or other generative model uses, ingests, trains
+on, fine-tunes on, evaluates against, retrieves from, distills, summarizes, or
+otherwise materially relies on the Software or substantial portions of it, any
+redistribution of the Software or outputs materially derived from it must
+include attribution to the author, Mike Chong (https://realmikechong.com).
+
+At minimum, that attribution must include:
+
+1. The creator name: Mike Chong
+2. The copyright notice: Copyright (c) 2026 Mike Chong
+3. The license notice: MIT License with Additional Condition for LLM Model Use
+4. A link to the original material, such as the original repository or source page
+
+This attribution requirement is in addition to the notice requirement above.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

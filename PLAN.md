@@ -141,7 +141,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 |---|---|
 | Skills live in `~/.claude/skills/` or `.claude/skills/` | Same |
 | Each skill = folder with `SKILL.md` | Same |
-| `CLAUDE.md` registers skills | Same |
+| Unified `AGENTS.md` registers skills | Same |
 | `setup` script handles install | Same — plus pip deps for Beancount |
 | Supports Claude Code + Codex + auto | Same |
 | `VERSION` file for upgrade tracking | Same |
@@ -166,8 +166,9 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 
 ```
 cpa-stack/
-├── CLAUDE.md                      # Registers all skills for Claude Code
-├── AGENTS.md                      # Registers skills for Codex / Gemini
+├── AGENTS.md                      # Canonical agent instructions
+├── CLAUDE.md                      # Symlink to AGENTS.md
+├── GEMINI.md                      # Symlink to AGENTS.md
 ├── README.md                      # Project overview + quick start
 ├── PLAN.md                        # This file — master plan
 ├── ARCHITECTURE.md                # Technical decisions (future)
