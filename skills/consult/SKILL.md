@@ -99,8 +99,12 @@ Prefer markdown-first context:
 - relevant policy or jurisdiction-pack excerpts
 - current assumptions
 - what decision must be made
+- explicit rules that the external model must follow
 
 Keep it focused. Do not dump the entire repo.
+
+Important: external providers do not automatically read `AGENTS.md`, local skills, or repo policy.
+If a rule matters for the consultation, put it in the outbound markdown bundle.
 
 Recommended bundle shape:
 
@@ -115,6 +119,14 @@ Recommended bundle shape:
 - jurisdiction:
 - ledger accounts involved:
 - current treatment:
+
+# Rules For This Consultation
+
+- This is accounting/tax research, not compliance approval.
+- Do not invent statutory rules, rates, or filing requirements.
+- Prefer jurisdiction-pack facts and official IRS/CRA source text over speculation.
+- Preserve ambiguity when multiple treatments are plausible.
+- End with human review items.
 
 # Relevant excerpts
 
@@ -142,6 +154,9 @@ npx 10x-chat@latest chat --provider chatgpt --file consult.md -p "Answer the que
 ```
 
 Use `--dry-run` first when the prompt bundle may include sensitive material.
+
+Before sending, verify that the outbound markdown already contains the rules the external
+model needs to follow. Do not assume repo-local instructions will be visible to it.
 
 If NotebookLM is the right fit, use it when the user has source-heavy materials such as:
 - tax guides
