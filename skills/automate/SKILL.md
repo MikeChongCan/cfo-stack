@@ -47,6 +47,7 @@ TMP_MAIN="$(mktemp)"
 echo "Processing $MONTH..."
 
 # 1. Import bank CSVs
+mkdir -p staging
 python3 importers/td_bank.py ~/Downloads/td-checking-*.csv >> "$STAGING_FILE"
 python3 importers/td_bank.py ~/Downloads/td-visa-*.csv >> "$STAGING_FILE"
 
@@ -58,7 +59,7 @@ EOF
 ./bin/cpa-check "$TMP_MAIN"
 
 # 3. Generate a patch for human review
-diff -u "ledger/$YEAR/${MONTH#*-}-transactions.beancount" "$STAGING_FILE" || true
+diff -uN "ledger/$YEAR/${MONTH#*-}-transactions.beancount" "$STAGING_FILE" || true
 
 echo "Review the patch, then apply it explicitly."
 echo "Archive source files only after approval and a successful ./bin/cpa-check main.beancount."

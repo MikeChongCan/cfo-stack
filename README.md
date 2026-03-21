@@ -213,8 +213,8 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 
 ## Prerequisites
 
-- Python 3
-- uv
+- Python 3 + uv
+- Current packaged dependencies install on Python 3.10+
 - Git
 - Claude Code, Codex CLI, or compatible AI agent
 
