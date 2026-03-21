@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/policy.schema.json
+version: 1
+review_policy:
+  large_transaction_human_confirmation:
+    enabled: true
+    amount: 1000
+    currency_mode: ledger_operating_currency
+    note: >-
+      Require explicit human approval before approving a transaction at or above
+      this amount. Ledger-local cfo-stack.yaml should override the global
+      ~/.cfo-stack/config.yaml default when both exist.

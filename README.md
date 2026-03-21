@@ -69,6 +69,20 @@ That gives editor validation and a stable contract for LLM workflows.
 Generated `tax/` review packets are intentionally tracked by default so the filing
 workflow keeps an audit trail.
 
+### Policy Config Schema
+
+Large-transaction review thresholds live in:
+
+- Ledger-local `cfo-stack.yaml`
+- Global `~/.cfo-stack/config.yaml` seeded by `./setup`
+
+Those files are governed by:
+
+`schemas/policy.schema.json`
+
+The default install-time threshold is `$1,000` in the ledger operating currency.
+Override it per ledger when a client needs a different review bar.
+
 ### 2. Set up your ledger
 
 ```
@@ -76,6 +90,8 @@ workflow keeps an audit trail.
 ```
 
 Describe your business. CFO Stack creates your chart of accounts, initial Beancount ledger, and git repo.
+It should also create a ledger-local `cfo-stack.yaml` so review thresholds and other
+policy knobs are part of the ledger, not buried in agent prose.
 
 ### 3. Import your data
 

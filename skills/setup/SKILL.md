@@ -43,6 +43,7 @@ Based on entity type and jurisdiction, use the appropriate template:
 
 ```
 ledger/
+├── cfo-stack.yaml             # Ledger-local policy overrides
 ├── main.beancount              # Master file
 ├── accounts.beancount          # Chart of accounts
 ├── YYYY/                       # Year directories
@@ -100,10 +101,20 @@ YYYY-MM-DD * "Opening balances"
 ### Step 6: Create jurisdiction pack
 
 ```bash
+# Copy templates/shared/cfo-stack.yaml to cfo-stack.yaml
+# Adjust review thresholds for this ledger if the global default is wrong
 # Create tax/jurisdiction.yaml from the matching template
 # Fill in filing frequency, deadlines, and rates from user-provided source data
 # Keep the schema comment at the top of the YAML file so editor validation works
 ```
+
+The approval policy file must define at least:
+- Large-transaction human confirmation threshold
+- Whether threshold uses ledger operating currency or an explicit currency
+
+Lookup order:
+1. Ledger-local `cfo-stack.yaml`
+2. Global `~/.cfo-stack/config.yaml` created by `./setup`
 
 The pack must contain:
 - Jurisdiction name
@@ -150,6 +161,7 @@ Tell the user:
 - ALWAYS create a valid, loadable Beancount ledger
 - ALWAYS replace template opening dates with the entity's actual start date
 - ALWAYS include tax-relevant accounts for the jurisdiction
+- ALWAYS create `cfo-stack.yaml` for ledger-local policy overrides when initializing a ledger
 - ALWAYS create `tax/jurisdiction.yaml` before any tax workflow is used
 - NEVER assume account balances — ask or start at zero
 - NEVER commit a ledger that fails `bean-check`

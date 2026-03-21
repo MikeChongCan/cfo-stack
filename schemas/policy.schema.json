@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/policy.schema.json",
+  "title": "CPA Stack Policy Config",
+  "description": "Schema for global or ledger-local CPA Stack policy settings.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "review_policy"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["large_transaction_human_confirmation"],
+      "properties": {
+        "large_transaction_human_confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "amount", "currency_mode"],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "amount": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "currency_mode": {
+              "type": "string",
+              "enum": ["ledger_operating_currency", "explicit"]
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "currency_mode": {
+                    "const": "explicit"
+                  }
+                }
+              },
+              "then": {
+                "required": ["currency"]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

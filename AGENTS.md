@@ -9,7 +9,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 3. Propose diffs only. AI suggests entries; a human approves before committing to the ledger.
 4. Run `bean-check` after every ledger change and before every commit.
 5. Show a diff for every ledger mutation. No silent changes.
-6. Flag transactions over $1,000 for human confirmation.
+6. Flag transactions at or above the configured large-transaction threshold for human confirmation.
 7. Never modify reconciled transactions without explicit approval.
 8. Always include tax treatment for transactions when applicable.
 9. Commit every meaningful approved change via `/snapshot`.
@@ -61,6 +61,7 @@ Year-end: `/audit` → `/report` → `/snapshot`
 
 - Operating currencies: `CAD`, `USD` (configured per entity)
 - Account hierarchy: `Assets:Bank:InstitutionName`, `Expenses:Category:Subcategory`
+- Policy lookup: ledger-local `cfo-stack.yaml`, then global `~/.cfo-stack/config.yaml`
 - Metadata tags: `classify: auto|confirmed|manual`, `receipt: path/to/file`, `receipt-ocr: path/to/processed/file`
 - Balance assertions: required at every monthly close
 - Recoverable sales tax: book to asset receivable accounts, not expense accounts
@@ -69,6 +70,7 @@ Year-end: `/audit` → `/report` → `/snapshot`
 
 ```text
 ledger/
+├── cfo-stack.yaml
 ├── main.beancount
 ├── accounts.beancount
 ├── YYYY/

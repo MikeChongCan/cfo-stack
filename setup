@@ -144,9 +144,29 @@ if [ ! -x "$VENV_BIN/fava" ]; then
   exit 1
 fi
 
-# ─── 6. Create state directory ─────────────────────────────────
-mkdir -p "$HOME/.cfo-stack"
+# ─── 6. Create state directory + default policy config ─────────
+STATE_DIR="$HOME/.cfo-stack"
+GLOBAL_CONFIG="$STATE_DIR/config.yaml"
+mkdir -p "$STATE_DIR"
 echo "  State dir: ~/.cfo-stack/"
+
+if [ ! -f "$GLOBAL_CONFIG" ]; then
+  cat > "$GLOBAL_CONFIG" <<'YAML'
+# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/policy.schema.json
+version: 1
+review_policy:
+  large_transaction_human_confirmation:
+    enabled: true
+    amount: 1000
+    currency_mode: ledger_operating_currency
+    note: >-
+      Default review threshold installed by CFO Stack setup. Ledger-local
+      cfo-stack.yaml may override this value.
+YAML
+  echo "  Default policy: $GLOBAL_CONFIG"
+else
+  echo "  Default policy: $GLOBAL_CONFIG (existing)"
+fi
 
 # ─── 7. Helper: symlink skill subdirectories ──────────────────
 link_claude_skill_dirs() {
@@ -284,10 +304,13 @@ echo "╠═══════════════════════�
 echo "║                                          ║"
 echo "║  Quick start:                            ║"
 echo "║    1. Run /setup to create your ledger   ║"
-echo "║    2. Drop bank CSVs in ~/Downloads      ║"
-echo "║    3. Run /capture to import them         ║"
-echo "║    4. Run /classify to categorize         ║"
-echo "║    5. Run /report to see your finances    ║"
+echo "║    2. Edit ~/.cfo-stack/config.yaml      ║"
+echo "║       if you want a different review     ║"
+echo "║       threshold than $1,000              ║"
+echo "║    3. Drop bank CSVs in ~/Downloads      ║"
+echo "║    4. Run /capture to import them        ║"
+echo "║    5. Run /classify to categorize        ║"
+echo "║    6. Run /report to see your finances   ║"
 echo "║                                          ║"
 echo "║  The CLEAR cycle:                        ║"
 echo "║    Capture → Log → Extract →              ║"

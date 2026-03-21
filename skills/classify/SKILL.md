@@ -118,7 +118,8 @@ rules:
 
 ## Constraints
 
-- NEVER approve a transaction over $1,000 without human confirmation
+- NEVER approve a transaction at or above the configured large-transaction threshold
+- Read the threshold from `cfo-stack.yaml` first, then `~/.cfo-stack/config.yaml`
 - NEVER change a previously reconciled transaction
 - ALWAYS flag transactions that could be personal vs business
 - ALWAYS apply tax treatment when classifying

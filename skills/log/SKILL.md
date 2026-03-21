@@ -80,6 +80,8 @@ Common patterns:
 
 - NEVER create entries that don't balance
 - NEVER use accounts that aren't in the chart of accounts (open them first)
+- NEVER approve a transaction at or above the configured large-transaction threshold
+- Read the threshold from `cfo-stack.yaml` first, then `~/.cfo-stack/config.yaml`
 - ALWAYS show the proposed diff before any ledger mutation
 - ALWAYS run validation after applying an approved patch
 - ALWAYS preserve source metadata from `/capture`

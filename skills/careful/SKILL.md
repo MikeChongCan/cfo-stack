@@ -27,6 +27,11 @@ Warn and require explicit confirmation before:
 6. **Force-pushing** the ledger repository
 7. **Removing balance assertions**
 8. **Changing the chart of accounts** (closing or renaming accounts)
+9. **Approving a transaction at or above the configured large-transaction threshold**
+
+Threshold lookup:
+- Ledger-local `cfo-stack.yaml`
+- Global `~/.cfo-stack/config.yaml`
 
 ## Warning Format
 
