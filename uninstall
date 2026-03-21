@@ -1,0 +1,158 @@
+#!/usr/bin/env bash
+# cfo-stack uninstall — unregister skills and optionally remove local tooling/state
+set -euo pipefail
+
+CFO_STACK_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILLS_DIR="$(dirname "$CFO_STACK_DIR")"
+STATE_DIR="$HOME/.cfo-stack"
+GLOBAL_CONFIG="$STATE_DIR/config.yaml"
+REMOVE_LOCAL_TOOLS=0
+REMOVE_STATE=0
+HOST="auto"
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --host)
+      if [ $# -lt 2 ]; then
+        echo "Error: --host requires a value (claude, codex, openclaw, antigravity, or auto)" >&2
+        exit 1
+      fi
+      HOST="$2"
+      shift 2
+      ;;
+    --host=*)
+      HOST="${1#--host=}"
+      shift
+      ;;
+    --remove-local-tools)
+      REMOVE_LOCAL_TOOLS=1
+      shift
+      ;;
+    --remove-state)
+      REMOVE_STATE=1
+      shift
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      exit 1
+      ;;
+  esac
+done
+
+case "$HOST" in
+  claude|codex|openclaw|antigravity|auto) ;;
+  *) echo "Unknown --host value: $HOST (expected claude, codex, openclaw, antigravity, or auto)" >&2; exit 1 ;;
+esac
+
+REMOVE_CLAUDE=0
+REMOVE_CODEX=0
+REMOVE_OPENCLAW=0
+REMOVE_ANTIGRAVITY=0
+
+if [ "$HOST" = "auto" ]; then
+  REMOVE_CLAUDE=1
+  REMOVE_CODEX=1
+  REMOVE_OPENCLAW=1
+  REMOVE_ANTIGRAVITY=1
+elif [ "$HOST" = "claude" ]; then
+  REMOVE_CLAUDE=1
+elif [ "$HOST" = "codex" ]; then
+  REMOVE_CODEX=1
+elif [ "$HOST" = "openclaw" ]; then
+  REMOVE_OPENCLAW=1
+elif [ "$HOST" = "antigravity" ]; then
+  REMOVE_ANTIGRAVITY=1
+fi
+
+echo "╔══════════════════════════════════════════╗"
+echo "║        CFO Stack Uninstall               ║"
+echo "║     Remove host registrations safely     ║"
+echo "╚══════════════════════════════════════════╝"
+echo ""
+
+remove_skill_links() {
+  local skills_root="$1"
+  local prefix="$2"
+  local removed=()
+  local skill_dir
+  local skill_name
+  local target
+  local current_target
+
+  [ -d "$skills_root" ] || return 0
+
+  for skill_dir in "$CFO_STACK_DIR"/skills/*/; do
+    if [ -f "$skill_dir/SKILL.md" ]; then
+      skill_name="${prefix}$(basename "$skill_dir")"
+      target="$skills_root/$skill_name"
+      if [ -L "$target" ]; then
+        current_target="$(readlink "$target" || true)"
+        if [ "$current_target" = "$skill_dir" ]; then
+          rm "$target"
+          removed+=("$skill_name")
+        fi
+      fi
+    fi
+  done
+
+  if [ ${#removed[@]} -gt 0 ]; then
+    echo "  Removed skills: ${removed[*]}"
+  else
+    echo "  No CFO Stack skill links found in $skills_root"
+  fi
+}
+
+SKILLS_BASENAME="$(basename "$SKILLS_DIR")"
+if [ "$REMOVE_CLAUDE" -eq 1 ]; then
+  echo "Unregistering from Claude Code..."
+  if [ "$SKILLS_BASENAME" = "skills" ]; then
+    remove_skill_links "$SKILLS_DIR" "cfo-"
+  else
+    echo "  Skipped Claude symlink cleanup — repo is not inside a skills directory"
+  fi
+  echo ""
+fi
+
+if [ "$REMOVE_CODEX" -eq 1 ]; then
+  echo "Unregistering from Codex..."
+  remove_skill_links "$HOME/.codex/skills" "cfo-"
+  echo ""
+fi
+
+if [ "$REMOVE_OPENCLAW" -eq 1 ]; then
+  echo "Unregistering from OpenClaw..."
+  remove_skill_links "$HOME/.openclaw/skills" "cfo-"
+  echo ""
+fi
+
+if [ "$REMOVE_ANTIGRAVITY" -eq 1 ]; then
+  echo "Unregistering from Antigravity..."
+  remove_skill_links "$HOME/.gemini/antigravity/skills" "cfo-"
+  echo ""
+fi
+
+if [ "$REMOVE_LOCAL_TOOLS" -eq 1 ]; then
+  echo "Removing repo-local tooling..."
+  rm -f "$CFO_STACK_DIR/bin/cfo-check" "$CFO_STACK_DIR/bin/cfo-fava"
+  if [ -d "$CFO_STACK_DIR/bin" ] && [ -z "$(find "$CFO_STACK_DIR/bin" -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+    rmdir "$CFO_STACK_DIR/bin"
+    echo "  Removed empty bin/"
+  fi
+  rm -rf "$CFO_STACK_DIR/.venv"
+  echo "  Removed .venv and generated helper scripts"
+  echo ""
+fi
+
+if [ "$REMOVE_STATE" -eq 1 ]; then
+  echo "Removing global CFO Stack state..."
+  rm -f "$GLOBAL_CONFIG"
+  if [ -d "$STATE_DIR" ] && [ -z "$(find "$STATE_DIR" -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+    rmdir "$STATE_DIR"
+    echo "  Removed empty $STATE_DIR"
+  else
+    echo "  Removed $GLOBAL_CONFIG"
+  fi
+  echo ""
+fi
+
+echo "Done."

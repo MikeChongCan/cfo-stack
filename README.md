@@ -53,6 +53,17 @@ Antigravity setup uses its documented global skills directory, `~/.gemini/antigr
 That keeps CFO Stack available across workspaces without requiring you to vendor the repo
 into each project's `.agents/skills/`.
 
+To unregister skills later:
+
+```bash
+./uninstall --host auto
+```
+
+Optional cleanup flags:
+
+- `./uninstall --host auto --remove-local-tools`
+- `./uninstall --host auto --remove-state`
+
 ### Included Samples
 
 - `examples/canadian-company/` — incorporated Canadian service business
