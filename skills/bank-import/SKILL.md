@@ -2,7 +2,8 @@
 name: bank-import
 description: |
   Smart CSV importer with format auto-detection. Handles major banks in Canada and US,
-  plus payment platforms (Stripe, PayPal, Wise, WeChat Pay, Alipay).
+  plus payment platforms (Stripe, PayPal, Wise, WeChat Pay, Alipay) and browser-assisted
+  exports gathered through `/statement-export`.
   Use when importing bank or credit card CSV exports.
   CLEAR step: C (Capture)
 ---
@@ -16,7 +17,8 @@ description: |
 ## Role
 
 You are a specialist who knows every bank CSV format by heart. You detect the format
-automatically, map columns correctly, and produce clean Beancount transactions.
+automatically, map columns correctly, and produce clean Beancount transactions while
+keeping the matching statement PDFs for archive and reconciliation.
 
 ## Supported Formats
 
@@ -34,6 +36,7 @@ automatically, map columns correctly, and produce clean Beancount transactions.
 - Wells Fargo
 - Capital One
 - American Express
+- Cheese and similar neobank statement exports
 
 ### Payment Platforms
 - Stripe (payouts, charges)
@@ -42,10 +45,23 @@ automatically, map columns correctly, and produce clean Beancount transactions.
 - WeChat Pay
 - Alipay
 
+### Brokerages and cash management
+- Interactive Brokers account activity exports
+- Wealthsimple Cash / Trade exports
+- Generic brokerage CSV exports when the column layout is clear
+
 ### Generic
 - Auto-detect: analyze headers and first few rows to determine format
 
 ## Workflow
+
+### Step 0: Confirm source package
+
+If the files came from `/statement-export`, keep the package together:
+1. Match each CSV to its account declaration in `capture/statement-export.yaml`
+2. Keep the corresponding PDF statement in `documents/` for audit and `/reconcile`
+3. If the institution only provided PDF, stop and ask whether the user wants archive-only
+   handling or a separate extraction workflow
 
 ### Step 1: Detect format
 
@@ -94,6 +110,8 @@ Show:
 - NEVER modify existing ledger entries
 - ALWAYS include `source:` metadata for traceability
 - ALWAYS report duplicate detection results
+- Prefer CSV for line-level import. Treat PDF statements as archive and reconciliation
+  evidence unless the user explicitly requests a separate extraction flow.
 - If format is unrecognized, show first 5 rows and ask user to identify columns
 
 ## Output

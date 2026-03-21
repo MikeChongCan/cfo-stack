@@ -18,6 +18,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 
 ### C — Capture
 - `/capture` — Import from financial data sources
+- `/statement-export` — Guided browser export for bank, card, brokerage, and platform statements
 - `/doc-preprocess` — Normalize receipt photos and oversized PDFs before OCR/archive
 - `/bank-import` — Smart CSV importer with format auto-detection
 - `/receipt-scan` — OCR receipt photos, extract data, generate transactions
@@ -54,6 +55,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 The C.L.E.A.R. cycle: Capture → Log → Extract → Automate → Report
 
 Monthly: `/capture` → `/classify` → `/reconcile` → `/report` → `/snapshot`
+When files are not on disk yet: `/statement-export` → `/capture`
 Quarterly: `/quarterly-tax` → `/tax-plan`
 Year-end: `/audit` → `/report` → `/snapshot`
 
@@ -71,6 +73,8 @@ Year-end: `/audit` → `/report` → `/snapshot`
 ```text
 ledger/
 ├── cfo-stack.yaml
+├── capture/
+│   └── statement-export.yaml
 ├── main.beancount
 ├── accounts.beancount
 ├── YYYY/

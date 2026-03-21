@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/statement-export.schema.json
+version: 1
+browser:
+  engine: playwright
+  channel: chrome
+  profile_strategy: dedicated
+  user_data_dir: ~/.cfo-stack/playwright/mapletech-export
+  downloads_dir: ~/Downloads/cfo-stack/mapletech
+institutions:
+  - id: td-banking
+    name: TD Canada Trust
+    kind: bank
+    region: CA
+    accounts:
+      - ledger_account: Assets:Bank:TD-Business
+        portal_label: Business Chequing
+        preferred_exports: [csv, pdf]
+        archive_subdir: bank-statements/td-business
+      - ledger_account: Liabilities:CreditCard:TD-Visa
+        portal_label: TD Business Visa
+        preferred_exports: [csv, pdf]
+        archive_subdir: credit-card-statements/td-visa
+  - id: wise
+    name: Wise
+    kind: payment_platform
+    region: multi
+    accounts:
+      - ledger_account: Assets:Bank:Wise
+        portal_label: CAD balance
+        preferred_exports: [csv, pdf]
+        archive_subdir: bank-statements/wise-cad
+        human_steps:
+          - Export both balance activity and monthly statement views when both exist.

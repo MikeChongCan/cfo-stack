@@ -73,6 +73,9 @@ Optional cleanup flags:
 - `examples/usa-individual/` — salaried US individual ledger
 - `examples/usa-family/` — US household ledger
 
+The two company examples also include `capture/statement-export.yaml` so you can see how
+to declare institutions and ledger-account mappings for browser-assisted exports.
+
 ### Jurisdiction Pack Schema
 
 `tax/jurisdiction.yaml` files are governed by:
@@ -101,6 +104,25 @@ Those files are governed by:
 The default install-time threshold is `$1,000` in the ledger operating currency.
 Override it per ledger when a client needs a different review bar.
 
+### Statement Export Profile Schema
+
+Optional human-in-the-loop export plans live in:
+
+- Ledger-local `capture/statement-export.yaml`
+- Shared starter template `templates/shared/statement-export.yaml`
+
+Those files are governed by:
+
+`schemas/statement-export.schema.json`
+
+Each file should keep the YAML schema comment that points at:
+
+`https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/statement-export.schema.json`
+
+Use this config to declare institutions such as TD, BMO, Chase, Cheese, Wealthsimple,
+IBKR, Wise, or other portals, then let `/statement-export` guide the human through login,
+account/date confirmation, and CSV/PDF download.
+
 ### 2. Set up your ledger
 
 ```
@@ -111,9 +133,22 @@ Describe your business. CFO Stack creates your chart of accounts, initial Beanco
 It should also create a ledger-local `cfo-stack.yaml` so review thresholds and other
 policy knobs are part of the ledger, not buried in agent prose.
 
-### 3. Import your data
+### 3. Get your raw files onto disk
 
-Drop bank CSVs into `~/Downloads/`, and put receipt photos / invoice PDFs in your capture folders, then:
+If you already exported files manually, drop bank CSVs into `~/Downloads/`, and put
+receipt photos / invoice PDFs in your capture folders.
+
+If you have declared accounts and want guided browser-based export instead of bank APIs,
+use:
+
+```text
+/statement-export
+```
+
+That workflow is human-in-the-loop: Chrome-family browser, dedicated reusable profile,
+manual login/MFA, agent-guided navigation, and raw CSV/PDF downloads preserved for archive.
+
+Then run:
 
 ```
 /capture
@@ -139,15 +174,16 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 
 ---
 
-## All 21 Skills
+## All 22 Skills
 
 ### C — Capture
 
 | Skill | Role | What It Does |
 |---|---|---|
-| `/capture` | Data Clerk | Import from all sources: bank CSVs, receipts, invoices |
+| `/capture` | Data Clerk | Inventory local files and route them into import/OCR flows |
+| `/statement-export` | Export Clerk | Guided Chrome + Playwright export for bank, card, brokerage, and platform statements |
 | `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive |
-| `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection |
+| `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
 | `/receipt-scan` | Receipt Clerk | OCR receipt photos, generate transactions |
 
 ### L — Log
@@ -194,9 +230,10 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 
 ---
 
-## Monthly Close in 5 Commands
+## Monthly Close with Optional Export
 
 ```
+/statement-export  # Optional: guided export when files are not on disk yet
 /capture          # Import all bank CSVs + receipts
 /classify         # AI categorizes, you review
 /reconcile        # Match to bank statements

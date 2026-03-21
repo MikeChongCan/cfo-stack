@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/statement-export.schema.json",
+  "title": "CFO Stack Statement Export Profile",
+  "description": "Schema for capture/statement-export.yaml files used to declare human-in-the-loop browser export settings for banks, cards, brokerages, and payment platforms.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "browser", "institutions"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "browser": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engine",
+        "channel",
+        "profile_strategy",
+        "user_data_dir",
+        "downloads_dir"
+      ],
+      "properties": {
+        "engine": {
+          "type": "string",
+          "const": "playwright"
+        },
+        "channel": {
+          "type": "string",
+          "enum": ["chrome", "msedge", "chromium"]
+        },
+        "profile_strategy": {
+          "type": "string",
+          "enum": ["dedicated", "copied_from_existing", "manual"]
+        },
+        "user_data_dir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "downloads_dir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "existing_profile_hint": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "institutions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/institution"
+      }
+    }
+  },
+  "$defs": {
+    "institution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "kind", "accounts"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["bank", "credit_card", "brokerage", "payment_platform"]
+        },
+        "region": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "accounts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/account"
+          }
+        }
+      }
+    },
+    "account": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ledger_account",
+        "portal_label",
+        "preferred_exports",
+        "archive_subdir"
+      ],
+      "properties": {
+        "ledger_account": {
+          "type": "string",
+          "minLength": 1
+        },
+        "portal_label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preferred_exports": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["csv", "pdf", "xlsx", "ofx", "qfx"]
+          }
+        },
+        "archive_subdir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "human_steps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

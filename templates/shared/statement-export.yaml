@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/statement-export.schema.json
+version: 1
+browser:
+  engine: playwright
+  channel: chrome
+  profile_strategy: dedicated
+  user_data_dir: ~/.cfo-stack/playwright/chrome-statement-export
+  downloads_dir: ~/Downloads/cfo-stack
+  notes: >-
+    Use a dedicated or copied profile for export sessions. Do not point
+    automation at your live daily-use Chrome profile.
+institutions:
+  - id: td-banking
+    name: TD Canada Trust
+    kind: bank
+    region: CA
+    accounts:
+      - ledger_account: Assets:Bank:TD-Business
+        portal_label: Business Chequing
+        preferred_exports: [csv, pdf]
+        archive_subdir: bank-statements/td-business
+        human_steps:
+          - Confirm the statement period before download.
+          - Save both the activity CSV and the statement PDF when available.
+
+  - id: chase-banking
+    name: Chase
+    kind: bank
+    region: US
+    accounts:
+      - ledger_account: Assets:Bank:Chase-Checking
+        portal_label: Total Checking
+        preferred_exports: [csv, pdf]
+        archive_subdir: bank-statements/chase-checking
+
+  - id: wealthsimple
+    name: Wealthsimple
+    kind: brokerage
+    region: CA
+    accounts:
+      - ledger_account: Assets:Brokerage:Wealthsimple:Taxable
+        portal_label: Taxable account
+        preferred_exports: [csv, pdf]
+        archive_subdir: brokerage-statements/wealthsimple-taxable
+        notes: >-
+          Adjust the ledger account to match your actual chart of accounts if you
+          track brokerage assets in this ledger.
+
+  - id: ibkr
+    name: Interactive Brokers
+    kind: brokerage
+    region: multi
+    accounts:
+      - ledger_account: Assets:Brokerage:IBKR:Taxable
+        portal_label: Main taxable account
+        preferred_exports: [csv, pdf]
+        archive_subdir: brokerage-statements/ibkr-taxable
+        notes: >-
+          Prefer exports that preserve transaction dates and cash activity. Keep
+          the PDF activity statement for archive even when CSV is imported.

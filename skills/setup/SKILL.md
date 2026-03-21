@@ -44,6 +44,8 @@ Based on entity type and jurisdiction, use the appropriate template:
 ```
 ledger/
 ├── cfo-stack.yaml             # Ledger-local policy overrides
+├── capture/
+│   └── statement-export.yaml  # Optional browser-assisted export profile
 ├── main.beancount              # Master file
 ├── accounts.beancount          # Chart of accounts
 ├── YYYY/                       # Year directories
@@ -103,6 +105,8 @@ YYYY-MM-DD * "Opening balances"
 ```bash
 # Copy templates/shared/cfo-stack.yaml to cfo-stack.yaml
 # Adjust review thresholds for this ledger if the global default is wrong
+# Optionally copy templates/shared/statement-export.yaml to capture/statement-export.yaml
+# and replace the example institutions/accounts with the user's actual portals
 # Create tax/jurisdiction.yaml from the matching template
 # Fill in filing frequency, deadlines, and rates from user-provided source data
 # Keep the schema comment at the top of the YAML file so editor validation works
@@ -152,9 +156,10 @@ git commit -m "init: ledger setup for [Entity Name]"
 ### Step 9: Next steps
 
 Tell the user:
-1. "Drop your bank CSVs in `~/Downloads/` and run `/capture`"
-2. "Run `/classify` to categorize transactions"
-3. "Run `/report` to see your financial statements"
+1. "If your statements are not on disk yet, configure `capture/statement-export.yaml` and run `/statement-export`"
+2. "Run `/capture` to inventory downloaded files and receipts"
+3. "Run `/classify` to categorize transactions"
+4. "Run `/report` to see your financial statements"
 
 ## Constraints
 

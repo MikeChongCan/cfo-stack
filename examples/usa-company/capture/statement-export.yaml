@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/statement-export.schema.json
+version: 1
+browser:
+  engine: playwright
+  channel: chrome
+  profile_strategy: dedicated
+  user_data_dir: ~/.cfo-stack/playwright/sarah-export
+  downloads_dir: ~/Downloads/cfo-stack/sarah
+institutions:
+  - id: chase-banking
+    name: Chase
+    kind: bank
+    region: US
+    accounts:
+      - ledger_account: Assets:Bank:Chase-Checking
+        portal_label: Total Checking
+        preferred_exports: [csv, pdf]
+        archive_subdir: bank-statements/chase-checking
+      - ledger_account: Assets:Bank:Chase-Savings
+        portal_label: High Yield Savings
+        preferred_exports: [csv, pdf]
+        archive_subdir: bank-statements/chase-savings
+      - ledger_account: Liabilities:CreditCard:Chase-Sapphire
+        portal_label: Sapphire
+        preferred_exports: [csv, pdf]
+        archive_subdir: credit-card-statements/chase-sapphire

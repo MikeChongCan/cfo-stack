@@ -3,7 +3,8 @@ name: capture
 description: |
   Master data import orchestrator. Consolidates every "evidence of money" into one place:
   bank CSVs, credit card statements, receipts, invoices, payment platform exports, and
-  routes raw source documents through preprocessing before OCR when needed.
+  routes raw source documents through preprocessing before OCR when needed. Can also
+  trigger browser-assisted statement export when files are not on disk yet.
   Use when starting the monthly CLEAR cycle or importing new financial data.
   CLEAR step: C (Capture)
 ---
@@ -28,9 +29,12 @@ download folder.
 
 Ask the user or check the ledger config for known data sources:
 
+0. **Statement export profiles** — check `capture/statement-export.yaml` for declared banks,
+   cards, brokerages, and payment platforms that may need browser-assisted export
 1. **Bank accounts** — check for CSV exports in `~/Downloads/`, `~/Documents/`, or a configured import directory
 2. **Credit cards** — same locations
-3. **Payment platforms** — Stripe, PayPal, Wise, WeChat Pay, Alipay
+3. **Brokerages and cash platforms** — IBKR, Wealthsimple, and similar portals with downloadable history
+4. **Payment platforms** — Stripe, PayPal, Wise, WeChat Pay, Alipay
 4. **Receipts** — check `~/receipts/` or configured receipt directory for photos/PDFs
 5. **Invoices** — check for incoming invoice PDFs
 
@@ -43,10 +47,14 @@ Flag source documents that are likely to need normalization:
 
 List all found files with dates and sizes. Ask user to confirm which to process.
 
+If the profile declares accounts but there are no fresh files on disk, say so explicitly
+and offer `/statement-export` before attempting import.
+
 ### Step 2: Route to specialists
 
 For each data source, delegate to the appropriate skill:
 
+- Missing bank, card, or brokerage files for a declared account → `/statement-export`
 - CSV bank/credit card statements → `/bank-import`
 - Receipt photos (JPG, PNG, HEIC, TIFF) → `/doc-preprocess` → `/receipt-scan`
 - Receipt PDFs or scanned invoice PDFs → `/doc-preprocess` → `/receipt-scan`
@@ -77,6 +85,9 @@ documents/YYYY/MM/
     └── processed/
 ```
 
+If `/statement-export` was used, also preserve the export manifest and the raw downloaded
+filenames before any normalization or renaming.
+
 ## Constraints
 
 - NEVER delete source files — only copy/move to archive
@@ -85,6 +96,8 @@ documents/YYYY/MM/
 - ALWAYS report file counts and amounts for verification
 - ALWAYS preserve original receipt/invoice files before creating compressed derivatives
 - Prefer WebP derivatives for receipt images and conservative compression for scanned PDFs
+- Treat `capture/statement-export.yaml` as workflow guidance only. It is not permission
+  to auto-log in, auto-submit, or bypass human review in bank portals.
 
 ## Output
 
