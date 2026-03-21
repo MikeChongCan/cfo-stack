@@ -1,0 +1,17 @@
+;; ═══════════════════════════════════════════════════════
+;; MapleTech Solutions Inc.
+;; Canadian Corporation — CPA Stack Example
+;;
+;; This is a realistic example of a small Canadian tech
+;; consulting company managed entirely with CPA Stack.
+;; ═══════════════════════════════════════════════════════
+
+option "title" "MapleTech Solutions Inc."
+option "operating_currency" "CAD"
+
+include "accounts.beancount"
+include "2025/opening-balances.beancount"
+include "2026/01-transactions.beancount"
+include "2026/02-transactions.beancount"
+include "2026/03-transactions.beancount"
+include "prices.beancount"

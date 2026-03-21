@@ -1,0 +1,49 @@
+;; MapleTech Solutions Inc. — January 2026
+
+2026-01-05 * "AlphaClient Inc." "January consulting — AI integration project"
+  Assets:Receivable:Clients        10,500.00 CAD
+  Income:Consulting:AlphaClient   -10,000.00 CAD
+  Liabilities:GST-HST-Payable        -500.00 CAD
+  ; invoice: documents/INV-2026-001.pdf
+  ; classify: confirmed
+
+2026-01-08 * "Anthropic" "Claude Pro — January"
+  Expenses:Software:AI-Services       26.00 CAD
+  Assets:Receivable:GST-HST            1.30 CAD
+  Liabilities:CreditCard:TD-Visa     -27.30 CAD
+  ; receipt: documents/2026-01/anthropic-jan.pdf
+  ; classify: auto
+
+2026-01-10 * "AlphaClient Inc." "Payment received — INV-2026-001"
+  Assets:Bank:TD-Business          10,500.00 CAD
+  Assets:Receivable:Clients       -10,500.00 CAD
+
+2026-01-12 * "GitHub" "GitHub Team — monthly"
+  Expenses:Software:Subscriptions     13.00 CAD
+  Assets:Receivable:GST-HST            0.65 CAD
+  Liabilities:CreditCard:TD-Visa     -13.65 CAD
+  ; classify: auto
+
+2026-01-15 * "Second Cup" "Client meeting coffee"
+  Expenses:Meals-Entertainment         8.50 CAD
+  Assets:Receivable:GST-HST            0.21 CAD  ; 50% ITC on meals
+  Liabilities:CreditCard:TD-Visa      -8.71 CAD
+  ; classify: confirmed
+
+2026-01-20 * "Rogers" "Business internet — January"
+  Expenses:Phone-Internet             89.00 CAD
+  Assets:Receivable:GST-HST            4.45 CAD
+  Liabilities:CreditCard:TD-Visa     -93.45 CAD
+  ; classify: auto
+
+2026-01-25 * "TD Bank" "Monthly account fee"
+  Expenses:Bank:Fees                   4.95 CAD
+  Assets:Bank:TD-Business             -4.95 CAD
+  ; classify: auto
+
+2026-01-31 * "TD Visa" "Credit card payment"
+  Liabilities:CreditCard:TD-Visa     143.11 CAD
+  Assets:Bank:TD-Business           -143.11 CAD
+
+2026-02-01 balance Assets:Bank:TD-Business    35,351.94 CAD
+2026-02-01 balance Liabilities:CreditCard:TD-Visa  0.00 CAD

@@ -1,0 +1,16 @@
+;; ═══════════════════════════════════════════════════════
+;; Sarah Chen — Freelance Software Consultant
+;; US Freelancer (Schedule C) — CPA Stack Example
+;;
+;; This is a realistic example of a US freelancer
+;; managed entirely with CPA Stack.
+;; ═══════════════════════════════════════════════════════
+
+option "title" "Sarah Chen — Freelance Software Consultant"
+option "operating_currency" "USD"
+
+include "accounts.beancount"
+include "2025/opening-balances.beancount"
+include "2026/01-transactions.beancount"
+include "2026/02-transactions.beancount"
+include "2026/03-transactions.beancount"

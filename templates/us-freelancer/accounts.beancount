@@ -1,0 +1,53 @@
+;; ═══════════════════════════════════════════════════════
+;; Chart of Accounts — US Freelancer (Schedule C)
+;; Schedule C line references in comments
+;; ═══════════════════════════════════════════════════════
+
+;; ─── Assets ───────────────────────────────────────────
+2025-01-01 open Assets:Bank:Checking            USD
+2025-01-01 open Assets:Bank:Savings             USD
+2025-01-01 open Assets:Receivable:Clients       USD
+2025-01-01 open Assets:Equipment:Computer       USD
+
+;; ─── Liabilities ──────────────────────────────────────
+2025-01-01 open Liabilities:CreditCard:Primary  USD
+2025-01-01 open Liabilities:Tax:Estimated       USD
+2025-01-01 open Liabilities:Tax:SelfEmployment  USD
+
+;; ─── Equity ───────────────────────────────────────────
+2025-01-01 open Equity:Opening-Balances         USD
+
+;; ─── Revenue ──────────────────────────────────────────
+2025-01-01 open Income:Freelance:Consulting     USD  ; Sch C Line 1
+2025-01-01 open Income:Freelance:Products       USD  ; Sch C Line 1
+2025-01-01 open Income:1099:Misc                USD  ; 1099-NEC
+2025-01-01 open Income:Interest                 USD
+2025-01-01 open Income:Uncategorized            USD
+
+;; ─── Business Expenses (Schedule C) ──────────────────
+2025-01-01 open Expenses:Advertising            USD  ; Sch C Line 8
+2025-01-01 open Expenses:Car-Truck              USD  ; Sch C Line 9
+2025-01-01 open Expenses:Commissions-Fees       USD  ; Sch C Line 10
+2025-01-01 open Expenses:Contract-Labor         USD  ; Sch C Line 11
+2025-01-01 open Expenses:Insurance:Business     USD  ; Sch C Line 15
+2025-01-01 open Expenses:Insurance:Health       USD  ; SE health deduction
+2025-01-01 open Expenses:Legal-Professional     USD  ; Sch C Line 17
+2025-01-01 open Expenses:Office-Supplies        USD  ; Sch C Line 18
+2025-01-01 open Expenses:Rent-Lease             USD  ; Sch C Line 20
+2025-01-01 open Expenses:Software:Subscriptions USD  ; Sch C Line 27a
+2025-01-01 open Expenses:Software:AI-Services   USD  ; Sch C Line 27a
+2025-01-01 open Expenses:Phone-Internet         USD  ; Sch C Line 25
+2025-01-01 open Expenses:Travel                 USD  ; Sch C Line 24a
+2025-01-01 open Expenses:Meals                  USD  ; Sch C Line 24b (50%)
+2025-01-01 open Expenses:Technology:Hardware    USD  ; Sec 179 / depreciation
+2025-01-01 open Expenses:Education:Training     USD  ; Sch C Line 27a
+2025-01-01 open Expenses:Bank:Fees              USD  ; Sch C Line 27a
+2025-01-01 open Expenses:Home-Office            USD  ; Form 8829 / simplified
+2025-01-01 open Expenses:Depreciation           USD  ; Sch C Line 13
+2025-01-01 open Expenses:Uncategorized          USD
+
+;; ─── Tax ──────────────────────────────────────────────
+2025-01-01 open Expenses:Tax:Federal            USD
+2025-01-01 open Expenses:Tax:State              USD
+2025-01-01 open Expenses:Tax:SelfEmployment     USD
+2025-01-01 open Expenses:Tax:SEP-IRA            USD  ; retirement contribution

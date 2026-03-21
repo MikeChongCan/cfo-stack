@@ -1,0 +1,45 @@
+;; Chart of Accounts — Canadian Sole Proprietorship
+;; Default opening date. `/setup` should rewrite this to the entity's actual start date.
+
+;; Assets
+2025-01-01 open Assets:Bank:Operating           CAD
+2025-01-01 open Assets:Bank:Savings             CAD
+2025-01-01 open Assets:Receivable:Clients       CAD
+2025-01-01 open Assets:Receivable:GST-HST       CAD
+2025-01-01 open Assets:Equipment:Computer       CAD
+
+;; Liabilities
+2025-01-01 open Liabilities:CreditCard:Primary  CAD
+2025-01-01 open Liabilities:GST-HST-Payable     CAD
+2025-01-01 open Liabilities:Tax:Income          CAD
+
+;; Equity
+2025-01-01 open Equity:Opening-Balances         CAD
+2025-01-01 open Equity:Owner-Draws              CAD
+
+;; Revenue
+2025-01-01 open Income:Business:Sales           CAD
+2025-01-01 open Income:Business:Consulting      CAD
+2025-01-01 open Income:Interest                 CAD
+2025-01-01 open Income:Uncategorized            CAD
+
+;; Expenses
+2025-01-01 open Expenses:Advertising            CAD
+2025-01-01 open Expenses:Meals-Entertainment    CAD
+2025-01-01 open Expenses:Insurance              CAD
+2025-01-01 open Expenses:Office-Supplies        CAD
+2025-01-01 open Expenses:Professional-Fees      CAD
+2025-01-01 open Expenses:Rent                   CAD
+2025-01-01 open Expenses:Software:Subscriptions CAD
+2025-01-01 open Expenses:Software:AI-Services   CAD
+2025-01-01 open Expenses:Phone-Internet         CAD
+2025-01-01 open Expenses:Travel                 CAD
+2025-01-01 open Expenses:Vehicle                CAD
+2025-01-01 open Expenses:Home-Office            CAD
+2025-01-01 open Expenses:Bank-Fees              CAD
+2025-01-01 open Expenses:Depreciation:CCA       CAD
+2025-01-01 open Expenses:Uncategorized          CAD
+
+;; Tax
+2025-01-01 open Expenses:Tax:Income             CAD
+2025-01-01 open Expenses:Tax:CPP-Self-Employed  CAD

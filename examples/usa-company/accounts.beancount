@@ -1,0 +1,41 @@
+;; Sarah Chen — Chart of Accounts
+;; Schedule C line references for tax filing
+
+;; Assets
+2025-01-01 open Assets:Bank:Chase-Checking       USD
+2025-01-01 open Assets:Bank:Chase-Savings         USD
+2025-01-01 open Assets:Receivable:Clients         USD
+
+;; Liabilities
+2025-01-01 open Liabilities:CreditCard:Chase-Sapphire  USD
+2025-01-01 open Liabilities:Tax:Estimated         USD
+
+;; Equity
+2025-01-01 open Equity:Opening-Balances           USD
+
+;; Revenue
+2025-01-01 open Income:Consulting:Acme-Corp       USD  ; Sch C Line 1
+2025-01-01 open Income:Consulting:StartupXYZ      USD  ; Sch C Line 1
+2025-01-01 open Income:Interest                   USD
+2025-01-01 open Income:Uncategorized              USD
+
+;; Expenses (Schedule C)
+2025-01-01 open Expenses:Software:Subscriptions   USD  ; Sch C Line 27a
+2025-01-01 open Expenses:Software:AI-Services     USD  ; Sch C Line 27a
+2025-01-01 open Expenses:Office-Supplies          USD  ; Sch C Line 18
+2025-01-01 open Expenses:Phone-Internet           USD  ; Sch C Line 25
+2025-01-01 open Expenses:Travel:Flights           USD  ; Sch C Line 24a
+2025-01-01 open Expenses:Travel:Hotels            USD  ; Sch C Line 24a
+2025-01-01 open Expenses:Meals                    USD  ; Sch C Line 24b (50%)
+2025-01-01 open Expenses:Insurance:Health         USD  ; SE health deduction
+2025-01-01 open Expenses:Home-Office              USD  ; Form 8829 / simplified
+2025-01-01 open Expenses:Professional-Fees        USD  ; Sch C Line 17
+2025-01-01 open Expenses:Education:Training       USD  ; Sch C Line 27a
+2025-01-01 open Expenses:Bank:Fees                USD
+2025-01-01 open Expenses:Marketing                USD  ; Sch C Line 8
+2025-01-01 open Expenses:Uncategorized            USD
+
+;; Tax
+2025-01-01 open Expenses:Tax:Federal-Estimated    USD
+2025-01-01 open Expenses:Tax:State-Estimated      USD
+2025-01-01 open Expenses:Tax:SEP-IRA              USD

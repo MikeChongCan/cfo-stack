@@ -1,0 +1,7 @@
+;; Sarah Chen — Opening Balances
+;; Starting freelance career Jan 2025
+
+2025-01-01 * "Opening balances"
+  Assets:Bank:Chase-Checking       15,000.00 USD
+  Assets:Bank:Chase-Savings        10,000.00 USD
+  Equity:Opening-Balances         -25,000.00 USD

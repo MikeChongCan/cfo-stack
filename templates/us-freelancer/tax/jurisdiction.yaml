@@ -1,0 +1,15 @@
+country: US
+entity_type: freelancer
+state: TODO
+filing_currency: USD
+filing_frequency: TODO
+effective_date: TODO
+source_reference: TODO
+rates:
+  federal_estimated_tax_method: TODO
+  self_employment_tax_rate: null
+  state_estimated_tax_method: TODO
+deadlines:
+  estimated_tax_due_dates: []
+notes:
+  - Fill every field from a verified source before using tax skills.

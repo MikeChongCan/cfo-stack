@@ -1,0 +1,19 @@
+# Sarah Chen — Classification Rules
+
+rules:
+  - payee: "ANTHROPIC"
+    account: "Expenses:Software:AI-Services"
+
+  - payee: "VERIZON"
+    account: "Expenses:Phone-Internet"
+
+  - pattern: "^AMAZON|AMZN"
+    account: "Expenses:Office-Supplies"
+    note: "Review: could be personal"
+
+  - payee: "BLUE CROSS"
+    account: "Expenses:Insurance:Health"
+
+  - pattern: "CHIPOTLE|SWEETGREEN|SHAKE SHACK"
+    account: "Expenses:Meals"
+    note: "50% deductible — confirm business purpose"

@@ -1,0 +1,74 @@
+;; MapleTech Solutions Inc. — March 2026
+
+2026-03-01 * "AlphaClient Inc." "March consulting — production deployment"
+  Assets:Receivable:Clients         5,250.00 CAD
+  Income:Consulting:AlphaClient    -5,000.00 CAD
+  Liabilities:GST-HST-Payable        -250.00 CAD
+  ; invoice: documents/INV-2026-003.pdf
+  ; classify: confirmed
+
+2026-03-05 * "Anthropic" "Claude Pro — March"
+  Expenses:Software:AI-Services       26.00 CAD
+  Assets:Receivable:GST-HST            1.30 CAD
+  Liabilities:CreditCard:TD-Visa     -27.30 CAD
+  ; classify: auto
+
+2026-03-08 * "Apple Canada" "MacBook Pro for development"
+  Assets:Equipment:Computer       3,499.00 CAD
+  Assets:Receivable:GST-HST          174.95 CAD
+  Liabilities:CreditCard:TD-Visa  -3,673.95 CAD
+  ; receipt: documents/2026-03/apple-macbook.pdf
+  ; classify: confirmed
+  ; cca-class: 50
+
+;; Example year-end adjustment for the capital asset above:
+;; 2026-12-31 * "CCA adjustment — Class 50"
+;;   Expenses:Depreciation:CCA         XXX.XX CAD
+;;   Assets:Equipment:Computer        -XXX.XX CAD
+
+2026-03-10 * "AlphaClient Inc." "Payment received — INV-2026-003"
+  Assets:Bank:TD-Business           5,250.00 CAD
+  Assets:Receivable:Clients        -5,250.00 CAD
+
+2026-03-15 * "Staples" "Printer paper and toner"
+  Expenses:Office:Supplies            45.99 CAD
+  Assets:Receivable:GST-HST            2.30 CAD
+  Liabilities:CreditCard:TD-Visa     -48.29 CAD
+  ; receipt: documents/2026-03/staples-supplies.pdf
+  ; classify: auto
+
+2026-03-18 * "Air Canada" "Toronto to Vancouver — client meeting"
+  Expenses:Travel:Flights            487.00 CAD
+  Assets:Receivable:GST-HST           24.35 CAD
+  Liabilities:CreditCard:TD-Visa    -511.35 CAD
+  ; receipt: documents/2026-03/aircanada-yvr.pdf
+  ; classify: confirmed
+
+2026-03-18 * "Fairmont Vancouver" "Hotel — 2 nights"
+  Expenses:Travel:Hotels             520.00 CAD
+  Assets:Receivable:GST-HST           26.00 CAD
+  Liabilities:CreditCard:TD-Visa    -546.00 CAD
+  ; receipt: documents/2026-03/fairmont-yvr.pdf
+  ; classify: confirmed
+
+2026-03-20 * "Rogers" "Business internet — March"
+  Expenses:Phone-Internet             89.00 CAD
+  Assets:Receivable:GST-HST            4.45 CAD
+  Liabilities:CreditCard:TD-Visa     -93.45 CAD
+  ; classify: auto
+
+2026-03-25 * "TD Bank" "Monthly account fee"
+  Expenses:Bank:Fees                   4.95 CAD
+  Assets:Bank:TD-Business             -4.95 CAD
+  ; classify: auto
+
+2026-03-28 * "TD Bank" "Interest earned"
+  Assets:Bank:TD-Business              3.42 CAD
+  Income:Interest                     -3.42 CAD
+
+2026-03-31 * "TD Visa" "Credit card payment"
+  Liabilities:CreditCard:TD-Visa   4,900.34 CAD
+  Assets:Bank:TD-Business          -4,900.34 CAD
+
+2026-04-01 balance Assets:Bank:TD-Business    43,790.64 CAD
+2026-04-01 balance Liabilities:CreditCard:TD-Visa  0.00 CAD

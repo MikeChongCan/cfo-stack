@@ -1,0 +1,58 @@
+;; Sarah Chen — January 2026
+
+2026-01-03 * "Acme Corp" "January sprint 1 — API integration"
+  Assets:Receivable:Clients        8,000.00 USD
+  Income:Consulting:Acme-Corp     -8,000.00 USD
+  ; invoice: documents/INV-2026-001.pdf
+  ; classify: confirmed
+
+2026-01-06 * "Anthropic" "Claude Pro subscription"
+  Expenses:Software:AI-Services       20.00 USD
+  Liabilities:CreditCard:Chase-Sapphire  -20.00 USD
+  ; classify: auto
+
+2026-01-10 * "Acme Corp" "Payment received — INV-2026-001"
+  Assets:Bank:Chase-Checking       8,000.00 USD
+  Assets:Receivable:Clients       -8,000.00 USD
+
+2026-01-12 * "Verizon" "Business phone — January"
+  Expenses:Phone-Internet             85.00 USD
+  Liabilities:CreditCard:Chase-Sapphire  -85.00 USD
+  ; classify: auto
+
+2026-01-15 * "IRS" "Q4 2025 estimated tax payment"
+  Expenses:Tax:Federal-Estimated   3,500.00 USD
+  Assets:Bank:Chase-Checking      -3,500.00 USD
+
+2026-01-15 * "Blue Cross" "Health insurance premium — January"
+  Expenses:Insurance:Health          650.00 USD
+  Assets:Bank:Chase-Checking        -650.00 USD
+  ; classify: confirmed
+
+2026-01-18 * "StartupXYZ" "January consulting — ML pipeline"
+  Assets:Receivable:Clients        5,000.00 USD
+  Income:Consulting:StartupXYZ    -5,000.00 USD
+  ; invoice: documents/INV-2026-002.pdf
+  ; classify: confirmed
+
+2026-01-22 * "StartupXYZ" "Payment received — INV-2026-002"
+  Assets:Bank:Chase-Checking       5,000.00 USD
+  Assets:Receivable:Clients       -5,000.00 USD
+
+2026-01-25 * "Amazon" "Keyboard and monitor stand"
+  Expenses:Office-Supplies           189.99 USD
+  Liabilities:CreditCard:Chase-Sapphire  -189.99 USD
+  ; receipt: documents/2026-01/amazon-keyboard.pdf
+  ; classify: confirmed
+
+2026-01-28 * "Coursera" "ML certification course"
+  Expenses:Education:Training         49.00 USD
+  Liabilities:CreditCard:Chase-Sapphire  -49.00 USD
+  ; classify: confirmed
+
+2026-01-30 * "Chase" "Credit card payment"
+  Liabilities:CreditCard:Chase-Sapphire  343.99 USD
+  Assets:Bank:Chase-Checking            -343.99 USD
+
+2026-02-01 balance Assets:Bank:Chase-Checking    23,506.01 USD
+2026-02-01 balance Liabilities:CreditCard:Chase-Sapphire  0.00 USD

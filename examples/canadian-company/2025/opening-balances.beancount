@@ -1,0 +1,7 @@
+;; MapleTech Solutions Inc. — Opening Balances
+;; As of January 1, 2025
+
+2025-01-01 * "Opening balances — incorporation"
+  Assets:Bank:TD-Business         25,000.00 CAD
+  Equity:Share-Capital            -1,000.00 CAD
+  Equity:Opening-Balances        -24,000.00 CAD

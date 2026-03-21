@@ -1,0 +1,55 @@
+;; MapleTech Solutions Inc. — February 2026
+
+2026-02-03 * "BetaCorp" "February consulting — data pipeline"
+  Assets:Receivable:Clients         8,400.00 CAD
+  Income:Consulting:BetaCorp       -8,000.00 CAD
+  Liabilities:GST-HST-Payable        -400.00 CAD
+  ; invoice: documents/INV-2026-002.pdf
+  ; classify: confirmed
+
+2026-02-05 * "Anthropic" "Claude Pro — February"
+  Expenses:Software:AI-Services       26.00 CAD
+  Assets:Receivable:GST-HST            1.30 CAD
+  Liabilities:CreditCard:TD-Visa     -27.30 CAD
+  ; classify: auto
+
+2026-02-10 * "BetaCorp" "Payment received — INV-2026-002"
+  Assets:Bank:TD-Business           8,400.00 CAD
+  Assets:Receivable:Clients        -8,400.00 CAD
+
+2026-02-12 * "Amazon.ca" "USB-C hub for development"
+  Expenses:Office:Supplies            67.99 CAD
+  Assets:Receivable:GST-HST            3.40 CAD
+  Liabilities:CreditCard:TD-Visa     -71.39 CAD
+  ; receipt: documents/2026-02/amazon-usbhub.pdf
+  ; classify: confirmed
+
+2026-02-15 * "WeWork" "Co-working day pass x2"
+  Expenses:Office:CoWorking           90.00 CAD
+  Assets:Receivable:GST-HST            4.50 CAD
+  Liabilities:CreditCard:TD-Visa     -94.50 CAD
+  ; classify: confirmed
+
+2026-02-20 * "Rogers" "Business internet — February"
+  Expenses:Phone-Internet             89.00 CAD
+  Assets:Receivable:GST-HST            4.45 CAD
+  Liabilities:CreditCard:TD-Visa     -93.45 CAD
+  ; classify: auto
+
+2026-02-22 * "Udemy" "Advanced Python course"
+  Expenses:Training                   16.99 CAD
+  Assets:Receivable:GST-HST            0.85 CAD
+  Liabilities:CreditCard:TD-Visa     -17.84 CAD
+  ; classify: confirmed
+
+2026-02-25 * "TD Bank" "Monthly account fee"
+  Expenses:Bank:Fees                   4.95 CAD
+  Assets:Bank:TD-Business             -4.95 CAD
+  ; classify: auto
+
+2026-02-28 * "TD Visa" "Credit card payment"
+  Liabilities:CreditCard:TD-Visa     304.48 CAD
+  Assets:Bank:TD-Business           -304.48 CAD
+
+2026-03-01 balance Assets:Bank:TD-Business    43,442.51 CAD
+2026-03-01 balance Liabilities:CreditCard:TD-Visa  0.00 CAD

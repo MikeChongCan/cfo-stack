@@ -1,0 +1,16 @@
+country: CA
+entity_type: corporation
+province_or_territory: Alberta
+filing_currency: CAD
+tax_registration_number: EXAMPLE-ONLY
+filing_frequency: quarterly
+effective_date: 2026-01-01
+source_reference: Example file for scaffold illustration only. Replace with verified source data.
+rates:
+  gst_rate: 0.05
+  hst_rate: null
+  pst_rate: null
+deadlines:
+  gst_hst_return: verify-before-filing
+notes:
+  - Example data only. Do not treat this file as tax advice or filing guidance.

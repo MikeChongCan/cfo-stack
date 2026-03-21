@@ -1,0 +1,263 @@
+#!/usr/bin/env bash
+# cpa-stack setup — install dependencies + register skills with Claude Code / Codex
+# Modeled after gstack's setup script
+set -euo pipefail
+
+CPA_STACK_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILLS_DIR="$(dirname "$CPA_STACK_DIR")"
+VENV_DIR="$CPA_STACK_DIR/.venv"
+VENV_BIN="$VENV_DIR/bin"
+VENV_PY="$VENV_BIN/python"
+
+# ─── Parse --host flag ─────────────────────────────────────────
+HOST="claude"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --host) HOST="$2"; shift 2 ;;
+    --host=*) HOST="${1#--host=}"; shift ;;
+    *) shift ;;
+  esac
+done
+
+case "$HOST" in
+  claude|codex|auto) ;;
+  *) echo "Unknown --host value: $HOST (expected claude, codex, or auto)" >&2; exit 1 ;;
+esac
+
+# For auto: detect which agents are installed
+INSTALL_CLAUDE=0
+INSTALL_CODEX=0
+if [ "$HOST" = "auto" ]; then
+  command -v claude >/dev/null 2>&1 && INSTALL_CLAUDE=1
+  command -v codex >/dev/null 2>&1 && INSTALL_CODEX=1
+  if [ "$INSTALL_CLAUDE" -eq 0 ] && [ "$INSTALL_CODEX" -eq 0 ]; then
+    INSTALL_CLAUDE=1
+  fi
+elif [ "$HOST" = "claude" ]; then
+  INSTALL_CLAUDE=1
+elif [ "$HOST" = "codex" ]; then
+  INSTALL_CODEX=1
+fi
+
+echo "╔══════════════════════════════════════════╗"
+echo "║          CPA Stack Setup                 ║"
+echo "║    AI-Powered Accounting with CLEAR      ║"
+echo "╚══════════════════════════════════════════╝"
+echo ""
+
+# ─── 1. Check Python ─────────────────────────────────────────
+PYTHON=""
+if command -v python3 >/dev/null 2>&1; then
+  PYTHON="python3"
+elif command -v python >/dev/null 2>&1; then
+  PYTHON="python"
+fi
+
+if [ -z "$PYTHON" ]; then
+  echo "Error: Python 3.10+ is required but not installed." >&2
+  echo "  macOS:   brew install python@3.12" >&2
+  echo "  Ubuntu:  sudo apt install python3 python3-pip" >&2
+  echo "  Windows: https://python.org/downloads/" >&2
+  exit 1
+fi
+
+PY_VERSION=$($PYTHON -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+PY_MAJOR=$($PYTHON -c "import sys; print(sys.version_info.major)")
+PY_MINOR=$($PYTHON -c "import sys; print(sys.version_info.minor)")
+
+if [ "$PY_MAJOR" -lt 3 ] || { [ "$PY_MAJOR" -eq 3 ] && [ "$PY_MINOR" -lt 10 ]; }; then
+  echo "Error: Python 3.10+ required, found $PY_VERSION" >&2
+  exit 1
+fi
+
+echo "  Python: $($PYTHON --version)"
+
+# ─── 2. Check Git ─────────────────────────────────────────────
+if ! command -v git >/dev/null 2>&1; then
+  echo "Error: git is required but not installed." >&2
+  exit 1
+fi
+echo "  Git: $(git --version | head -1)"
+
+# ─── 3. Check uv ─────────────────────────────────────────────
+UV=""
+if command -v uv >/dev/null 2>&1; then
+  UV="uv"
+  echo "  uv: $(uv --version | head -1)"
+else
+  echo "Error: uv is required but not installed." >&2
+  echo "  Install it: curl -LsSf https://astral.sh/uv/install.sh | sh" >&2
+  exit 1
+fi
+
+# ─── 4. Create local virtual environment ─────────────────────
+echo ""
+echo "Creating local virtual environment..."
+uv venv --allow-existing --python "$PYTHON" "$VENV_DIR"
+echo "  Virtualenv: $VENV_DIR"
+
+# ─── 5. Install Python dependencies ──────────────────────────
+echo ""
+echo "Installing Python dependencies via uv..."
+
+if ! uv pip install --python "$VENV_PY" --quiet \
+  beancount \
+  fava \
+  beangulp \
+  beanquery; then
+  echo "Error: Failed to install Python dependencies." >&2
+  echo "  Try running: uv pip install --python \"$VENV_PY\" beancount fava beangulp beanquery" >&2
+  exit 1
+fi
+
+# Verify Beancount works
+if "$VENV_PY" -c "import beancount" 2>/dev/null; then
+  BC_VERSION=$("$VENV_PY" -c "import beancount; print(beancount.__version__)" 2>/dev/null || echo "installed")
+  echo "  Beancount: $BC_VERSION"
+else
+  echo "Error: Beancount installed but could not be imported." >&2
+  exit 1
+fi
+
+# Verify Fava
+if "$VENV_PY" -c "import fava" 2>/dev/null; then
+  echo "  Fava: installed"
+else
+  echo "Error: Fava could not be imported." >&2
+  exit 1
+fi
+
+if [ ! -x "$VENV_BIN/bean-check" ]; then
+  echo "Error: bean-check was not installed into $VENV_BIN." >&2
+  exit 1
+fi
+
+if [ ! -x "$VENV_BIN/fava" ]; then
+  echo "Error: fava executable was not installed into $VENV_BIN." >&2
+  exit 1
+fi
+
+# ─── 6. Create state directory ─────────────────────────────────
+mkdir -p "$HOME/.cpa-stack"
+echo "  State dir: ~/.cpa-stack/"
+
+# ─── 7. Helper: symlink skill subdirectories ──────────────────
+link_claude_skill_dirs() {
+  local cpa_dir="$1"
+  local skills_dir="$2"
+  local linked=()
+  for skill_dir in "$cpa_dir"/skills/*/; do
+    if [ -f "$skill_dir/SKILL.md" ]; then
+      skill_name="cpa-$(basename "$skill_dir")"
+      target="$skills_dir/$skill_name"
+      if [ -L "$target" ] || [ ! -e "$target" ]; then
+        ln -snf "$skill_dir" "$target"
+        linked+=("$skill_name")
+      fi
+    fi
+  done
+  if [ ${#linked[@]} -gt 0 ]; then
+    echo "  Linked skills: ${linked[*]}"
+  fi
+}
+
+link_codex_skill_dirs() {
+  local cpa_dir="$1"
+  local skills_dir="$2"
+  local linked=()
+  for skill_dir in "$cpa_dir"/skills/*/; do
+    if [ -f "$skill_dir/SKILL.md" ]; then
+      skill_name="cpa-$(basename "$skill_dir")"
+      target="$skills_dir/$skill_name"
+      if [ -L "$target" ] || [ ! -e "$target" ]; then
+        ln -snf "$skill_dir" "$target"
+        linked+=("$skill_name")
+      fi
+    fi
+  done
+  if [ ${#linked[@]} -gt 0 ]; then
+    echo "  Linked skills: ${linked[*]}"
+  fi
+}
+
+# ─── 8. Install for Claude Code ───────────────────────────────
+SKILLS_BASENAME="$(basename "$SKILLS_DIR")"
+if [ "$INSTALL_CLAUDE" -eq 1 ]; then
+  echo ""
+  echo "Registering with Claude Code..."
+  if [ "$SKILLS_BASENAME" = "skills" ]; then
+    link_claude_skill_dirs "$CPA_STACK_DIR" "$SKILLS_DIR"
+    echo "  cpa-stack ready (claude)."
+  else
+    echo "  cpa-stack ready (claude)."
+    echo "  (skipped skill symlinks — not inside .claude/skills/)"
+  fi
+fi
+
+# ─── 9. Install for Codex ────────────────────────────────────
+if [ "$INSTALL_CODEX" -eq 1 ]; then
+  echo ""
+  echo "Registering with Codex..."
+  CODEX_SKILLS="$HOME/.codex/skills"
+  mkdir -p "$CODEX_SKILLS"
+  link_codex_skill_dirs "$CPA_STACK_DIR" "$CODEX_SKILLS"
+  echo "  cpa-stack ready (codex)."
+  echo "  codex skills: $CODEX_SKILLS"
+fi
+
+# ─── 10. Create helper scripts ────────────────────────────────
+mkdir -p "$CPA_STACK_DIR/bin"
+
+# cpa-check: bean-check wrapper
+cat > "$CPA_STACK_DIR/bin/cpa-check" << 'SCRIPT'
+#!/usr/bin/env bash
+# Wrapper around bean-check with colored output
+set -euo pipefail
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+VENV_BIN="$ROOT_DIR/.venv/bin"
+LEDGER="${1:-main.beancount}"
+if [ ! -f "$LEDGER" ]; then
+  echo "Error: $LEDGER not found" >&2
+  exit 1
+fi
+"$VENV_BIN/bean-check" "$LEDGER" 2>&1
+echo "Ledger OK: $LEDGER"
+SCRIPT
+chmod +x "$CPA_STACK_DIR/bin/cpa-check"
+
+# cpa-fava: Fava launcher
+cat > "$CPA_STACK_DIR/bin/cpa-fava" << 'SCRIPT'
+#!/usr/bin/env bash
+# Launch Fava web UI
+set -euo pipefail
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+VENV_BIN="$ROOT_DIR/.venv/bin"
+LEDGER="${1:-main.beancount}"
+PORT="${2:-5000}"
+if [ ! -f "$LEDGER" ]; then
+  echo "Error: $LEDGER not found" >&2
+  exit 1
+fi
+echo "Starting Fava (read-only) on http://localhost:$PORT ..."
+"$VENV_BIN/fava" "$LEDGER" --port "$PORT" --read-only
+SCRIPT
+chmod +x "$CPA_STACK_DIR/bin/cpa-fava"
+
+# ─── 11. Done ─────────────────────────────────────────────────
+echo ""
+echo "╔══════════════════════════════════════════╗"
+echo "║          Setup Complete!                 ║"
+echo "╠══════════════════════════════════════════╣"
+echo "║                                          ║"
+echo "║  Quick start:                            ║"
+echo "║    1. Run /setup to create your ledger   ║"
+echo "║    2. Drop bank CSVs in ~/Downloads      ║"
+echo "║    3. Run /capture to import them         ║"
+echo "║    4. Run /classify to categorize         ║"
+echo "║    5. Run /report to see your finances    ║"
+echo "║                                          ║"
+echo "║  The CLEAR cycle:                        ║"
+echo "║    Capture → Log → Extract →              ║"
+echo "║    Automate → Report                      ║"
+echo "║                                          ║"
+echo "╚══════════════════════════════════════════╝"

@@ -1,0 +1,16 @@
+country: US
+entity_type: freelancer
+state: California
+filing_currency: USD
+filing_frequency: quarterly
+effective_date: 2026-01-01
+source_reference: Example file for scaffold illustration only. Replace with verified source data.
+rates:
+  federal_estimated_tax_method: annualized-income
+  self_employment_tax_rate: verify-before-use
+  state_estimated_tax_method: verify-before-use
+deadlines:
+  estimated_tax_due_dates:
+    - verify-before-filing
+notes:
+  - Example data only. Do not treat this file as tax advice or filing guidance.

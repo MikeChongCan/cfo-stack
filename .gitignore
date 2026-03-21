@@ -140,7 +140,7 @@ dist
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
 
 # Thumbnails
 ._*
@@ -170,4 +170,28 @@ xcuserdata/
 *.xcscmblueprint
 *.xccheckout
 
+# Research (local reference, not tracked)
 research/
+
+# CPA Stack local state
+.cpa-stack/
+staging/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Beancount
+*.beancount.bak
+
+# Sensitive financial data (user ledgers are in their own repos)
+/ledger/
+/documents/
+/receipts/
+/reports/
+/tax/
+
+# Generated local helpers
+/bin/

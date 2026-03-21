@@ -1,0 +1,37 @@
+# MapleTech Solutions Inc. — Classification Rules
+# Built over time as /classify learns from corrections
+
+rules:
+  # Software
+  - payee: "ANTHROPIC"
+    account: "Expenses:Software:AI-Services"
+    tax: "gst-itc"
+
+  - payee: "GITHUB"
+    account: "Expenses:Software:Subscriptions"
+    tax: "gst-itc"
+
+  # Office
+  - pattern: "^AMAZON|AMZN"
+    account: "Expenses:Office:Supplies"
+    tax: "gst-itc"
+    note: "Review: could be personal"
+
+  - payee: "STAPLES"
+    account: "Expenses:Office:Supplies"
+    tax: "gst-itc"
+
+  # Meals
+  - pattern: "SECOND CUP|STARBUCKS|TIM HORTONS"
+    account: "Expenses:Meals-Entertainment"
+    tax: "gst-itc-50"
+
+  # Telecom
+  - payee: "ROGERS"
+    account: "Expenses:Phone-Internet"
+    tax: "gst-itc"
+
+  # Bank fees
+  - pattern: "TD BANK.*FEE|MONTHLY ACCOUNT FEE"
+    account: "Expenses:Bank:Fees"
+    tax: "none"

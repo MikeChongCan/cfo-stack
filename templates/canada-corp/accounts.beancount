@@ -1,0 +1,66 @@
+;; Chart of Accounts — Canadian Corporation
+;; Default opening date. `/setup` should rewrite this to the entity's actual start date.
+
+;; Assets
+2025-01-01 open Assets:Bank:Operating           CAD
+2025-01-01 open Assets:Bank:Savings             CAD
+2025-01-01 open Assets:Bank:USD                 USD
+2025-01-01 open Assets:Receivable:Clients       CAD
+2025-01-01 open Assets:Receivable:GST-HST       CAD
+2025-01-01 open Assets:Prepaid:Software         CAD
+2025-01-01 open Assets:Prepaid:Insurance        CAD
+2025-01-01 open Assets:Equipment:Computer       CAD
+2025-01-01 open Assets:Equipment:Furniture      CAD
+
+;; Liabilities
+2025-01-01 open Liabilities:CreditCard:Visa     CAD
+2025-01-01 open Liabilities:CreditCard:Amex     CAD
+2025-01-01 open Liabilities:GST-HST-Payable     CAD
+2025-01-01 open Liabilities:Tax:Corporate       CAD
+2025-01-01 open Liabilities:Tax:Payroll         CAD
+2025-01-01 open Liabilities:Payable:Directors   CAD
+
+;; Equity
+2025-01-01 open Equity:Opening-Balances         CAD
+2025-01-01 open Equity:Retained-Earnings        CAD
+2025-01-01 open Equity:Share-Capital            CAD
+
+;; Revenue
+2025-01-01 open Income:Consulting               CAD
+2025-01-01 open Income:Product-Sales            CAD
+2025-01-01 open Income:Commissions              CAD
+2025-01-01 open Income:Interest                 CAD
+2025-01-01 open Income:Other                    CAD
+2025-01-01 open Income:Uncategorized            CAD
+
+;; Cost of Goods Sold
+2025-01-01 open Expenses:COGS:Materials         CAD
+2025-01-01 open Expenses:COGS:Subcontractors    CAD
+
+;; Operating Expenses
+2025-01-01 open Expenses:Salary:Gross           CAD
+2025-01-01 open Expenses:Salary:CPP-Employer    CAD
+2025-01-01 open Expenses:Salary:EI-Employer     CAD
+2025-01-01 open Expenses:Software:Subscriptions CAD
+2025-01-01 open Expenses:Software:AI-Services   CAD
+2025-01-01 open Expenses:Office:Supplies        CAD
+2025-01-01 open Expenses:Office:Rent            CAD
+2025-01-01 open Expenses:Professional:Legal     CAD
+2025-01-01 open Expenses:Professional:Accounting CAD
+2025-01-01 open Expenses:Meals-Entertainment    CAD
+2025-01-01 open Expenses:Travel:Transportation  CAD
+2025-01-01 open Expenses:Travel:Accommodation   CAD
+2025-01-01 open Expenses:Technology:Hardware    CAD
+2025-01-01 open Expenses:Insurance:Business     CAD
+2025-01-01 open Expenses:Marketing:Advertising  CAD
+2025-01-01 open Expenses:Marketing:Domains      CAD
+2025-01-01 open Expenses:Bank:Fees              CAD
+2025-01-01 open Expenses:Bank:FX-Loss           CAD
+2025-01-01 open Expenses:Phone-Internet         CAD
+2025-01-01 open Expenses:Training:Education     CAD
+2025-01-01 open Expenses:Depreciation:CCA       CAD
+2025-01-01 open Expenses:Uncategorized          CAD
+
+;; Tax Accounts
+2025-01-01 open Expenses:Tax:Corporate          CAD
+2025-01-01 open Income:GST-HST:Adjustments      CAD

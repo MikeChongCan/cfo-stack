@@ -1,0 +1,57 @@
+;; Sarah Chen — February 2026
+
+2026-02-02 * "Acme Corp" "February sprint — dashboard redesign"
+  Assets:Receivable:Clients        8,000.00 USD
+  Income:Consulting:Acme-Corp     -8,000.00 USD
+  ; invoice: documents/INV-2026-003.pdf
+  ; classify: confirmed
+
+2026-02-05 * "Anthropic" "Claude Pro — February"
+  Expenses:Software:AI-Services       20.00 USD
+  Liabilities:CreditCard:Chase-Sapphire  -20.00 USD
+  ; classify: auto
+
+2026-02-08 * "Acme Corp" "Payment received — INV-2026-003"
+  Assets:Bank:Chase-Checking       8,000.00 USD
+  Assets:Receivable:Clients       -8,000.00 USD
+
+2026-02-10 * "Verizon" "Business phone — February"
+  Expenses:Phone-Internet             85.00 USD
+  Liabilities:CreditCard:Chase-Sapphire  -85.00 USD
+  ; classify: auto
+
+2026-02-12 * "Chipotle" "Client lunch — Acme project"
+  Expenses:Meals                      32.50 USD
+  Liabilities:CreditCard:Chase-Sapphire  -32.50 USD
+  ; classify: confirmed
+  ; note: 50% deductible
+
+2026-02-15 * "Blue Cross" "Health insurance premium — February"
+  Expenses:Insurance:Health          650.00 USD
+  Assets:Bank:Chase-Checking        -650.00 USD
+
+2026-02-18 * "Namecheap" "Domain renewal — sarahchendev.com"
+  Expenses:Marketing                  12.99 USD
+  Liabilities:CreditCard:Chase-Sapphire  -12.99 USD
+  ; classify: auto
+
+2026-02-20 * "StartupXYZ" "February consulting — data pipeline phase 2"
+  Assets:Receivable:Clients        5,500.00 USD
+  Income:Consulting:StartupXYZ    -5,500.00 USD
+  ; invoice: documents/INV-2026-004.pdf
+  ; classify: confirmed
+
+2026-02-24 * "StartupXYZ" "Payment received — INV-2026-004"
+  Assets:Bank:Chase-Checking       5,500.00 USD
+  Assets:Receivable:Clients       -5,500.00 USD
+
+2026-02-27 * "Chase" "Credit card payment"
+  Liabilities:CreditCard:Chase-Sapphire  150.49 USD
+  Assets:Bank:Chase-Checking            -150.49 USD
+
+2026-02-28 * "Chase" "Savings interest"
+  Assets:Bank:Chase-Savings            4.17 USD
+  Income:Interest                     -4.17 USD
+
+2026-03-01 balance Assets:Bank:Chase-Checking    36,205.52 USD
+2026-03-01 balance Liabilities:CreditCard:Chase-Sapphire  0.00 USD

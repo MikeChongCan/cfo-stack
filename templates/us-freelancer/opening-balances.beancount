@@ -1,0 +1,9 @@
+;; ═══════════════════════════════════════════════════════
+;; Opening Balances — US Freelancer
+;; Replace with your actual account balances
+;; ═══════════════════════════════════════════════════════
+
+;; Example:
+;; 2025-01-01 * "Opening balances"
+;;   Assets:Bank:Checking           5,000.00 USD
+;;   Equity:Opening-Balances       -5,000.00 USD

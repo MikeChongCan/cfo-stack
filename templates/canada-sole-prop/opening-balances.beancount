@@ -1,0 +1,7 @@
+;; Opening Balances — Canadian Sole Proprietorship
+;; Replace with your actual account balances
+
+;; Example:
+;; 2025-01-01 * "Opening balances"
+;;   Assets:Bank:Operating           5,000.00 CAD
+;;   Equity:Opening-Balances        -5,000.00 CAD
