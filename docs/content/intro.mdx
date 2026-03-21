@@ -6,8 +6,77 @@ description: AI-powered accounting on top of Beancount and the C.L.E.A.R. framew
 ---
 
 import StageGrid from '@site/src/components/StageGrid';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 CFO Stack is an AI-assisted accounting system built on top of Beancount, slash-command skills, and explicit validation gates. The docs site is where the operating model lives now instead of scattering the framework across top-level markdown files.
+
+## Live Dashboard Samples
+
+These sample dashboards are generated at docs build time from the example ledgers, not hand-made screenshots.
+
+<div className="dashboard-home-grid">
+  <div className="dashboard-home-card">
+    <h3>US Company</h3>
+    <p>Solo consulting business with statement-style reporting and cash movement.</p>
+    <div className="dashboard-demo-frame dashboard-demo-frame--compact">
+      <iframe
+        src={useBaseUrl('/demo/report-dashboard/usa-company/index.html')}
+        title="US company dashboard sample"
+        loading="lazy"
+      />
+    </div>
+    <p>
+      <a href={useBaseUrl('/demo/report-dashboard/usa-company/index.html')}>Open standalone HTML</a>
+    </p>
+  </div>
+
+  <div className="dashboard-home-card">
+    <h3>Canadian Company</h3>
+    <p>Incorporated Canadian service business with GST/HST and equipment activity.</p>
+    <div className="dashboard-demo-frame dashboard-demo-frame--compact">
+      <iframe
+        src={useBaseUrl('/demo/report-dashboard/canadian-company/index.html')}
+        title="Canadian company dashboard sample"
+        loading="lazy"
+      />
+    </div>
+    <p>
+      <a href={useBaseUrl('/demo/report-dashboard/canadian-company/index.html')}>Open standalone HTML</a>
+    </p>
+  </div>
+
+  <div className="dashboard-home-card">
+    <h3>US Family</h3>
+    <p>Household net worth, savings rate, spending mix, and direct cash flow.</p>
+    <div className="dashboard-demo-frame dashboard-demo-frame--compact">
+      <iframe
+        src={useBaseUrl('/demo/report-dashboard/usa-family/index.html')}
+        title="US family dashboard sample"
+        loading="lazy"
+      />
+    </div>
+    <p>
+      <a href={useBaseUrl('/demo/report-dashboard/usa-family/index.html')}>Open standalone HTML</a>
+    </p>
+  </div>
+
+  <div className="dashboard-home-card">
+    <h3>Canadian Family</h3>
+    <p>Canadian household view with mortgage, childcare, and tax-heavy spending mix.</p>
+    <div className="dashboard-demo-frame dashboard-demo-frame--compact">
+      <iframe
+        src={useBaseUrl('/demo/report-dashboard/canadian-family/index.html')}
+        title="Canadian family dashboard sample"
+        loading="lazy"
+      />
+    </div>
+    <p>
+      <a href={useBaseUrl('/demo/report-dashboard/canadian-family/index.html')}>Open standalone HTML</a>
+    </p>
+  </div>
+</div>
+
+See [the full dashboard reference](/reference/report-dashboard) for all six sample ledgers, including the individual examples and generation workflow.
 
 <StageGrid />
 
