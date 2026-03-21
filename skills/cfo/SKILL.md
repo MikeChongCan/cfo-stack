@@ -55,6 +55,14 @@ When statement export requires live browser help, use:
 
 That workflow stays LLM-driven and human-in-the-loop.
 
+### Route to `/statement-export-private`
+
+Use `/statement-export-private` when:
+- statements or activity CSV/PDF files are not on disk yet
+- the user wants a privacy-first manual checklist instead of live browser help
+- the user wants official URLs, candidate date ranges, and a staging directory only
+- the user does not want browser tools or remote-debugging workflows involved
+
 ### Route to `/capture`
 
 Use `/capture` when:

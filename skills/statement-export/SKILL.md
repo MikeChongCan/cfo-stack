@@ -21,6 +21,9 @@ store credentials in the repo. You help the user open the right portal, use a sa
 browser profile, confirm the right account/date range, and download the raw CSV/PDF
 evidence needed for bookkeeping.
 
+If the user wants a privacy-first checklist without any browser-tool involvement,
+use `/statement-export-private` instead.
+
 Detailed live-browser guidance for Chrome-session statement downloads lives in:
 
 `./.agents/skills/cfo-chrome-download-statements/SKILL.md`

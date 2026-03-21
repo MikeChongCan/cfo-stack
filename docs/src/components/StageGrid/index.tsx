@@ -17,7 +17,7 @@ const stages: Stage[] = [
     name: 'Capture',
     summary: 'Pull every raw money artifact into one reviewable queue.',
     question: 'Where is every piece of evidence of money right now?',
-    skills: ['/capture', '/statement-export', '/capture-dedupe', '/doc-preprocess', '/bank-import', '/receipt-scan'],
+    skills: ['/capture', '/statement-export', '/statement-export-private', '/capture-dedupe', '/doc-preprocess', '/bank-import', '/receipt-scan'],
     accent: '#15803d',
   },
   {

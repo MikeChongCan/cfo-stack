@@ -195,7 +195,7 @@ git commit -m "init: ledger setup for [Entity Name]"
 ### Step 9: Next steps
 
 Tell the user:
-1. "If your statements are not on disk yet, configure `capture/statement-export.yaml` and run `/statement-export`"
+1. "If your statements are not on disk yet, configure `capture/statement-export.yaml` and run `/statement-export` for guided browser help or `/statement-export-private` for a privacy-first manual checklist"
 2. "Run `/capture` to inventory downloaded files and receipts"
 3. "Run `/classify` to categorize transactions"
 4. "Run `/report` to see your financial statements"

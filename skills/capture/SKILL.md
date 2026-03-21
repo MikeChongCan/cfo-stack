@@ -48,7 +48,7 @@ Flag source documents that are likely to need normalization:
 List all found files with dates and sizes. Ask user to confirm which to process.
 
 If the profile declares accounts but there are no fresh files on disk, say so explicitly
-and offer `/statement-export` before attempting import.
+and offer `/statement-export` or `/statement-export-private` before attempting import.
 
 ### Step 2: Route to specialists
 
@@ -58,7 +58,7 @@ document-derived transaction.
 
 For each data source, delegate to the appropriate skill:
 
-- Missing bank, card, or brokerage files for a declared account → `/statement-export`
+- Missing bank, card, or brokerage files for a declared account → `/statement-export` or `/statement-export-private`
 - CSV bank/credit card statements → `/capture-dedupe` → `/bank-import`
 - Brokerage and cash-platform exports on disk → `/capture-dedupe` → `/bank-import`
 - Receipt photos (JPG, PNG, HEIC, TIFF) → `/doc-preprocess` → `/capture-dedupe` → `/receipt-scan`
@@ -110,6 +110,7 @@ filenames before any normalization or renaming.
 ## Related Skills
 
 - `/statement-export` — guided export when source files are not on disk yet
+- `/statement-export-private` — privacy-first manual export planning with no browser tools
 - `/capture-dedupe` — duplicate-source detection and rerun control
 - `/bank-import` — statement and platform imports
 - `/doc-preprocess` — image and PDF normalization

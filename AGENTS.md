@@ -38,6 +38,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 ### C — Capture
 - `/capture` — Import from financial data sources
 - `/statement-export` — Guided browser export for bank, card, brokerage, and platform statements
+- `/statement-export-private` — Privacy-first manual export plan with official URLs and no browser tools
 - `/capture-dedupe` — Fingerprint sources and suppress duplicate capture reruns
 - `/doc-preprocess` — Normalize receipt photos and oversized PDFs before OCR/archive
 - `/bank-import` — Smart CSV importer with format auto-detection
@@ -77,7 +78,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 The C.L.E.A.R. cycle: Capture → Log → Extract → Automate → Report
 
 Monthly: `/capture` → `/classify` → `/reconcile` → `/report` → `/snapshot`
-When files are not on disk yet: `/statement-export` → `/capture`
+When files are not on disk yet: `/statement-export` or `/statement-export-private` → `/capture`
 Quarterly: `/quarterly-tax` → `/tax-plan`
 Year-end: `/audit` → `/report` → `/snapshot`
 

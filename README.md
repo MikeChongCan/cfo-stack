@@ -205,6 +205,16 @@ manual login/MFA, agent-guided navigation, and raw CSV/PDF downloads preserved f
 When the correct login or export page is unclear, the agent should use web search against
 official institution domains before navigating.
 
+If you want more privacy and do not want the agent to touch browser tools at all, use:
+
+```text
+/statement-export-private
+```
+
+That workflow only produces a manual checklist: official institution URLs, candidate date
+ranges to confirm, preferred export formats, and the suggested staging directory
+`~/Downloads/cfo-staging`.
+
 Then run:
 
 ```
@@ -245,7 +255,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 
 ---
 
-## All 26 Skills
+## All 27 Skills
 
 ### C — Capture
 
@@ -253,6 +263,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 |---|---|---|
 | `/capture` | Data Clerk | Inventory local files and route them into import/OCR flows |
 | `/statement-export` | Export Clerk | Guided Chrome DevTools MCP export for bank, card, brokerage, and platform statements |
+| `/statement-export-private` | Private Export Planner | Privacy-first manual export checklist with official URLs, date ranges, and no browser tools |
 | `/capture-dedupe` | Import Provenance Clerk | Prevent duplicate imports across repeated capture runs |
 | `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive |
 | `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
@@ -309,6 +320,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 
 ```
 /statement-export  # Optional: guided export when files are not on disk yet
+/statement-export-private  # Optional: privacy-first manual export planning
 /capture          # Import all bank CSVs + receipts
 /classify         # AI categorizes, you review
 /reconcile        # Match to bank statements

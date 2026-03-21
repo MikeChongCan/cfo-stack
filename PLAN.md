@@ -50,6 +50,7 @@ This is the skeleton of the entire system. Each skill group completes one step o
 C — Capture
 ├── /capture        Master orchestrator: import from all sources
 ├── /statement-export Guided browser export when source files are not on disk yet
+├── /statement-export-private Privacy-first manual export planning when browser tools are undesired
 ├── /capture-dedupe Prevent duplicate imports across repeated capture runs
 ├── /doc-preprocess Normalize receipt photos and oversized PDFs before OCR
 ├── /bank-import    CSV import with format auto-detection (TD, RBC, BMO, Chase, BoA...)
@@ -91,6 +92,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 |---|---|---|
 | `/capture` | **Data Clerk** — imports everything | C |
 | `/statement-export` | **Export Clerk** — guides human export from portals | C |
+| `/statement-export-private` | **Private Export Planner** — prepares manual export checklists without browser tools | C |
 | `/capture-dedupe` | **Import Provenance Clerk** — suppress duplicate reruns | C |
 | `/doc-preprocess` | **Document Prep Clerk** — normalize source documents | C |
 | `/bank-import` | **Bank Specialist** — knows CSV formats | C |
