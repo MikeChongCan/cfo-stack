@@ -126,13 +126,8 @@
 }
 
 .dashboard-demo-frame--compact iframe {
-  width: 1280px;
-  max-width: none;
-  height: 1520px;
-  position: relative;
-  top: -118px;
-  transform: scale(0.29);
-  transform-origin: top left;
+  width: 100%;
+  height: 520px;
   pointer-events: none;
   background: transparent;
 }
@@ -145,11 +140,10 @@
 
 @media (max-width: 767px) {
   .dashboard-demo-frame--compact {
-    height: 500px;
+    height: 460px;
   }
 
   .dashboard-demo-frame--compact iframe {
-    top: -92px;
-    transform: scale(0.25);
+    height: 460px;
   }
 }

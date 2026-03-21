@@ -149,7 +149,7 @@ Options:
   --ledger <path>       Explicit ledger entrypoint.
   --output <dir>        Output directory, or output root when used with --sample-set all.
   --profile <type>      Force profile: business or household.
-  --variant <type>      Render variant: full or social.
+  --variant <type>      Render variant: full, social, or preview.
   --sample-set all      Generate dashboards for every repo example ledger.
 `);
 }
@@ -163,9 +163,9 @@ function parseProfile(value: string | undefined): DashboardProfile {
 }
 
 function parseVariant(value: string | undefined): DashboardVariant {
-  if (value === undefined || value === 'full' || value === 'social') {
+  if (value === undefined || value === 'full' || value === 'social' || value === 'preview') {
     return value ?? 'full';
   }
-  console.error(`Invalid --variant value: ${value}. Expected "full" or "social".`);
+  console.error(`Invalid --variant value: ${value}. Expected "full", "social", or "preview".`);
   process.exit(1);
 }
