@@ -1,0 +1,7 @@
+interface:
+  display_name: "GitHub Issue Loop"
+  short_description: "Drive cpa-stack issues through gh with durable status tracking"
+  default_prompt: "Use $github-issue-loop to claim, execute, validate, and report a cpa-stack GitHub issue through gh while avoiding duplicate parallel work."
+
+policy:
+  allow_implicit_invocation: true
