@@ -30,16 +30,13 @@ Recommended MCP config example:
   "command": "npx",
   "args": [
     "chrome-devtools-mcp@latest",
-    "--autoConnect",
-    "--channel=beta"
+    "--autoConnect"
   ]
 }
 ```
 
 Notes:
 - `--autoConnect` helps the MCP attach to the active Chrome session.
-- `--channel=beta` is a practical recommendation when the user is running Chrome Beta.
-- If the user is on stable Chrome, adjust the channel instead of forcing beta.
 - Do not tell the user to launch a separate browser instance unless the current Chrome session cannot be used.
 
 ## Inputs

@@ -72,13 +72,10 @@ Recommended MCP config example:
   "command": "npx",
   "args": [
     "chrome-devtools-mcp@latest",
-    "--autoConnect",
-    "--channel=beta"
+    "--autoConnect"
   ]
 }
 ```
-
-Adjust the channel for the user's actual Chrome build instead of forcing beta everywhere.
 
 ### Step 3: Run human-in-the-loop export
 
