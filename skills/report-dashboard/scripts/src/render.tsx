@@ -36,7 +36,7 @@ export function renderDashboardHtml(
     <meta name="description" content="${variant === 'social' ? 'Share-safe CFO Stack dashboard with redacted values.' : 'Deterministic CFO Stack dashboard generated from Beancount data.'}" />
     <link rel="stylesheet" href="./dashboard.css" />
   </head>
-  <body class="min-h-screen bg-[#f7f7f2] text-[#10211d]">
+  <body class="min-h-screen bg-transparent text-[#10211d]">
     ${markup}
     <script>
       const buttons = Array.from(document.querySelectorAll('[data-tab-button]'));
@@ -77,7 +77,7 @@ function DashboardPage({data}: {data: DashboardData}) {
             </div>
             <div className="space-y-2">
               <h1
-                className="max-w-4xl text-3xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#10211d] sm:text-4xl lg:text-[3.25rem]"
+                className="max-w-4xl text-3xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#10211d] sm:text-4xl lg:text-5xl"
                 style={{fontFamily: '"Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif'}}
               >
                 {data.meta.title}
@@ -87,7 +87,7 @@ function DashboardPage({data}: {data: DashboardData}) {
                 The renderer stays static, but the data comes directly from <code className="rounded bg-[#10211d]/6 px-1.5 py-0.5 text-[0.92em]">bean-query</code>.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#fbf8f1] px-4 py-3">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#10211d]/[0.045] px-4 py-3 backdrop-blur-sm">
               <MetaPill label="Report window" value={data.meta.periodLabel} />
               <MetaPill label="Latest month" value={data.meta.latestMonthLabel} />
               <MetaPill label="Review threshold" value={reviewThresholdLabel(data)} />
@@ -128,7 +128,7 @@ function DashboardPage({data}: {data: DashboardData}) {
         </section>
 
         <section>
-          <div role="tablist" aria-label="Dashboard sections" className="flex flex-wrap gap-2 border-b border-[#10211d]/10 pb-2">
+          <div role="tablist" aria-label="Dashboard sections" className="flex flex-wrap gap-2">
             <TabButton id="overview" label="Overview" />
             <TabButton id="statements" label="Statements" />
             <TabButton id="activity" label="Activity" />
@@ -223,7 +223,7 @@ function SocialDashboardPage({data}: {data: DashboardData}) {
                 Relative shapes and category mix stay visible. Exact amounts, statement totals, and transaction figures are redacted for social sharing.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#fbf8f1] px-4 py-3">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#10211d]/[0.045] px-4 py-3 backdrop-blur-sm">
               <MetaPill label="Window" value="Recent periods" />
               <MetaPill label="Visibility" value="Amounts redacted" />
               <MetaPill label="Focus" value="Trend, cash movement, mix" />
@@ -369,7 +369,7 @@ function TrendPanel({
           </div>
           <div className="grid gap-3" style={monthGridStyle(monthly.length, 220)}>
             {monthly.map((point) => (
-              <div key={point.key} className="rounded-[18px] bg-[#fbf8f1] p-3">
+              <div key={point.key} className="rounded-[18px] border border-white/65 bg-white/55 p-3 shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">
                 <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a756f]">{displayPeriodLabel(point.label, point.key, monthly, redactedValues)}</div>
                 <div className="mt-3 flex h-36 items-end gap-1.5">
                   <TrendBar color="bg-[#0f766e]" height={Math.max(12, (point.revenue / max) * 120)} value={point.revenue} currency={currency} label="Revenue" redactedValues={redactedValues} />
@@ -445,7 +445,7 @@ function FlowPanel({
           const values = monthly.map((point) => point[flow.key as keyof MonthlyPoint] as number);
           const peak = Math.max(1, ...values.map((value) => Math.abs(value)));
           return (
-            <div key={flow.key} className="rounded-[18px] bg-[#fbf8f1] p-3">
+            <div key={flow.key} className="rounded-[18px] border border-white/65 bg-white/55 p-3 shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">
               <div className="flex items-center justify-between gap-3">
                 <div className="text-sm font-semibold text-[#10211d]">{flow.label}</div>
                 <div className="text-sm font-semibold text-[#10211d]">
@@ -460,10 +460,10 @@ function FlowPanel({
                   return (
                     <div key={`${flow.key}:${point.key}`} className="space-y-1.5">
                       <div className="text-[0.62rem] uppercase tracking-[0.16em] text-[#6a756f]">{displayPeriodLabel(point.label, point.key, monthly, redactedValues)}</div>
-                      <div className="h-2 rounded-full bg-[#10211d]/8">
+                      <div className="h-1.5 rounded-full bg-[#10211d]/8">
                         <div
                           title={redactedValues ? `${flow.label}: redacted` : `${flow.label}: ${money(value, currency)}`}
-                          className={`h-2 rounded-full ${barTone}`}
+                          className={`h-1.5 rounded-full ${barTone}`}
                           style={{width}}
                         />
                       </div>
@@ -515,8 +515,8 @@ function BreakdownCard({
               <div className="text-[0.92rem] font-medium text-[#10211d]">{row.label}</div>
               <div className="text-[0.92rem] font-semibold text-[#10211d]">{displayMoney(row.amount, currency, redactedValues)}</div>
             </div>
-            <div className="h-2 rounded-full bg-[#10211d]/8">
-              <div className={`h-2 rounded-full ${toneClass}`} style={{width: `${Math.max(8, (row.share ?? 0) * 100)}%`}} />
+            <div className="h-1.5 rounded-full bg-[#10211d]/8">
+              <div className={`h-1.5 rounded-full ${toneClass}`} style={{width: `${Math.max(8, (row.share ?? 0) * 100)}%`}} />
             </div>
           </div>
         ))}
@@ -563,7 +563,7 @@ function StatementCard({
 
 function StatementSectionView({currency, section}: {currency: string; section: StatementSection}) {
   return (
-    <div className="rounded-[18px] bg-[#fbf8f1] p-4">
+    <div className="rounded-[18px] border border-white/65 bg-white/55 p-4 shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">
       <div className="flex items-center justify-between gap-3">
         <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{section.title}</div>
         <div className="text-sm font-semibold text-[#10211d]">{money(section.total, currency)}</div>
@@ -611,10 +611,10 @@ function TransactionCard({
       </div>
       <div className="px-5 py-3">
         {rows.length === 0 ? (
-          <div className="rounded-[18px] bg-[#fbf8f1] px-4 py-4 text-sm text-[#50615b]">{emptyLabel}</div>
+          <div className="rounded-[18px] border border-white/65 bg-white/55 px-4 py-4 text-sm text-[#50615b] shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">{emptyLabel}</div>
         ) : (
           rows.map((row) => (
-            <article key={row.id} className="border-b border-[#10211d]/7 py-3 last:border-b-0">
+            <article key={row.id} className="border-b border-[#10211d]/7 py-2 last:border-b-0">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -646,7 +646,7 @@ function ActivityGrid({currency, monthly}: {currency: string; monthly: MonthlyPo
       <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">Month-by-month summary</h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {monthly.map((point) => (
-          <article key={point.key} className="rounded-[18px] bg-[#fbf8f1] p-4">
+          <article key={point.key} className="rounded-[18px] border border-white/65 bg-white/55 p-4 shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">
             <div className="flex items-center justify-between gap-3">
               <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{point.label}</div>
               <div className="rounded-full bg-[#10211d] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white">
