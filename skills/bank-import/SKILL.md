@@ -79,7 +79,12 @@ For each row:
 1. Extract: date, payee/description, amount, currency
 2. Clean payee name (strip reference numbers, normalize case)
 3. Determine direction (income vs expense based on sign/column)
-4. Deduplicate against existing ledger entries (match by date + amount + payee)
+4. Send the normalized row through `/capture-dedupe` using a deterministic row fingerprint,
+   not just a loose date + amount + payee check
+
+Important: include `source_account` in the fingerprint. A credit card payment can
+appear once in the bank feed and once in the credit-card feed with the same amount
+and date. Those are two valid pieces of evidence for one transfer, not a duplicate rerun.
 
 ### Step 3: Generate Beancount transactions
 
@@ -100,7 +105,9 @@ Key metadata:
 Show:
 - Total rows in CSV
 - Transactions generated (new)
-- Duplicates skipped (already in ledger)
+- Exact duplicates skipped (already fingerprinted in prior capture history)
+- Corrected-source reimports that need explicit approval
+- Near-duplicate risks that need review
 - Rows that failed to parse (with reasons)
 - Date range covered
 
@@ -110,9 +117,16 @@ Show:
 - NEVER modify existing ledger entries
 - ALWAYS include `source:` metadata for traceability
 - ALWAYS report duplicate detection results
+- ALWAYS record row-fingerprint decisions in the import manifest
 - Prefer CSV for line-level import. Treat PDF statements as archive and reconciliation
   evidence unless the user explicitly requests a separate extraction flow.
 - If format is unrecognized, show first 5 rows and ask user to identify columns
+
+## Related Skills
+
+- `/capture` — orchestrates source intake
+- `/capture-dedupe` — canonical duplicate detection before staging
+- `/validate` — reports duplicate-risk findings downstream
 
 ## Output
 

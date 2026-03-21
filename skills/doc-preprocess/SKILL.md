@@ -85,7 +85,7 @@ Use the optimized PDF only as a processed derivative. Keep the original PDF beca
 
 ### Step 5: Hand off to OCR/import
 
-- Pass processed WebP or optimized scanned PDFs to `/receipt-scan`
+- Pass processed WebP or optimized scanned PDFs to `/capture-dedupe` and then `/receipt-scan`
 - For born-digital invoice PDFs that are already small and text-selectable, skip preprocessing and extract directly
 - Record both the source path and processed path in the import log when a derivative was created
 
@@ -96,6 +96,12 @@ Use the optimized PDF only as a processed derivative. Keep the original PDF beca
 - NEVER compress below the point where totals, tax, vendor name, or payment details become ambiguous
 - ALWAYS preserve page order and rotation
 - ALWAYS report when preprocessing was skipped, and why
+
+## Related Skills
+
+- `/capture` — top-level source intake
+- `/capture-dedupe` — provenance and duplicate tracking after derivative creation
+- `/receipt-scan` — OCR and transaction extraction
 
 ## Output
 

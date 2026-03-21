@@ -52,23 +52,29 @@ and offer `/statement-export` before attempting import.
 
 ### Step 2: Route to specialists
 
+Before appending anything to staging, run `/capture-dedupe` on every candidate source
+so repeated capture runs do not silently restage the same file, statement row, or
+document-derived transaction.
+
 For each data source, delegate to the appropriate skill:
 
 - Missing bank, card, or brokerage files for a declared account → `/statement-export`
-- CSV bank/credit card statements → `/bank-import`
-- Receipt photos (JPG, PNG, HEIC, TIFF) → `/doc-preprocess` → `/receipt-scan`
-- Receipt PDFs or scanned invoice PDFs → `/doc-preprocess` → `/receipt-scan`
-- Born-digital PDF invoices → extract data directly; only run `/doc-preprocess` first if the file is image-heavy or materially oversized
-- Payment platform exports → `/bank-import` with platform-specific format
+- CSV bank/credit card statements → `/capture-dedupe` → `/bank-import`
+- Brokerage and cash-platform exports on disk → `/capture-dedupe` → `/bank-import`
+- Receipt photos (JPG, PNG, HEIC, TIFF) → `/doc-preprocess` → `/capture-dedupe` → `/receipt-scan`
+- Receipt PDFs or scanned invoice PDFs → `/doc-preprocess` → `/capture-dedupe` → `/receipt-scan`
+- Born-digital PDF invoices → `/capture-dedupe` → extract data directly; only run `/doc-preprocess` first if the file is image-heavy or materially oversized
+- Payment platform exports → `/capture-dedupe` → `/bank-import` with platform-specific format
 
 ### Step 3: Consolidate results
 
 After all imports complete:
 
 1. Count total transactions imported
-2. List any files that failed to process
-3. Show summary: new transactions by account, date range, total amounts
-4. Suggest next step: "Run `/classify` to categorize these transactions"
+2. Count exact duplicates skipped and duplicate-risk items blocked for review
+3. List any files that failed to process
+4. Show summary: new transactions by account, date range, total amounts
+5. Suggest next step: "Run `/classify` to categorize these transactions"
 
 ### Step 4: Archive source files
 
@@ -94,13 +100,25 @@ filenames before any normalization or renaming.
 - NEVER auto-commit imported transactions — they go to a staging file
 - ALWAYS show the user what was found before processing
 - ALWAYS report file counts and amounts for verification
+- ALWAYS fingerprint candidate sources before staging entries from them
+- ALWAYS require an explicit override when corrected source data should supersede a prior import
 - ALWAYS preserve original receipt/invoice files before creating compressed derivatives
 - Prefer WebP derivatives for receipt images and conservative compression for scanned PDFs
 - Treat `capture/statement-export.yaml` as workflow guidance only. It is not permission
   to auto-log in, auto-submit, or bypass human review in bank portals.
 
+## Related Skills
+
+- `/statement-export` — guided export when source files are not on disk yet
+- `/capture-dedupe` — duplicate-source detection and rerun control
+- `/bank-import` — statement and platform imports
+- `/doc-preprocess` — image and PDF normalization
+- `/receipt-scan` — OCR extraction after preprocessing or direct PDF intake
+
 ## Output
 
 - Staging file: `staging/YYYY-MM-imports.beancount` with all new transactions
 - Import log: `staging/YYYY-MM-import-log.md` with file-by-file results
+- Duplicate-risk report: `staging/YYYY-MM-duplicate-risk.md`
+- Import manifest: `staging/YYYY-MM-import-manifest.jsonl`
 - Archived source files in `documents/`

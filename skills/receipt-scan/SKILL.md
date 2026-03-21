@@ -47,6 +47,10 @@ Use vision capabilities to analyze the receipt image/PDF. Extract:
 
 ### Step 3: Generate Beancount transaction
 
+Before drafting a new posting from OCR output, run the normalized document through
+`/capture-dedupe` so reruns of the same receipt, processed derivative, or corrected scan
+do not silently create duplicate expenses.
+
 ```beancount
 2026-03-15 * "Vendor Name" "Item description (or 'various')"
   Expenses:Uncategorized           45.00 CAD
@@ -75,6 +79,8 @@ copy if compression materially improves OCR or storage.
 - **HIGH confidence:** All fields clearly read, amounts match
 - **MEDIUM confidence:** Some fields unclear, amounts verified
 - **LOW confidence:** Significant uncertainty — flag for human review
+- Report whether the document was imported, skipped as an exact duplicate, or blocked
+  as a duplicate-risk candidate
 
 ## Tax Treatment (Auto-detect)
 
@@ -100,6 +106,12 @@ copy if compression materially improves OCR or storage.
 - If the receipt is not in English, preserve the source text in metadata and provide an English summary
 - Flag any receipt over $500 for manual verification
 - Prefer WebP for processed image receipts unless the original format is required to preserve legibility
+
+## Related Skills
+
+- `/doc-preprocess` — normalize images and scanned PDFs first when needed
+- `/capture-dedupe` — document fingerprinting and rerun control
+- `/capture` — orchestrates archive and staging flow
 
 ## Output
 

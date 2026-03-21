@@ -19,6 +19,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 ### C — Capture
 - `/capture` — Import from financial data sources
 - `/statement-export` — Guided browser export for bank, card, brokerage, and platform statements
+- `/capture-dedupe` — Fingerprint sources and suppress duplicate capture reruns
 - `/doc-preprocess` — Normalize receipt photos and oversized PDFs before OCR/archive
 - `/bank-import` — Smart CSV importer with format auto-detection
 - `/receipt-scan` — OCR receipt photos, extract data, generate transactions

@@ -48,6 +48,7 @@ Beyond bean-check, verify:
 5. **Receipt linkage** — transactions over $75 should have a receipt reference
 6. **Tax treatment** — all business expenses have tax metadata
 7. **Flagged transactions** — report any `!` (flagged) entries that need resolution
+8. **Duplicate-risk findings** — surface unresolved items from the capture duplicate-risk report or manifest conflicts
 
 ### Step 3: Report
 
@@ -62,6 +63,7 @@ Payee names:    WARN (3 inconsistent names)
 Receipts:       WARN (2 transactions >$75 missing receipts)
 Tax treatment:  PASS
 Flagged:        INFO (1 flagged transaction remaining)
+Duplicate risk: WARN (1 corrected reimport waiting for approval)
 
 Overall: PASS with warnings
 ```
@@ -71,3 +73,8 @@ Overall: PASS with warnings
 - Run automatically before every `/snapshot` commit
 - Report all issues — never silently ignore
 - Distinguish ERROR (must fix) from WARNING (should fix) from INFO (awareness)
+
+## Related Skills
+
+- `/capture-dedupe` — emits duplicate-risk findings and import manifests
+- `/snapshot` — blocked until validation results are acceptable

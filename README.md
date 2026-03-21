@@ -154,7 +154,7 @@ Then run:
 /capture
 ```
 
-`/capture` now routes receipt photos through document preprocessing first, prefers bounded-size WebP derivatives for image receipts, and only creates compressed PDF derivatives when that materially helps OCR or storage.
+`/capture` now routes receipt photos through document preprocessing first, fingerprints candidate sources before staging, prefers bounded-size WebP derivatives for image receipts, and only creates compressed PDF derivatives when that materially helps OCR or storage.
 
 ### 4. Classify transactions
 
@@ -174,7 +174,7 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 
 ---
 
-## All 22 Skills
+## All 23 Skills
 
 ### C — Capture
 
@@ -182,6 +182,7 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 |---|---|---|
 | `/capture` | Data Clerk | Inventory local files and route them into import/OCR flows |
 | `/statement-export` | Export Clerk | Guided Chrome + Playwright export for bank, card, brokerage, and platform statements |
+| `/capture-dedupe` | Import Provenance Clerk | Prevent duplicate imports across repeated capture runs |
 | `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive |
 | `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
 | `/receipt-scan` | Receipt Clerk | OCR receipt photos, generate transactions |

@@ -49,6 +49,8 @@ This is the skeleton of the entire system. Each skill group completes one step o
 ```
 C — Capture
 ├── /capture        Master orchestrator: import from all sources
+├── /statement-export Guided browser export when source files are not on disk yet
+├── /capture-dedupe Prevent duplicate imports across repeated capture runs
 ├── /doc-preprocess Normalize receipt photos and oversized PDFs before OCR
 ├── /bank-import    CSV import with format auto-detection (TD, RBC, BMO, Chase, BoA...)
 └── /receipt-scan   OCR receipt photos, generate Beancount transactions
@@ -88,6 +90,8 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 | Skill | Specialist | CLEAR Step |
 |---|---|---|
 | `/capture` | **Data Clerk** — imports everything | C |
+| `/statement-export` | **Export Clerk** — guides human export from portals | C |
+| `/capture-dedupe` | **Import Provenance Clerk** — suppress duplicate reruns | C |
 | `/doc-preprocess` | **Document Prep Clerk** — normalize source documents | C |
 | `/bank-import` | **Bank Specialist** — knows CSV formats | C |
 | `/receipt-scan` | **Receipt Clerk** — OCR + data extraction | C |
@@ -180,6 +184,8 @@ cfo-stack/
 │
 ├── skills/                        # Slash-command skills (the core)
 │   ├── capture/SKILL.md           # C — /capture
+│   ├── statement-export/SKILL.md  # C — /statement-export
+│   ├── capture-dedupe/SKILL.md    # C — /capture-dedupe
 │   ├── doc-preprocess/SKILL.md    # C — /doc-preprocess
 │   ├── bank-import/SKILL.md       # C — /bank-import
 │   ├── receipt-scan/SKILL.md      # C — /receipt-scan
