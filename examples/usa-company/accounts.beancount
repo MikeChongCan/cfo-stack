@@ -8,10 +8,11 @@
 
 ;; Liabilities
 2025-01-01 open Liabilities:CreditCard:Chase-Sapphire  USD
-2025-01-01 open Liabilities:Tax:Estimated         USD
 
 ;; Equity
 2025-01-01 open Equity:Opening-Balances           USD
+2025-01-01 open Equity:Owner-Draws                USD
+2025-01-01 open Equity:Owner-Contributions        USD
 
 ;; Revenue
 2025-01-01 open Income:Consulting:Acme-Corp       USD  ; Sch C Line 1
@@ -27,7 +28,6 @@
 2025-01-01 open Expenses:Travel:Flights           USD  ; Sch C Line 24a
 2025-01-01 open Expenses:Travel:Hotels            USD  ; Sch C Line 24a
 2025-01-01 open Expenses:Meals                    USD  ; Sch C Line 24b (50%)
-2025-01-01 open Expenses:Insurance:Health         USD  ; SE health deduction
 2025-01-01 open Expenses:Home-Office              USD  ; Form 8829 / simplified
 2025-01-01 open Expenses:Professional-Fees        USD  ; Sch C Line 17
 2025-01-01 open Expenses:Education:Training       USD  ; Sch C Line 27a
@@ -35,7 +35,6 @@
 2025-01-01 open Expenses:Marketing                USD  ; Sch C Line 8
 2025-01-01 open Expenses:Uncategorized            USD
 
-;; Tax
-2025-01-01 open Expenses:Tax:Federal-Estimated    USD
-2025-01-01 open Expenses:Tax:State-Estimated      USD
-2025-01-01 open Expenses:Tax:SEP-IRA              USD
+;; Owner-level estimated taxes, retirement contributions, and health insurance
+;; are intentionally excluded from this business P&L example. If paid from the
+;; business account, record them against Equity:Owner-Draws.

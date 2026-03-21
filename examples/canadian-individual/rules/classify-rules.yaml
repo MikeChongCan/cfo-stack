@@ -1,0 +1,12 @@
+rules:
+  - payee: "METRO"
+    account: "Expenses:Food:Groceries"
+
+  - payee: "ROGERS"
+    account: "Expenses:Phone:Mobile"
+
+  - payee: "TTC"
+    account: "Expenses:Transportation:Transit"
+
+  - payee: "VISA"
+    account: "Liabilities:CreditCard:Visa"

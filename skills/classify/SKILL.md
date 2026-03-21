@@ -41,18 +41,20 @@ Find transactions marked with `classify: pending` or using `Expenses:Uncategoriz
 
 ### Step 3: Present for review
 
-Show each classification with confidence level:
+Show each classification with confidence level and a proposed patch. Nothing is
+applied until the human approves the diff:
 
-- **HIGH (>95%):** Auto-applied unless human overrides. Show as confirmed.
-- **MEDIUM (70-95%):** Suggested, needs confirmation. Show options.
-- **LOW (<70%):** Needs human decision. Show top 3 suggestions.
+- **HIGH (>95%):** Present a ready-to-apply diff, but still require approval.
+- **MEDIUM (70-95%):** Present a suggested diff and alternatives.
+- **LOW (<70%):** Do not draft a final posting. Show top 3 suggestions.
 
 Format:
 ```
 Transaction: 2026-03-15 "AMZN MKTP CA" $47.23
   Suggested: Expenses:Office-Supplies (87% — matches pattern "AMZN*")
   Also:      Expenses:Technology:Software (12%)
-  [Accept] [Change] [Skip]
+  Diff:      staging/2026-03-imports.beancount -> 2026/03-transactions.beancount
+  [Approve patch] [Change] [Skip]
 ```
 
 ### Step 4: Apply tax treatment
@@ -70,9 +72,15 @@ For each classified transaction in supported jurisdictions:
 - Meals → 50% deductible
 - Home office → calculate proportional deduction
 
+**Pass-through guardrail:**
+- US sole proprietors/single-member LLCs: federal/state estimated taxes, self-employment tax,
+  SEP-IRA contributions, and personal health insurance are owner-level items, not business expenses
+- Canadian sole proprietors: personal income tax and owner CPP amounts are owner-level items, not business expenses
+- If those payments appear in a business ledger, propose `Equity:Owner-Draws` or move them to the personal ledger
+
 ### Step 5: Learn from corrections
 
-When the human corrects a classification:
+When the human approves or corrects a classification:
 1. Update `rules/classify-rules.yaml` with the new payee → account mapping
 2. Log the correction for pattern improvement
 3. If the same payee appears again, use the corrected classification
@@ -118,8 +126,8 @@ rules:
 
 ## Output
 
-Updated Beancount files with:
+Proposed or approved Beancount patch with:
 - Account classifications (no more Uncategorized)
 - Tax treatment metadata
 - Confidence metadata: `; classify: auto|confirmed|manual`
-- Updated `rules/classify-rules.yaml`
+- Updated `rules/classify-rules.yaml` diff after human approval

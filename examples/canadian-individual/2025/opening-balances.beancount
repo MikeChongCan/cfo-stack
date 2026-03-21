@@ -1,0 +1,9 @@
+;; Jordan Lee — Opening Balances
+
+2025-12-31 * "Opening balances"
+  Assets:Bank:Checking             7,200.00 CAD
+  Assets:Bank:Savings             14,500.00 CAD
+  Assets:Retirement:RRSP          18,000.00 CAD
+  Assets:Investments:TFSA          7,500.00 CAD
+  Liabilities:CreditCard:Visa       -360.00 CAD
+  Equity:Opening-Balances        -46,840.00 CAD

@@ -1,0 +1,12 @@
+rules:
+  - payee: "HEB"
+    account: "Expenses:Food:Groceries"
+
+  - payee: "AUSTIN ENERGY"
+    account: "Expenses:Utilities:Electric"
+
+  - payee: "VERIZON"
+    account: "Expenses:Phone:Mobile"
+
+  - payee: "CHASE"
+    account: "Liabilities:CreditCard:Chase"

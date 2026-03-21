@@ -11,11 +11,11 @@
 
 ;; ─── Liabilities ──────────────────────────────────────
 2025-01-01 open Liabilities:CreditCard:Primary  USD
-2025-01-01 open Liabilities:Tax:Estimated       USD
-2025-01-01 open Liabilities:Tax:SelfEmployment  USD
 
 ;; ─── Equity ───────────────────────────────────────────
 2025-01-01 open Equity:Opening-Balances         USD
+2025-01-01 open Equity:Owner-Draws              USD
+2025-01-01 open Equity:Owner-Contributions      USD
 
 ;; ─── Revenue ──────────────────────────────────────────
 2025-01-01 open Income:Freelance:Consulting     USD  ; Sch C Line 1
@@ -30,7 +30,6 @@
 2025-01-01 open Expenses:Commissions-Fees       USD  ; Sch C Line 10
 2025-01-01 open Expenses:Contract-Labor         USD  ; Sch C Line 11
 2025-01-01 open Expenses:Insurance:Business     USD  ; Sch C Line 15
-2025-01-01 open Expenses:Insurance:Health       USD  ; SE health deduction
 2025-01-01 open Expenses:Legal-Professional     USD  ; Sch C Line 17
 2025-01-01 open Expenses:Office-Supplies        USD  ; Sch C Line 18
 2025-01-01 open Expenses:Rent-Lease             USD  ; Sch C Line 20
@@ -46,8 +45,7 @@
 2025-01-01 open Expenses:Depreciation           USD  ; Sch C Line 13
 2025-01-01 open Expenses:Uncategorized          USD
 
-;; ─── Tax ──────────────────────────────────────────────
-2025-01-01 open Expenses:Tax:Federal            USD
-2025-01-01 open Expenses:Tax:State              USD
-2025-01-01 open Expenses:Tax:SelfEmployment     USD
-2025-01-01 open Expenses:Tax:SEP-IRA            USD  ; retirement contribution
+;; Owner-level items such as federal/state estimated tax payments, self-employment
+;; tax, SEP-IRA contributions, and self-employed health insurance do not belong in
+;; the business P&L. Record them in the owner's personal ledger, or as
+;; Equity:Owner-Draws if the business account paid them.

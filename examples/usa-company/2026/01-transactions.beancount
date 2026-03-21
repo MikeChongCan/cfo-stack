@@ -21,12 +21,14 @@
   ; classify: auto
 
 2026-01-15 * "IRS" "Q4 2025 estimated tax payment"
-  Expenses:Tax:Federal-Estimated   3,500.00 USD
+  Equity:Owner-Draws            3,500.00 USD
   Assets:Bank:Chase-Checking      -3,500.00 USD
+  ; owner-level estimated tax, not a Schedule C expense
 
 2026-01-15 * "Blue Cross" "Health insurance premium — January"
-  Expenses:Insurance:Health          650.00 USD
+  Equity:Owner-Draws               650.00 USD
   Assets:Bank:Chase-Checking        -650.00 USD
+  ; owner-level health insurance, not a business expense
   ; classify: confirmed
 
 2026-01-18 * "StartupXYZ" "January consulting — ML pipeline"

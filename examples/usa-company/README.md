@@ -8,7 +8,7 @@ A realistic US freelancer example managed with CPA Stack.
 - **Business:** Software consulting
 - **Revenue:** ~$13,000-$14,000/month from two clients
 - **Location:** San Francisco, CA
-- **Health insurance:** Self-employed health insurance deduction
+- **Owner transactions:** shows how to keep owner taxes and health insurance out of business expenses
 
 ## What's Included
 
@@ -17,7 +17,7 @@ A realistic US freelancer example managed with CPA Stack.
 - Balance assertions at each month-end
 - Classification rules from corrections
 - Travel expense tracking with receipts
-- Estimated tax payment tracking
+- Owner draw tracking for non-business cash outflows
 
 ## How to Use
 
@@ -37,8 +37,8 @@ A realistic US freelancer example managed with CPA Stack.
 ## Key Patterns Demonstrated
 
 1. **Schedule C mapping:** Every expense references its Schedule C line
-2. **Estimated tax payments:** Q4 2025 payment tracked in January
-3. **Health insurance deduction:** Self-employed premium tracking
+2. **Owner draws:** estimated taxes and personal health insurance kept outside Schedule C expenses
+3. **Business-only P&L:** deductible operating costs stay separate from owner-level items
 4. **Meals 50% rule:** Business meals flagged as 50% deductible
 5. **Travel expenses:** Flights + hotels with receipt references
 6. **Two income streams:** Multiple 1099 clients tracked separately

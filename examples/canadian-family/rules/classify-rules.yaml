@@ -1,0 +1,12 @@
+rules:
+  - payee: "REAL CANADIAN SUPERSTORE"
+    account: "Expenses:Food:Groceries"
+
+  - payee: "ENMAX"
+    account: "Expenses:Utilities:Electric-Gas"
+
+  - payee: "SHAW"
+    account: "Expenses:Utilities:Internet-Mobile"
+
+  - payee: "BRIGHT STEPS DAYCARE"
+    account: "Expenses:Childcare:Daycare"

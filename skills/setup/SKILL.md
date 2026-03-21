@@ -102,6 +102,7 @@ YYYY-MM-DD * "Opening balances"
 ```bash
 # Create tax/jurisdiction.yaml from the matching template
 # Fill in filing frequency, deadlines, and rates from user-provided source data
+# Keep the schema comment at the top of the YAML file so editor validation works
 ```
 
 The pack must contain:
@@ -111,6 +112,12 @@ The pack must contain:
 - Tax registration numbers
 - Rates and calculation method references
 - Source and effective date for every rate
+
+For pass-through entities, keep owner-only items out of the business chart:
+- US sole proprietor / single-member LLC: do not model federal/state estimated tax,
+  self-employment tax, SEP-IRA, or personal health insurance as business expenses
+- Canadian sole proprietor: do not model personal income tax or owner CPP amounts
+  as business expenses
 
 ### Step 7: Validate and launch
 

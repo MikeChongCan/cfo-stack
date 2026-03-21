@@ -27,8 +27,9 @@
   ; note: 50% deductible
 
 2026-02-15 * "Blue Cross" "Health insurance premium — February"
-  Expenses:Insurance:Health          650.00 USD
+  Equity:Owner-Draws               650.00 USD
   Assets:Bank:Chase-Checking        -650.00 USD
+  ; owner-level health insurance, not a business expense
 
 2026-02-18 * "Namecheap" "Domain renewal — sarahchendev.com"
   Expenses:Marketing                  12.99 USD

@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cpa-stack/main/schemas/jurisdiction.schema.json
+country: CA
+entity_type: family_household
+province_or_territory: Alberta
+filing_currency: CAD
+filing_frequency: annual
+effective_date: 2026-01-01
+source_reference: Example file for workflow illustration only. Replace with verified source data.
+rates:
+  federal_income_tax_method: verify-before-use
+  provincial_income_tax_method: verify-before-use
+  payroll_deductions_method: verify-before-use
+deadlines:
+  annual_return: verify-before-filing
+notes:
+  - Household example only. Not tax advice.

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cpa-stack/main/schemas/jurisdiction.schema.json
 country: CA
 entity_type: sole_proprietorship
 province_or_territory: TODO

@@ -12,7 +12,8 @@ rules:
     note: "Review: could be personal"
 
   - payee: "BLUE CROSS"
-    account: "Expenses:Insurance:Health"
+    account: "Equity:Owner-Draws"
+    note: "Owner-level health insurance paid from business cash"
 
   - pattern: "CHIPOTLE|SWEETGREEN|SHAKE SHACK"
     account: "Expenses:Meals"

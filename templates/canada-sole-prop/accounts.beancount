@@ -11,11 +11,11 @@
 ;; Liabilities
 2025-01-01 open Liabilities:CreditCard:Primary  CAD
 2025-01-01 open Liabilities:GST-HST-Payable     CAD
-2025-01-01 open Liabilities:Tax:Income          CAD
 
 ;; Equity
 2025-01-01 open Equity:Opening-Balances         CAD
 2025-01-01 open Equity:Owner-Draws              CAD
+2025-01-01 open Equity:Owner-Contributions      CAD
 
 ;; Revenue
 2025-01-01 open Income:Business:Sales           CAD
@@ -40,6 +40,6 @@
 2025-01-01 open Expenses:Depreciation:CCA       CAD
 2025-01-01 open Expenses:Uncategorized          CAD
 
-;; Tax
-2025-01-01 open Expenses:Tax:Income             CAD
-2025-01-01 open Expenses:Tax:CPP-Self-Employed  CAD
+;; Owner income tax and the owner-paid CPP portions do not belong in the business
+;; expense ledger for a sole proprietorship. Keep them in the owner's personal
+;; ledger, or record them as Equity:Owner-Draws if paid from the business account.

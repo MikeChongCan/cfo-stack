@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/MikeChongCan/cpa-stack/main/schemas/jurisdiction.schema.json",
+  "title": "CPA Stack Jurisdiction Pack",
+  "description": "Schema for tax/jurisdiction.yaml files used by templates and example ledgers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "country",
+    "entity_type",
+    "filing_currency",
+    "filing_frequency",
+    "effective_date",
+    "source_reference",
+    "rates",
+    "deadlines"
+  ],
+  "properties": {
+    "country": {
+      "type": "string",
+      "enum": ["CA", "US"]
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "corporation",
+        "sole_proprietorship",
+        "freelancer",
+        "llc",
+        "individual",
+        "family_household"
+      ]
+    },
+    "province_or_territory": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "type": "string",
+      "minLength": 1
+    },
+    "filing_currency": {
+      "type": "string",
+      "enum": ["CAD", "USD"]
+    },
+    "tax_registration_number": {
+      "type": "string",
+      "minLength": 1
+    },
+    "filing_frequency": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effective_date": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_reference": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rates": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/scalarOrStringArray"
+      }
+    },
+    "deadlines": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/stringOrStringArray"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "country": {
+            "const": "CA"
+          }
+        }
+      },
+      "then": {
+        "required": ["province_or_territory"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "country": {
+            "const": "US"
+          }
+        }
+      },
+      "then": {
+        "required": ["state"]
+      }
+    }
+  ],
+  "$defs": {
+    "scalarOrStringArray": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "stringOrStringArray": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  }
+}

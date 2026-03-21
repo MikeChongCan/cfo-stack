@@ -32,7 +32,8 @@ Analyze the user's workflow history:
 
 ### Step 2: Generate pipeline script
 
-Create a shell script or Python script that chains the steps:
+Create a shell script or Python script that chains the steps without mutating the
+ledger silently:
 
 ```bash
 #!/usr/bin/env bash
@@ -40,20 +41,28 @@ Create a shell script or Python script that chains the steps:
 # Run: ./monthly-pipeline.sh 2026-03
 
 MONTH="${1:?Usage: monthly-pipeline.sh YYYY-MM}"
+YEAR="${MONTH%%-*}"
+STAGING_FILE="staging/$MONTH-imports.beancount"
+TMP_MAIN="$(mktemp)"
 echo "Processing $MONTH..."
 
 # 1. Import bank CSVs
-python3 importers/td_bank.py ~/Downloads/td-checking-*.csv >> staging/$MONTH-imports.beancount
-python3 importers/td_bank.py ~/Downloads/td-visa-*.csv >> staging/$MONTH-imports.beancount
+python3 importers/td_bank.py ~/Downloads/td-checking-*.csv >> "$STAGING_FILE"
+python3 importers/td_bank.py ~/Downloads/td-visa-*.csv >> "$STAGING_FILE"
 
-# 2. Validate imports
-./bin/cpa-check main.beancount
+# 2. Validate the proposed import file in a temporary combined ledger
+cat > "$TMP_MAIN" <<EOF
+include "$(pwd)/main.beancount"
+include "$(pwd)/$STAGING_FILE"
+EOF
+./bin/cpa-check "$TMP_MAIN"
 
-# 3. Archive source files
-mkdir -p documents/$(echo $MONTH | cut -d- -f1)/$MONTH/bank-statements
-mv ~/Downloads/td-*.csv documents/$(echo $MONTH | cut -d- -f1)/$MONTH/bank-statements/
+# 3. Generate a patch for human review
+diff -u "ledger/$YEAR/${MONTH#*-}-transactions.beancount" "$STAGING_FILE" || true
 
-echo "Done. Next: run /classify to categorize new transactions."
+echo "Review the patch, then apply it explicitly."
+echo "Archive source files only after approval and a successful ./bin/cpa-check main.beancount."
+rm -f "$TMP_MAIN"
 ```
 
 ### Step 3: Add error handling and notifications
@@ -61,7 +70,7 @@ echo "Done. Next: run /classify to categorize new transactions."
 - Check for missing files before processing
 - Validate after each step
 - Report success/failure with counts
-- Suggest next manual step
+- Suggest the next manual approval step
 
 ### Step 4: Schedule (optional)
 
@@ -72,6 +81,7 @@ If the user wants automated runs:
 ## Constraints
 
 - NEVER auto-commit to ledger without human review step
+- NEVER archive source documents before the human approves the resulting ledger patch
 - ALWAYS include a validation step in every pipeline
 - ALWAYS make scripts idempotent (safe to run twice)
 - Generated scripts must be human-readable and well-commented

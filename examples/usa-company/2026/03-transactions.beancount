@@ -34,8 +34,9 @@
   ; note: 50% deductible
 
 2026-03-15 * "Blue Cross" "Health insurance premium — March"
-  Expenses:Insurance:Health          650.00 USD
+  Equity:Owner-Draws               650.00 USD
   Assets:Bank:Chase-Checking        -650.00 USD
+  ; owner-level health insurance, not a business expense
 
 2026-03-15 * "Verizon" "Business phone — March"
   Expenses:Phone-Internet             85.00 USD

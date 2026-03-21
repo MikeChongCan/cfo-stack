@@ -1,0 +1,12 @@
+;; Nguyen Household — Opening Balances
+
+2025-12-31 * "Opening balances"
+  Assets:Bank:Checking                 18,000.00 CAD
+  Assets:Bank:Savings                  28,000.00 CAD
+  Assets:Retirement:RRSP:Morgan        42,000.00 CAD
+  Assets:Retirement:RRSP:Taylor        24,000.00 CAD
+  Assets:Education:RESP                12,000.00 CAD
+  Assets:Property:Home                540,000.00 CAD
+  Liabilities:CreditCard:Mastercard      -900.00 CAD
+  Liabilities:Mortgage:Home          -390,000.00 CAD
+  Equity:Opening-Balances            -273,100.00 CAD

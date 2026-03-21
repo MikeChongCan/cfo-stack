@@ -1,0 +1,33 @@
+;; Nguyen Household — Personal Chart of Accounts
+
+;; Assets
+2025-01-01 open Assets:Bank:Checking                 CAD
+2025-01-01 open Assets:Bank:Savings                  CAD
+2025-01-01 open Assets:Retirement:RRSP:Morgan        CAD
+2025-01-01 open Assets:Retirement:RRSP:Taylor        CAD
+2025-01-01 open Assets:Education:RESP                CAD
+2025-01-01 open Assets:Property:Home                 CAD
+
+;; Liabilities
+2025-01-01 open Liabilities:CreditCard:Mastercard    CAD
+2025-01-01 open Liabilities:Mortgage:Home            CAD
+
+;; Equity
+2025-01-01 open Equity:Opening-Balances              CAD
+
+;; Income
+2025-01-01 open Income:Salary:Morgan                 CAD
+2025-01-01 open Income:Salary:Taylor                 CAD
+
+;; Expenses
+2025-01-01 open Expenses:Housing:Mortgage-Interest   CAD
+2025-01-01 open Expenses:Housing:Property-Tax        CAD
+2025-01-01 open Expenses:Insurance:Home              CAD
+2025-01-01 open Expenses:Insurance:Health            CAD
+2025-01-01 open Expenses:Food:Groceries              CAD
+2025-01-01 open Expenses:Childcare:Daycare           CAD
+2025-01-01 open Expenses:Utilities:Electric-Gas      CAD
+2025-01-01 open Expenses:Utilities:Internet-Mobile   CAD
+2025-01-01 open Expenses:Tax:Federal                 CAD
+2025-01-01 open Expenses:Tax:Provincial              CAD
+2025-01-01 open Expenses:Tax:CPP-EI                  CAD

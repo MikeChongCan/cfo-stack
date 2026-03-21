@@ -1,0 +1,12 @@
+rules:
+  - payee: "KING SOOPERS"
+    account: "Expenses:Food:Groceries"
+
+  - payee: "XCEL ENERGY"
+    account: "Expenses:Utilities:Electric-Gas"
+
+  - payee: "LITTLE PINES DAYCARE"
+    account: "Expenses:Childcare:Daycare"
+
+  - payee: "VISA"
+    account: "Liabilities:CreditCard:Visa"

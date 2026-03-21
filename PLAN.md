@@ -299,7 +299,7 @@ You:    /tax-plan
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3
 - Git
 - Claude Code or Codex CLI
 

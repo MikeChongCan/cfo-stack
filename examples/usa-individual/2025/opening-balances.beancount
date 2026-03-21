@@ -1,0 +1,9 @@
+;; Alex Rivera — Opening Balances
+
+2025-12-31 * "Opening balances"
+  Assets:Bank:Checking             8,500.00 USD
+  Assets:Bank:Savings             18,000.00 USD
+  Assets:Retirement:401k          32,000.00 USD
+  Assets:Investments:Roth-IRA      6,000.00 USD
+  Liabilities:CreditCard:Chase      -420.00 USD
+  Equity:Opening-Balances        -64,080.00 USD

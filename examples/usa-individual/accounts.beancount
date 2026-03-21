@@ -1,0 +1,26 @@
+;; Alex Rivera — Personal Chart of Accounts
+
+;; Assets
+2025-01-01 open Assets:Bank:Checking             USD
+2025-01-01 open Assets:Bank:Savings              USD
+2025-01-01 open Assets:Retirement:401k           USD
+2025-01-01 open Assets:Investments:Roth-IRA      USD
+
+;; Liabilities
+2025-01-01 open Liabilities:CreditCard:Chase     USD
+
+;; Equity
+2025-01-01 open Equity:Opening-Balances          USD
+
+;; Income
+2025-01-01 open Income:Salary:Employer           USD
+2025-01-01 open Income:Interest                  USD
+
+;; Expenses
+2025-01-01 open Expenses:Housing:Rent            USD
+2025-01-01 open Expenses:Food:Groceries          USD
+2025-01-01 open Expenses:Utilities:Electric      USD
+2025-01-01 open Expenses:Phone:Mobile            USD
+2025-01-01 open Expenses:Tax:Federal             USD
+2025-01-01 open Expenses:Tax:Payroll             USD
+2025-01-01 open Expenses:Insurance:Health        USD

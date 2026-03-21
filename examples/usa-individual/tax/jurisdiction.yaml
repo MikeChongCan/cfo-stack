@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cpa-stack/main/schemas/jurisdiction.schema.json
+country: US
+entity_type: individual
+state: Texas
+filing_currency: USD
+filing_frequency: annual
+effective_date: 2026-01-01
+source_reference: Example file for workflow illustration only. Replace with verified source data.
+rates:
+  federal_income_tax_method: verify-before-use
+  payroll_tax_method: verify-before-use
+deadlines:
+  annual_return: verify-before-filing
+notes:
+  - Personal sample only. Not tax advice.

@@ -1,0 +1,41 @@
+;; Alex Rivera — January 2026
+
+2026-01-15 * "Northstar Software" "Semi-monthly paycheck"
+  Assets:Bank:Checking            4,850.00 USD
+  Assets:Retirement:401k            600.00 USD
+  Expenses:Tax:Federal            1,225.00 USD
+  Expenses:Tax:Payroll              575.00 USD
+  Expenses:Insurance:Health         250.00 USD
+  Income:Salary:Employer         -7,500.00 USD
+
+2026-01-16 * "Highline Apartments" "January rent"
+  Expenses:Housing:Rent           1,850.00 USD
+  Assets:Bank:Checking           -1,850.00 USD
+
+2026-01-18 * "HEB" "Groceries"
+  Expenses:Food:Groceries           134.67 USD
+  Liabilities:CreditCard:Chase     -134.67 USD
+
+2026-01-20 * "Austin Energy" "Electric bill"
+  Expenses:Utilities:Electric        96.42 USD
+  Assets:Bank:Checking              -96.42 USD
+
+2026-01-22 * "Verizon" "Phone plan"
+  Expenses:Phone:Mobile              89.32 USD
+  Liabilities:CreditCard:Chase      -89.32 USD
+
+2026-01-24 * "Transfer" "Move cash to savings"
+  Assets:Bank:Savings               700.00 USD
+  Assets:Bank:Checking             -700.00 USD
+
+2026-01-26 * "Transfer" "Roth IRA contribution"
+  Assets:Investments:Roth-IRA       250.00 USD
+  Assets:Bank:Checking             -250.00 USD
+
+2026-01-28 * "Chase" "Credit card payment"
+  Liabilities:CreditCard:Chase      300.00 USD
+  Assets:Bank:Checking             -300.00 USD
+
+2026-01-31 * "Bank" "Savings interest"
+  Assets:Bank:Savings                 6.25 USD
+  Income:Interest                    -6.25 USD

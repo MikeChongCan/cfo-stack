@@ -1,0 +1,32 @@
+;; Patel Household — Personal Chart of Accounts
+
+;; Assets
+2025-01-01 open Assets:Bank:Checking                 USD
+2025-01-01 open Assets:Bank:Savings                  USD
+2025-01-01 open Assets:Retirement:401k:Sam           USD
+2025-01-01 open Assets:Retirement:401k:Priya         USD
+2025-01-01 open Assets:Education:529                 USD
+2025-01-01 open Assets:Property:Home                 USD
+
+;; Liabilities
+2025-01-01 open Liabilities:CreditCard:Visa          USD
+2025-01-01 open Liabilities:Mortgage:Home            USD
+
+;; Equity
+2025-01-01 open Equity:Opening-Balances              USD
+
+;; Income
+2025-01-01 open Income:Salary:Sam                    USD
+2025-01-01 open Income:Salary:Priya                  USD
+
+;; Expenses
+2025-01-01 open Expenses:Housing:Mortgage-Interest   USD
+2025-01-01 open Expenses:Housing:Property-Tax        USD
+2025-01-01 open Expenses:Insurance:Home              USD
+2025-01-01 open Expenses:Insurance:Health            USD
+2025-01-01 open Expenses:Food:Groceries              USD
+2025-01-01 open Expenses:Childcare:Daycare           USD
+2025-01-01 open Expenses:Utilities:Electric-Gas      USD
+2025-01-01 open Expenses:Tax:Federal                 USD
+2025-01-01 open Expenses:Tax:State                   USD
+2025-01-01 open Expenses:Tax:Payroll                 USD

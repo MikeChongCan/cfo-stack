@@ -1,0 +1,45 @@
+;; Patel Household — January 2026
+
+2026-01-15 * "Peak Analytics" "Sam paycheck"
+  Assets:Bank:Checking               4,300.00 USD
+  Assets:Retirement:401k:Sam           500.00 USD
+  Expenses:Tax:Federal               1,100.00 USD
+  Expenses:Tax:State                   250.00 USD
+  Expenses:Tax:Payroll                 520.00 USD
+  Expenses:Insurance:Health            130.00 USD
+  Income:Salary:Sam                 -6,800.00 USD
+
+2026-01-15 * "Canyon Health" "Priya paycheck"
+  Assets:Bank:Checking               3,300.00 USD
+  Assets:Retirement:401k:Priya         350.00 USD
+  Expenses:Tax:Federal                 900.00 USD
+  Expenses:Tax:State                   190.00 USD
+  Expenses:Tax:Payroll                 460.00 USD
+  Income:Salary:Priya               -5,200.00 USD
+
+2026-01-18 * "Front Range Mortgage" "Monthly mortgage payment"
+  Expenses:Housing:Mortgage-Interest 1,150.00 USD
+  Liabilities:Mortgage:Home            850.00 USD
+  Expenses:Housing:Property-Tax        400.00 USD
+  Expenses:Insurance:Home              150.00 USD
+  Assets:Bank:Checking              -2,550.00 USD
+
+2026-01-20 * "King Soopers" "Groceries"
+  Expenses:Food:Groceries              289.44 USD
+  Liabilities:CreditCard:Visa         -289.44 USD
+
+2026-01-21 * "Little Pines Daycare" "January tuition"
+  Expenses:Childcare:Daycare           950.00 USD
+  Assets:Bank:Checking                -950.00 USD
+
+2026-01-24 * "Xcel Energy" "Electric and gas"
+  Expenses:Utilities:Electric-Gas      210.56 USD
+  Assets:Bank:Checking                -210.56 USD
+
+2026-01-26 * "Transfer" "529 contribution"
+  Assets:Education:529                 200.00 USD
+  Assets:Bank:Checking                -200.00 USD
+
+2026-01-29 * "Visa" "Credit card payment"
+  Liabilities:CreditCard:Visa          600.00 USD
+  Assets:Bank:Checking                -600.00 USD

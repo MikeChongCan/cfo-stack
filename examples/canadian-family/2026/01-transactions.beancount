@@ -1,0 +1,49 @@
+;; Nguyen Household — January 2026
+
+2026-01-15 * "Summit Design" "Morgan paycheck"
+  Assets:Bank:Checking               4,550.00 CAD
+  Assets:Retirement:RRSP:Morgan        600.00 CAD
+  Expenses:Tax:Federal               1,350.00 CAD
+  Expenses:Tax:Provincial              420.00 CAD
+  Expenses:Tax:CPP-EI                  480.00 CAD
+  Income:Salary:Morgan              -7,400.00 CAD
+
+2026-01-15 * "Cedar Health" "Taylor paycheck"
+  Assets:Bank:Checking               2,750.00 CAD
+  Assets:Retirement:RRSP:Taylor        250.00 CAD
+  Expenses:Tax:Federal                 650.00 CAD
+  Expenses:Tax:Provincial              240.00 CAD
+  Expenses:Tax:CPP-EI                  260.00 CAD
+  Expenses:Insurance:Health            150.00 CAD
+  Income:Salary:Taylor              -4,300.00 CAD
+
+2026-01-18 * "Prairie Mortgage" "Monthly mortgage payment"
+  Expenses:Housing:Mortgage-Interest   980.00 CAD
+  Liabilities:Mortgage:Home            920.00 CAD
+  Expenses:Housing:Property-Tax        320.00 CAD
+  Expenses:Insurance:Home              140.00 CAD
+  Assets:Bank:Checking              -2,360.00 CAD
+
+2026-01-20 * "Real Canadian Superstore" "Groceries"
+  Expenses:Food:Groceries              245.90 CAD
+  Liabilities:CreditCard:Mastercard   -245.90 CAD
+
+2026-01-22 * "Bright Steps Daycare" "January tuition"
+  Expenses:Childcare:Daycare           850.00 CAD
+  Assets:Bank:Checking                -850.00 CAD
+
+2026-01-24 * "Enmax" "Electric and gas"
+  Expenses:Utilities:Electric-Gas      310.44 CAD
+  Assets:Bank:Checking                -310.44 CAD
+
+2026-01-25 * "Shaw" "Internet and mobile"
+  Expenses:Utilities:Internet-Mobile   168.22 CAD
+  Liabilities:CreditCard:Mastercard   -168.22 CAD
+
+2026-01-27 * "Transfer" "RESP contribution"
+  Assets:Education:RESP                250.00 CAD
+  Assets:Bank:Checking                -250.00 CAD
+
+2026-01-29 * "Mastercard" "Credit card payment"
+  Liabilities:CreditCard:Mastercard    500.00 CAD
+  Assets:Bank:Checking                -500.00 CAD

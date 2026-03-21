@@ -48,6 +48,29 @@ After setup, use the generated helpers for validation and Fava:
 ./bin/cpa-fava main.beancount 5000
 ```
 
+### Included Samples
+
+- `examples/canadian-company/` — incorporated Canadian service business
+- `examples/usa-company/` — US solo consulting business
+- `examples/canadian-individual/` — salaried Canadian individual ledger
+- `examples/canadian-family/` — Canadian household ledger
+- `examples/usa-individual/` — salaried US individual ledger
+- `examples/usa-family/` — US household ledger
+
+### Jurisdiction Pack Schema
+
+`tax/jurisdiction.yaml` files are governed by:
+
+`schemas/jurisdiction.schema.json`
+
+Each template and example pack includes a YAML schema comment pointing at:
+
+`https://raw.githubusercontent.com/MikeChongCan/cpa-stack/main/schemas/jurisdiction.schema.json`
+
+That gives editor validation and a stable contract for LLM workflows.
+Generated `tax/` review packets are intentionally tracked by default so the filing
+workflow keeps an audit trail.
+
 ### 2. Set up your ledger
 
 ```
@@ -70,7 +93,7 @@ Drop bank CSVs into `~/Downloads/`, then:
 /classify
 ```
 
-AI categorizes each transaction. Correct the ones it gets wrong — it learns.
+AI proposes classifications and tax treatment diffs. You approve the patch, then it learns.
 
 ### 5. See your finances
 
@@ -189,7 +212,8 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 
 ## Prerequisites
 
-- Python 3.10+
+- Python 3
+- uv
 - Git
 - Claude Code, Codex CLI, or compatible AI agent
 

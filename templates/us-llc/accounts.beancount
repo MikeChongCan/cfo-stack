@@ -9,7 +9,6 @@
 
 ;; Liabilities
 2025-01-01 open Liabilities:CreditCard:Primary  USD
-2025-01-01 open Liabilities:Tax:Estimated       USD
 2025-01-01 open Liabilities:Payable:Vendors     USD
 
 ;; Equity
@@ -28,7 +27,6 @@
 2025-01-01 open Expenses:Car-Truck              USD  ; Sch C Line 9
 2025-01-01 open Expenses:Contract-Labor         USD  ; Sch C Line 11
 2025-01-01 open Expenses:Insurance:Business     USD  ; Sch C Line 15
-2025-01-01 open Expenses:Insurance:Health       USD  ; SE health deduction
 2025-01-01 open Expenses:Legal-Professional     USD  ; Sch C Line 17
 2025-01-01 open Expenses:Office-Supplies        USD  ; Sch C Line 18
 2025-01-01 open Expenses:Rent-Lease             USD  ; Sch C Line 20
@@ -44,7 +42,6 @@
 2025-01-01 open Expenses:Depreciation           USD  ; Sch C Line 13
 2025-01-01 open Expenses:Uncategorized          USD
 
-;; Tax
-2025-01-01 open Expenses:Tax:Federal            USD
-2025-01-01 open Expenses:Tax:State              USD
-2025-01-01 open Expenses:Tax:SelfEmployment     USD
+;; For a single-member pass-through LLC, owner income taxes, self-employment tax,
+;; retirement contributions, and personal health insurance stay outside the
+;; business expense ledger. Use the owner's personal ledger or Equity:Owner-Draws.

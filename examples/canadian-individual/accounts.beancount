@@ -1,0 +1,27 @@
+;; Jordan Lee — Personal Chart of Accounts
+
+;; Assets
+2025-01-01 open Assets:Bank:Checking             CAD
+2025-01-01 open Assets:Bank:Savings              CAD
+2025-01-01 open Assets:Retirement:RRSP           CAD
+2025-01-01 open Assets:Investments:TFSA          CAD
+
+;; Liabilities
+2025-01-01 open Liabilities:CreditCard:Visa      CAD
+
+;; Equity
+2025-01-01 open Equity:Opening-Balances          CAD
+
+;; Income
+2025-01-01 open Income:Salary:Employer           CAD
+2025-01-01 open Income:Interest                  CAD
+
+;; Expenses
+2025-01-01 open Expenses:Housing:Rent            CAD
+2025-01-01 open Expenses:Food:Groceries          CAD
+2025-01-01 open Expenses:Transportation:Transit  CAD
+2025-01-01 open Expenses:Phone:Mobile            CAD
+2025-01-01 open Expenses:Tax:Federal             CAD
+2025-01-01 open Expenses:Tax:Provincial          CAD
+2025-01-01 open Expenses:Tax:CPP-EI              CAD
+2025-01-01 open Expenses:Insurance:Health        CAD

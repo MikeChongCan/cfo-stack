@@ -48,10 +48,16 @@ Run `bean-check` equivalent validation:
 - No duplicate transactions (by hash or date+amount+payee)
 - Currency matches account constraints
 
-### Step 4: Commit to ledger
+### Step 4: Prepare ledger patch
 
-Move validated entries from staging to the appropriate ledger file:
+Prepare a unified diff from staging to the appropriate ledger file:
 - `YYYY/MM-transactions.beancount` for the relevant month
+
+Show the patch, explain any non-trivial normalization, and ask for explicit approval.
+Only after approval:
+1. Apply the patch
+2. Re-run `./bin/cpa-check main.beancount`
+3. Report the exact file(s) changed
 
 ## Double-Entry Primer
 
@@ -74,10 +80,11 @@ Common patterns:
 
 - NEVER create entries that don't balance
 - NEVER use accounts that aren't in the chart of accounts (open them first)
-- ALWAYS run validation after committing
+- ALWAYS show the proposed diff before any ledger mutation
+- ALWAYS run validation after applying an approved patch
 - ALWAYS preserve source metadata from `/capture`
 - If unsure about an entry, mark it with `!` (flag) instead of `*` (cleared)
 
 ## Output
 
-Clean, validated Beancount entries in the appropriate month file.
+Proposed patch for the appropriate month file, plus a validated ledger after approval.

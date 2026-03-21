@@ -1,0 +1,8 @@
+;; Canadian Family Sample — Nguyen Household
+
+option "title" "Nguyen Household — Personal Ledger"
+option "operating_currency" "CAD"
+
+include "accounts.beancount"
+include "2025/opening-balances.beancount"
+include "2026/01-transactions.beancount"

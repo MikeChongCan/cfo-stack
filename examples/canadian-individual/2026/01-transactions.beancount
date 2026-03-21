@@ -1,0 +1,38 @@
+;; Jordan Lee — January 2026
+
+2026-01-15 * "North Maple Studio" "Biweekly paycheck"
+  Assets:Bank:Checking            3,850.00 CAD
+  Assets:Retirement:RRSP            400.00 CAD
+  Expenses:Tax:Federal              950.00 CAD
+  Expenses:Tax:Provincial           450.00 CAD
+  Expenses:Tax:CPP-EI               350.00 CAD
+  Expenses:Insurance:Health         200.00 CAD
+  Income:Salary:Employer         -6,200.00 CAD
+
+2026-01-16 * "Harbourview Rentals" "January rent"
+  Expenses:Housing:Rent           2,100.00 CAD
+  Assets:Bank:Checking           -2,100.00 CAD
+
+2026-01-18 * "Metro" "Groceries"
+  Expenses:Food:Groceries           128.55 CAD
+  Liabilities:CreditCard:Visa      -128.55 CAD
+
+2026-01-20 * "TTC" "Monthly transit pass"
+  Expenses:Transportation:Transit   156.00 CAD
+  Assets:Bank:Checking             -156.00 CAD
+
+2026-01-22 * "Rogers" "Phone plan"
+  Expenses:Phone:Mobile              89.32 CAD
+  Liabilities:CreditCard:Visa       -89.32 CAD
+
+2026-01-24 * "Transfer" "TFSA contribution"
+  Assets:Investments:TFSA           300.00 CAD
+  Assets:Bank:Checking             -300.00 CAD
+
+2026-01-28 * "Visa" "Credit card payment"
+  Liabilities:CreditCard:Visa       250.00 CAD
+  Assets:Bank:Checking             -250.00 CAD
+
+2026-01-31 * "Bank" "Savings interest"
+  Assets:Bank:Savings                 4.10 CAD
+  Income:Interest                    -4.10 CAD
