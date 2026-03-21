@@ -22,8 +22,8 @@ The detailed framework, skill map, and future tooling notes now live in the Docu
 
 ```bash
 cd docs
-npm install
-npm start
+bun install
+bun run start
 ```
 
 ---

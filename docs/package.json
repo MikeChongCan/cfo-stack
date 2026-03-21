@@ -8,7 +8,7 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "typecheck": "tsc",
-    "check": "npm run typecheck && npm run build"
+    "check": "bun run typecheck && bun run build"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
@@ -40,5 +40,5 @@
   "engines": {
     "node": ">=20.0"
   },
-  "packageManager": "npm@10.9.2"
+  "packageManager": "bun@1.3.10"
 }
