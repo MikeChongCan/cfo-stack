@@ -226,7 +226,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 
 ---
 
-## All 25 Skills
+## All 26 Skills
 
 ### C — Capture
 
@@ -277,6 +277,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 
 | Skill | Role | What It Does |
 |---|---|---|
+| `/cfo` | Root CFO | Ask the minimum onboarding questions and route to the right next CFO Stack skill |
 | `/setup` | Onboarding | Initialize new ledger from scratch |
 | `/snapshot` | Archivist | Git commit with meaningful messages + tags |
 | `/audit` | Internal Auditor | Comprehensive ledger validation |

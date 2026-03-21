@@ -56,6 +56,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 - `/advisor` — Financial health assessment, FIRE planning, net worth
 
 ### Meta
+- `/cfo` — Root onboarding and routing command
 - `/setup` — Initialize a new Beancount ledger
 - `/snapshot` — Commit ledger changes with meaningful messages and tags
 - `/audit` — Comprehensive ledger validation and integrity check
