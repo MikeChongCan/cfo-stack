@@ -33,7 +33,7 @@ const stages: Stage[] = [
     name: 'Extract',
     summary: 'Pull patterns, anomalies, and tax signals out of the books.',
     question: 'What are the numbers telling me to do next?',
-    skills: ['/extract', '/reconcile', '/tax-plan'],
+    skills: ['/extract', '/reconcile', '/tax-plan', '/consult'],
     accent: '#b45309',
   },
   {

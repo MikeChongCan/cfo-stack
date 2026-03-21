@@ -226,7 +226,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 
 ---
 
-## All 24 Skills
+## All 25 Skills
 
 ### C — Capture
 
@@ -254,6 +254,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 | `/extract` | Data Analyst | Spending patterns, anomalies, trends |
 | `/reconcile` | Controller | Match bank statements to ledger balances |
 | `/tax-plan` | Tax Strategist | Deductions, income splitting, quarterly estimates |
+| `/consult` | Cross-Model Consultant | Ask ChatGPT, Gemini, Claude, Grok, or NotebookLM a CFO Stack question and synthesize a markdown answer |
 
 ### A — Automate
 

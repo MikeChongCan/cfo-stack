@@ -43,6 +43,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 - `/extract` — Analyze spending patterns, anomalies, and trends
 - `/reconcile` — Match bank statements to ledger balances
 - `/tax-plan` — Tax strategy, deductions, income splitting, and estimates
+- `/consult` — Cross-model accounting and tax self-consulting via 10x-chat
 
 ### A — Automate
 - `/automate` — Generate reusable processing scripts and pipelines
