@@ -132,7 +132,7 @@ export async function extractDashboardData(options: ExtractOptions): Promise<Das
 
   const incomeStatement = buildIncomeStatement(currentYearRows, profile);
   const balanceSheet = buildBalanceSheet(finalBalances, incomeStatement.total, profile);
-  const cashFlow = buildCashFlowStatement(monthlySeries);
+  const cashFlow = buildCashFlowStatement(flowMap, latestYear, latestMonthKey);
   const mixes = buildMixes({finalBalances, currentYearRows, profile});
   const metrics = buildMetrics({
     balanceSheet,
@@ -344,13 +344,23 @@ function buildBalanceSheet(
 ): StatementSummary {
   const assetRows = mapBalancesToRows(finalBalances, 'Assets', 1);
   const liabilityRows = mapBalancesToRows(finalBalances, 'Liabilities', -1);
+
+  const allTimeRevenue = sumMapByPrefix(finalBalances, 'Income') * -1;
+  const allTimeExpenses = sumMapByPrefix(finalBalances, 'Expenses');
+  const allTimeNetIncome = allTimeRevenue - allTimeExpenses;
+  const priorEarnings = allTimeNetIncome - currentEarnings;
+
+  const dynamicEquity = [];
+  if (Math.abs(priorEarnings) > EPSILON) {
+    dynamicEquity.push({label: 'Prior year earnings', amount: priorEarnings, account: 'Equity:Retained-Earnings-Unclosed'});
+  }
+  if (Math.abs(currentEarnings) > EPSILON) {
+    dynamicEquity.push({label: 'Current year earnings', amount: currentEarnings, account: 'Equity:Current-Year-Earnings'});
+  }
+
   const equityRows =
     profile === 'business'
-      ? mapBalancesToRows(finalBalances, 'Equity', -1).concat(
-          Math.abs(currentEarnings) > EPSILON
-            ? [{label: 'Current year earnings', amount: currentEarnings, account: 'Equity:Current-Year-Earnings'}]
-            : [],
-        )
+      ? mapBalancesToRows(finalBalances, 'Equity', -1).concat(dynamicEquity)
       : [];
 
   const assetsTotal = totalRows(assetRows);
@@ -377,16 +387,26 @@ function buildBalanceSheet(
   };
 }
 
-function buildCashFlowStatement(monthlySeries: MonthlyPoint[]): StatementSummary {
-  const operating = monthlySeries.reduce((total, point) => total + point.operating, 0);
-  const investing = monthlySeries.reduce((total, point) => total + point.investing, 0);
-  const financing = monthlySeries.reduce((total, point) => total + point.financing, 0);
-  const net = operating + investing + financing;
+function buildCashFlowStatement(flowMap: Map<string, FlowTotals>, latestYear: number, latestMonthKey: string): StatementSummary {
+  let operating = 0;
+  let investing = 0;
+  let financing = 0;
+  let net = 0;
+
+  for (const [monthKey, flow] of flowMap.entries()) {
+    if (monthKey.startsWith(`${latestYear}-`)) {
+      operating += flow.operating;
+      investing += flow.investing;
+      financing += flow.financing;
+      net += flow.net;
+    }
+  }
+
   return {
     title: 'Direct Cash Flow',
     sections: [
       {
-        title: 'Movement',
+        title: 'YTD Movement',
         rows: [
           {label: 'Operating', amount: operating},
           {label: 'Investing', amount: investing},
@@ -395,10 +415,10 @@ function buildCashFlowStatement(monthlySeries: MonthlyPoint[]): StatementSummary
         total: net,
       },
     ],
-    totalLabel: 'Net cash change',
+    totalLabel: 'YTD net cash change',
     total: net,
     comparisonLabel: 'Latest month',
-    comparisonValue: monthlySeries.at(-1)?.net ?? 0,
+    comparisonValue: flowMap.get(latestMonthKey)?.net ?? 0,
   };
 }
 
