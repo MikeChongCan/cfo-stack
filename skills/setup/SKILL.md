@@ -125,6 +125,7 @@ YYYY-MM-DD * "Opening balances"
 # Adjust review thresholds for this ledger if the global default is wrong
 # Optionally copy templates/shared/statement-export.yaml to capture/statement-export.yaml
 # and replace the example institutions/accounts with the user's actual portals
+# Keep the overlap guidance in the template so repeated exports can catch delayed postings
 # Create tax/jurisdiction.yaml from the matching template
 # Fill in filing frequency, deadlines, and rates from user-provided source data
 # Keep the schema comment at the top of the YAML file so editor validation works
@@ -195,7 +196,7 @@ git commit -m "init: ledger setup for [Entity Name]"
 ### Step 9: Next steps
 
 Tell the user:
-1. "If your statements are not on disk yet, configure `capture/statement-export.yaml` and run `/statement-export` for guided browser help or `/statement-export-private` for a privacy-first manual checklist"
+1. "If your statements are not on disk yet, configure `capture/statement-export.yaml` and run `/statement-export` for guided browser help or `/statement-export-private` for a privacy-first manual checklist; when repeating exports, use a small overlap with the prior window to catch delayed postings"
 2. "Run `/capture` to inventory downloaded files and receipts"
 3. "Run `/classify` to categorize transactions"
 4. "Run `/report` to see your financial statements"

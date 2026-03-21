@@ -172,6 +172,9 @@ Use this config to declare institutions such as TD, BMO, Chase, Cheese, Wealthsi
 IBKR, Wise, or other portals, then let `/statement-export` guide the human through login,
 account/date confirmation, and CSV/PDF download.
 
+When repeating exports, prefer a small overlap with the prior export window so
+delayed bank postings are less likely to be missed.
+
 The statement download pattern is intentionally LLM-driven and human-in-the-loop.
 This repo does not depend on deterministic bank-site scripts. The repo-local skill
 `./.agents/skills/cfo-chrome-download-statements/SKILL.md` is the preferred pattern
@@ -204,6 +207,8 @@ That workflow is human-in-the-loop: current Chrome session with remote debugging
 manual login/MFA, agent-guided navigation, and raw CSV/PDF downloads preserved for archive.
 When the correct login or export page is unclear, the agent should use web search against
 official institution domains before navigating.
+When repeating exports, confirm a small overlap with the prior export window rather than
+treating the last end date as a perfect cutoff.
 
 If you want more privacy and do not want the agent to touch browser tools at all, use:
 
@@ -214,6 +219,8 @@ If you want more privacy and do not want the agent to touch browser tools at all
 That workflow only produces a manual checklist: official institution URLs, candidate date
 ranges to confirm, preferred export formats, and the suggested staging directory
 `~/Downloads/cfo-staging`.
+It should also suggest a small overlap with the prior export window when delayed posting
+risk exists.
 
 Then run:
 

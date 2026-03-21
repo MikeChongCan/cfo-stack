@@ -6,6 +6,9 @@ browser:
   profile_strategy: current_session
   downloads_dir: ~/Downloads/cfo-staging
   existing_profile_hint: Sarah's primary signed-in Chrome profile
+  notes: >-
+    When repeating exports, include a small overlap with the prior export
+    window so delayed bank postings are less likely to be missed.
 institutions:
   - id: chase-banking
     name: Chase
@@ -16,11 +19,17 @@ institutions:
         portal_label: Total Checking
         preferred_exports: [csv, pdf]
         archive_subdir: bank-statements/chase-checking
+        human_steps:
+          - Include a small overlap with the prior export window when repeating downloads.
       - ledger_account: Assets:Bank:Chase-Savings
         portal_label: High Yield Savings
         preferred_exports: [csv, pdf]
         archive_subdir: bank-statements/chase-savings
+        human_steps:
+          - Include a small overlap with the prior export window when repeating downloads.
       - ledger_account: Liabilities:CreditCard:Chase-Sapphire
         portal_label: Sapphire
         preferred_exports: [csv, pdf]
         archive_subdir: credit-card-statements/chase-sapphire
+        human_steps:
+          - Include a small overlap with the prior export window when repeating downloads.

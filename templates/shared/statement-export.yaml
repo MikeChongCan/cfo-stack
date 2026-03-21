@@ -9,7 +9,8 @@ browser:
   notes: >-
     Prefer the user's current Chrome session with remote debugging enabled.
     Only fall back to a copied profile when Chrome DevTools MCP cannot
-    attach cleanly.
+    attach cleanly. When repeating exports, prefer a small overlap with the
+    prior export window so delayed postings are less likely to be missed.
 institutions:
   - id: td-banking
     name: TD Canada Trust
@@ -22,6 +23,7 @@ institutions:
         archive_subdir: bank-statements/td-business
         human_steps:
           - Confirm the statement period before download.
+          - Re-export with a small overlap from the prior export window when the bank may post transactions late.
           - Save both the activity CSV and the statement PDF when available.
 
   - id: chase-banking
@@ -59,3 +61,5 @@ institutions:
         notes: >-
           Prefer exports that preserve transaction dates and cash activity. Keep
           the PDF activity statement for archive even when CSV is imported.
+          When repeating exports, include a small overlap with the prior export
+          window if postings can arrive late.

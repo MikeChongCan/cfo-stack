@@ -6,6 +6,9 @@ browser:
   profile_strategy: current_session
   downloads_dir: ~/Downloads/cfo-staging
   existing_profile_hint: MapleTech's primary signed-in Chrome profile
+  notes: >-
+    When repeating exports, include a small overlap with the prior export
+    window so delayed bank postings are less likely to be missed.
 institutions:
   - id: td-banking
     name: TD Canada Trust
@@ -16,10 +19,14 @@ institutions:
         portal_label: Business Chequing
         preferred_exports: [csv, pdf]
         archive_subdir: bank-statements/td-business
+        human_steps:
+          - Include a small overlap with the prior export window when repeating downloads.
       - ledger_account: Liabilities:CreditCard:TD-Visa
         portal_label: TD Business Visa
         preferred_exports: [csv, pdf]
         archive_subdir: credit-card-statements/td-visa
+        human_steps:
+          - Include a small overlap with the prior export window when repeating downloads.
   - id: wise
     name: Wise
     kind: payment_platform
@@ -31,3 +38,4 @@ institutions:
         archive_subdir: bank-statements/wise-cad
         human_steps:
           - Export both balance activity and monthly statement views when both exist.
+          - Include a small overlap with the prior export window when repeating downloads.
