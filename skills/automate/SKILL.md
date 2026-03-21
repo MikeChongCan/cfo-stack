@@ -47,7 +47,7 @@ python3 importers/td_bank.py ~/Downloads/td-checking-*.csv >> staging/$MONTH-imp
 python3 importers/td_bank.py ~/Downloads/td-visa-*.csv >> staging/$MONTH-imports.beancount
 
 # 2. Validate imports
-bean-check main.beancount
+./bin/cpa-check main.beancount
 
 # 3. Archive source files
 mkdir -p documents/$(echo $MONTH | cut -d- -f1)/$MONTH/bank-statements

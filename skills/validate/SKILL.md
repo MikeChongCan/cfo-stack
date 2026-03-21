@@ -19,10 +19,10 @@ You are the quality gate. Nothing gets committed without passing your checks.
 
 ## Workflow
 
-### Step 1: Run bean-check
+### Step 1: Run validation helper
 
 ```bash
-bean-check main.beancount
+./bin/cpa-check main.beancount
 ```
 
 Report any errors with file, line number, and description.

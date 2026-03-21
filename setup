@@ -13,7 +13,14 @@ VENV_PY="$VENV_BIN/python"
 HOST="claude"
 while [ $# -gt 0 ]; do
   case "$1" in
-    --host) HOST="$2"; shift 2 ;;
+    --host)
+      if [ $# -lt 2 ]; then
+        echo "Error: --host requires a value (claude, codex, or auto)" >&2
+        exit 1
+      fi
+      HOST="$2"
+      shift 2
+      ;;
     --host=*) HOST="${1#--host=}"; shift ;;
     *) shift ;;
   esac
@@ -61,7 +68,7 @@ if [ -z "$PYTHON" ]; then
   exit 1
 fi
 
-PY_VERSION=$($PYTHON -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+PY_VERSION=$($PYTHON -c "import sys; print(str(sys.version_info.major) + '.' + str(sys.version_info.minor))")
 PY_MAJOR=$($PYTHON -c "import sys; print(sys.version_info.major)")
 PY_MINOR=$($PYTHON -c "import sys; print(sys.version_info.minor)")
 
