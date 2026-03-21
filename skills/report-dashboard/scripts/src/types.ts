@@ -1,5 +1,5 @@
 export type DashboardProfile = 'business' | 'household';
-export type DashboardVariant = 'full' | 'social';
+export type DashboardVariant = 'full' | 'social' | 'preview';
 
 export type FlowCategory = 'operating' | 'investing' | 'financing' | 'internal';
 

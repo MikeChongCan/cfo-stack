@@ -23,20 +23,27 @@ export function renderDashboardHtml(
   } = {},
 ): string {
   const variant = options.variant ?? 'full';
-  const titleLabel = variant === 'social' ? ' Social Dashboard' : ' Dashboard';
+  const titleLabel =
+    variant === 'social' ? ' Social Dashboard' : variant === 'preview' ? ' Preview Dashboard' : ' Dashboard';
   const markup = renderToStaticMarkup(
-    variant === 'social' ? <SocialDashboardPage data={data} /> : <DashboardPage data={data} />,
+    variant === 'social' ? <SocialDashboardPage data={data} /> : variant === 'preview' ? <PreviewDashboardPage data={data} /> : <DashboardPage data={data} />,
   );
+  const description =
+    variant === 'social'
+      ? 'Share-safe CFO Stack dashboard with redacted values.'
+      : variant === 'preview'
+        ? 'Compact CFO Stack dashboard preview for docs embeds.'
+        : 'Deterministic CFO Stack dashboard generated from Beancount data.';
   return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${escapeHtml(data.meta.title)}${titleLabel}</title>
-    <meta name="description" content="${variant === 'social' ? 'Share-safe CFO Stack dashboard with redacted values.' : 'Deterministic CFO Stack dashboard generated from Beancount data.'}" />
+    <meta name="description" content="${description}" />
     <link rel="stylesheet" href="./dashboard.css" />
   </head>
-  <body class="min-h-screen bg-[#f7f7f2] text-[#10211d]">
+  <body class="min-h-screen bg-transparent text-[#10211d]">
     ${markup}
     <script>
       const buttons = Array.from(document.querySelectorAll('[data-tab-button]'));
@@ -77,7 +84,7 @@ function DashboardPage({data}: {data: DashboardData}) {
             </div>
             <div className="space-y-2">
               <h1
-                className="max-w-4xl text-3xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#10211d] sm:text-4xl lg:text-[3.25rem]"
+                className="max-w-4xl text-3xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#10211d] sm:text-4xl lg:text-5xl"
                 style={{fontFamily: '"Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif'}}
               >
                 {data.meta.title}
@@ -87,7 +94,7 @@ function DashboardPage({data}: {data: DashboardData}) {
                 The renderer stays static, but the data comes directly from <code className="rounded bg-[#10211d]/6 px-1.5 py-0.5 text-[0.92em]">bean-query</code>.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#fbf8f1] px-4 py-3">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#10211d]/[0.045] px-4 py-3 backdrop-blur-sm">
               <MetaPill label="Report window" value={data.meta.periodLabel} />
               <MetaPill label="Latest month" value={data.meta.latestMonthLabel} />
               <MetaPill label="Review threshold" value={reviewThresholdLabel(data)} />
@@ -128,7 +135,7 @@ function DashboardPage({data}: {data: DashboardData}) {
         </section>
 
         <section>
-          <div role="tablist" aria-label="Dashboard sections" className="flex flex-wrap gap-2 border-b border-[#10211d]/10 pb-2">
+          <div role="tablist" aria-label="Dashboard sections" className="flex flex-wrap gap-2">
             <TabButton id="overview" label="Overview" />
             <TabButton id="statements" label="Statements" />
             <TabButton id="activity" label="Activity" />
@@ -223,7 +230,7 @@ function SocialDashboardPage({data}: {data: DashboardData}) {
                 Relative shapes and category mix stay visible. Exact amounts, statement totals, and transaction figures are redacted for social sharing.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#fbf8f1] px-4 py-3">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#10211d]/[0.045] px-4 py-3 backdrop-blur-sm">
               <MetaPill label="Window" value="Recent periods" />
               <MetaPill label="Visibility" value="Amounts redacted" />
               <MetaPill label="Focus" value="Trend, cash movement, mix" />
@@ -260,6 +267,63 @@ function SocialDashboardPage({data}: {data: DashboardData}) {
           <BreakdownCard currency={data.meta.currency} block={data.mixes.assets} tone="ink" redactedValues />
           <BreakdownCard currency={data.meta.currency} block={data.mixes.liabilities} tone="slate" redactedValues />
         </div>
+      </main>
+    </div>
+  );
+}
+
+function PreviewDashboardPage({data}: {data: DashboardData}) {
+  const isBusiness = data.meta.profile === 'business';
+  const recentMonths = data.monthly.slice(-3);
+  const summaryRows =
+    (data.meta.profile === 'business' ? data.mixes.primary.rows : data.mixes.secondary.rows).slice(0, 3);
+
+  return (
+    <div className="w-full p-3" style={{fontFamily: '"Avenir Next", "IBM Plex Sans", "Segoe UI", sans-serif'}}>
+      <main className="rounded-[24px] border border-white/75 bg-white/86 p-3 shadow-[0_12px_40px_rgba(11,29,26,0.1)] backdrop-blur">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#0f766e]">
+              <span>{isBusiness ? 'Finance operating system' : 'Household operating system'}</span>
+              <span className="rounded-full bg-[#10211d] px-2.5 py-1 text-[0.62rem] tracking-[0.18em] text-white">
+                {data.meta.profile}
+              </span>
+            </div>
+            <h1
+              className="mt-2 text-[1.45rem] font-semibold leading-[0.96] tracking-[-0.05em] text-[#10211d] sm:text-[1.65rem]"
+              style={{fontFamily: '"Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif'}}
+            >
+              {data.meta.title}
+            </h1>
+            <p className="mt-1 text-[0.72rem] leading-5 text-[#50615b]">
+              {data.meta.periodLabel}
+            </p>
+          </div>
+          <div className="rounded-[16px] border border-[#10211d]/8 bg-[#10211d]/[0.045] px-3 py-2 text-right backdrop-blur-sm">
+            <div className="text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-[#6a756f]">Latest month</div>
+            <div className="mt-1 text-sm font-semibold text-[#10211d]">{data.meta.latestMonthLabel}</div>
+          </div>
+        </div>
+
+        <section className="mt-3 grid grid-cols-2 gap-2 xl:grid-cols-4">
+          {data.metrics.slice(0, 4).map((metric) => (
+            <PreviewMetricTile key={metric.label} currency={data.meta.currency} metric={metric} />
+          ))}
+        </section>
+
+        <section className="mt-3 grid gap-3 lg:grid-cols-[1.15fr_0.85fr]">
+          <PreviewTrendPanel
+            currency={data.meta.currency}
+            monthly={recentMonths}
+            profile={data.meta.profile}
+          />
+          <PreviewSnapshotCard
+            currency={data.meta.currency}
+            monthly={recentMonths}
+            rows={summaryRows}
+            title={isBusiness ? data.mixes.primary.title : data.mixes.secondary.title}
+          />
+        </section>
       </main>
     </div>
   );
@@ -317,6 +381,29 @@ function MetricTile({metric, currency}: {metric: MetricCard; currency: string}) 
   );
 }
 
+function PreviewMetricTile({metric, currency}: {metric: MetricCard; currency: string}) {
+  const toneClasses =
+    metric.tone === 'positive'
+      ? 'text-[#0f766e]'
+      : metric.tone === 'negative'
+        ? 'text-[#b45309]'
+        : 'text-[#10211d]';
+
+  return (
+    <article className="rounded-[16px] border border-white/70 bg-white/60 px-3 py-2.5 shadow-[0_10px_24px_rgba(16,33,29,0.05)] backdrop-blur-sm">
+      <div className="text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{metric.label}</div>
+      <div className={`mt-1.5 text-lg font-semibold tracking-[-0.04em] ${toneClasses}`}>
+        {metric.value === null
+          ? 'N/A'
+          : metric.label === 'Savings rate'
+            ? percent(metric.value)
+            : compactMoney(metric.value, currency)}
+      </div>
+      <p className="mt-1 text-[0.68rem] leading-4 text-[#66726d]">{metric.note}</p>
+    </article>
+  );
+}
+
 function TabButton({id, label}: {id: string; label: string}) {
   return (
     <button
@@ -369,7 +456,7 @@ function TrendPanel({
           </div>
           <div className="grid gap-3" style={monthGridStyle(monthly.length, 220)}>
             {monthly.map((point) => (
-              <div key={point.key} className="rounded-[18px] bg-[#fbf8f1] p-3">
+              <div key={point.key} className="rounded-[18px] border border-white/65 bg-white/55 p-3 shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">
                 <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a756f]">{displayPeriodLabel(point.label, point.key, monthly, redactedValues)}</div>
                 <div className="mt-3 flex h-36 items-end gap-1.5">
                   <TrendBar color="bg-[#0f766e]" height={Math.max(12, (point.revenue / max) * 120)} value={point.revenue} currency={currency} label="Revenue" redactedValues={redactedValues} />
@@ -392,6 +479,140 @@ function TrendPanel({
         </div>
       </div>
     </section>
+  );
+}
+
+function PreviewTrendPanel({
+  currency,
+  monthly,
+  profile,
+}: {
+  currency: string;
+  monthly: MonthlyPoint[];
+  profile: DashboardData['meta']['profile'];
+}) {
+  const max = Math.max(
+    1,
+    ...monthly.flatMap((point) => [point.revenue, point.expenses, Math.abs(point.netIncome)]),
+  );
+
+  return (
+    <section className="rounded-[18px] border border-white/70 bg-white/60 px-3 py-3 shadow-[0_10px_24px_rgba(16,33,29,0.05)] backdrop-blur-sm">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <div className="text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-[#0f766e]">Trendline</div>
+          <h2 className="mt-1 text-base font-semibold tracking-[-0.04em] text-[#10211d]">
+            {profile === 'business' ? 'Revenue, cost, and margin' : 'Income, spending, and surplus'}
+          </h2>
+        </div>
+        <div className="rounded-full bg-[#10211d]/5 px-2.5 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[#6a756f]">
+          {monthWindowLabel(monthly.length)}
+        </div>
+      </div>
+      <div className="mt-3 grid gap-2" style={monthGridStyle(monthly.length, 96)}>
+        {monthly.map((point) => (
+          <div key={point.key} className="rounded-[16px] border border-white/65 bg-white/55 p-2.5">
+            <div className="text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[#6a756f]">{point.label}</div>
+            <div className="mt-2 flex h-16 items-end gap-1">
+              <PreviewTrendBar color="bg-[#0f766e]" height={Math.max(8, (point.revenue / max) * 52)} />
+              <PreviewTrendBar color="bg-[#d97706]" height={Math.max(8, (point.expenses / max) * 52)} />
+              <PreviewTrendBar color={point.netIncome >= 0 ? 'bg-[#10211d]' : 'bg-[#9a3412]'} height={Math.max(8, (Math.abs(point.netIncome) / max) * 52)} />
+            </div>
+            <dl className="mt-2 space-y-1 text-[0.68rem]">
+              <PreviewMetricRow label="Net" value={compactMoney(point.netIncome, currency)} />
+              <PreviewMetricRow label="Cash" value={compactMoney(point.cashBalance, currency)} />
+            </dl>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PreviewTrendBar({color, height}: {color: string; height: number}) {
+  return <div className={`w-full rounded-t-[10px] ${color}`} style={{height}} />;
+}
+
+function PreviewSnapshotCard({
+  currency,
+  monthly,
+  rows,
+  title,
+}: {
+  currency: string;
+  monthly: MonthlyPoint[];
+  rows: StatementRow[];
+  title: string;
+}) {
+  const flowRows = [
+    {
+      label: 'Operating',
+      value: monthly.reduce((total, point) => total + point.operating, 0),
+      tone: 'bg-[#0f766e]',
+    },
+    {
+      label: 'Investing',
+      value: monthly.reduce((total, point) => total + point.investing, 0),
+      tone: 'bg-[#d97706]',
+    },
+    {
+      label: 'Financing',
+      value: monthly.reduce((total, point) => total + point.financing, 0),
+      tone: 'bg-[#10211d]',
+    },
+  ];
+  const peakFlow = Math.max(1, ...flowRows.map((row) => Math.abs(row.value)));
+
+  return (
+    <section className="rounded-[18px] border border-white/70 bg-white/60 px-3 py-3 shadow-[0_10px_24px_rgba(16,33,29,0.05)] backdrop-blur-sm">
+      <div className="text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-[#0f766e]">Snapshot</div>
+      <h2 className="mt-1 text-base font-semibold tracking-[-0.04em] text-[#10211d]">Cash movement and mix</h2>
+
+      <div className="mt-3 space-y-2">
+        {flowRows.map((row) => (
+          <div key={row.label} className="space-y-1">
+            <div className="flex items-center justify-between gap-2 text-[0.72rem]">
+              <span className="font-medium text-[#10211d]">{row.label}</span>
+              <span className="font-semibold text-[#10211d]">{compactMoney(row.value, currency)}</span>
+            </div>
+            <div className="h-1.5 rounded-full bg-[#10211d]/8">
+              <div className={`h-1.5 rounded-full ${row.value < 0 ? 'bg-[#b45309]' : row.tone}`} style={{width: `${Math.max(10, (Math.abs(row.value) / peakFlow) * 100)}%`}} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 border-t border-[#10211d]/8 pt-3">
+        <div className="text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{title}</div>
+        <div className="mt-2 space-y-2">
+          {rows.map((row) => (
+            <PreviewMetricRow
+              key={row.label}
+              label={row.label}
+              value={compactMoney(row.amount, currency)}
+              toneClass="text-[#10211d]"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PreviewMetricRow({
+  label,
+  value,
+  toneClass = 'text-[#42504b]',
+}: {
+  label: string;
+  value: string;
+  toneClass?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 text-[0.68rem]">
+      <span className="text-[#66726d]">{label}</span>
+      <span className={`font-semibold ${toneClass}`}>{value}</span>
+    </div>
   );
 }
 
@@ -433,47 +654,49 @@ function FlowPanel({
   redactedValues?: boolean;
 }) {
   return (
-    <section className={`${panel} px-5 py-4`}>
+    <section className={`${panel} overflow-hidden px-5 py-4`}>
       <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#0f766e]">Cash movement</div>
       <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">Operating, investing, and financing</h2>
-      <div className="mt-4 space-y-3">
-        {[
-          {key: 'operating', label: 'Operating', tone: 'bg-[#0f766e]'},
-          {key: 'investing', label: 'Investing', tone: 'bg-[#d97706]'},
-          {key: 'financing', label: 'Financing', tone: 'bg-[#10211d]'},
-        ].map((flow) => {
-          const values = monthly.map((point) => point[flow.key as keyof MonthlyPoint] as number);
-          const peak = Math.max(1, ...values.map((value) => Math.abs(value)));
-          return (
-            <div key={flow.key} className="rounded-[18px] bg-[#fbf8f1] p-3">
-              <div className="flex items-center justify-between gap-3">
-                <div className="text-sm font-semibold text-[#10211d]">{flow.label}</div>
-                <div className="text-sm font-semibold text-[#10211d]">
-                  {displayMoney(values.reduce((total, value) => total + value, 0), currency, redactedValues)}
+      <div className="mt-4 overflow-x-auto">
+        <div className="space-y-3">
+          {[
+            {key: 'operating', label: 'Operating', tone: 'bg-[#0f766e]'},
+            {key: 'investing', label: 'Investing', tone: 'bg-[#d97706]'},
+            {key: 'financing', label: 'Financing', tone: 'bg-[#10211d]'},
+          ].map((flow) => {
+            const values = monthly.map((point) => point[flow.key as keyof MonthlyPoint] as number);
+            const peak = Math.max(1, ...values.map((value) => Math.abs(value)));
+            return (
+              <div key={flow.key} className="rounded-[18px] border border-white/65 bg-white/55 p-3 shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="text-sm font-semibold text-[#10211d]">{flow.label}</div>
+                  <div className="text-sm font-semibold text-[#10211d]">
+                    {displayMoney(values.reduce((total, value) => total + value, 0), currency, redactedValues)}
+                  </div>
+                </div>
+                <div className="mt-3 grid gap-2" style={monthGridStyle(monthly.length, 92)}>
+                  {monthly.map((point) => {
+                    const value = point[flow.key as keyof MonthlyPoint] as number;
+                    const width = `${Math.max(8, (Math.abs(value) / peak) * 100)}%`;
+                    const barTone = value < 0 ? 'bg-[#b45309]' : flow.tone;
+                    return (
+                      <div key={`${flow.key}:${point.key}`} className="space-y-1.5">
+                        <div className="text-[0.62rem] uppercase tracking-[0.16em] text-[#6a756f]">{displayPeriodLabel(point.label, point.key, monthly, redactedValues)}</div>
+                        <div className="h-1.5 rounded-full bg-[#10211d]/8">
+                          <div
+                            title={redactedValues ? `${flow.label}: redacted` : `${flow.label}: ${money(value, currency)}`}
+                            className={`h-1.5 rounded-full ${barTone}`}
+                            style={{width}}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-              <div className="mt-3 grid gap-2" style={monthGridStyle(monthly.length, 92)}>
-                {monthly.map((point) => {
-                  const value = point[flow.key as keyof MonthlyPoint] as number;
-                  const width = `${Math.max(8, (Math.abs(value) / peak) * 100)}%`;
-                  const barTone = value < 0 ? 'bg-[#b45309]' : flow.tone;
-                  return (
-                    <div key={`${flow.key}:${point.key}`} className="space-y-1.5">
-                      <div className="text-[0.62rem] uppercase tracking-[0.16em] text-[#6a756f]">{displayPeriodLabel(point.label, point.key, monthly, redactedValues)}</div>
-                      <div className="h-2 rounded-full bg-[#10211d]/8">
-                        <div
-                          title={redactedValues ? `${flow.label}: redacted` : `${flow.label}: ${money(value, currency)}`}
-                          className={`h-2 rounded-full ${barTone}`}
-                          style={{width}}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );
@@ -515,8 +738,8 @@ function BreakdownCard({
               <div className="text-[0.92rem] font-medium text-[#10211d]">{row.label}</div>
               <div className="text-[0.92rem] font-semibold text-[#10211d]">{displayMoney(row.amount, currency, redactedValues)}</div>
             </div>
-            <div className="h-2 rounded-full bg-[#10211d]/8">
-              <div className={`h-2 rounded-full ${toneClass}`} style={{width: `${Math.max(8, (row.share ?? 0) * 100)}%`}} />
+            <div className="h-1.5 rounded-full bg-[#10211d]/8">
+              <div className={`h-1.5 rounded-full ${toneClass}`} style={{width: `${Math.max(8, (row.share ?? 0) * 100)}%`}} />
             </div>
           </div>
         ))}
@@ -563,7 +786,7 @@ function StatementCard({
 
 function StatementSectionView({currency, section}: {currency: string; section: StatementSection}) {
   return (
-    <div className="rounded-[18px] bg-[#fbf8f1] p-4">
+    <div className="rounded-[18px] border border-white/65 bg-white/55 p-4 shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">
       <div className="flex items-center justify-between gap-3">
         <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{section.title}</div>
         <div className="text-sm font-semibold text-[#10211d]">{money(section.total, currency)}</div>
@@ -611,10 +834,10 @@ function TransactionCard({
       </div>
       <div className="px-5 py-3">
         {rows.length === 0 ? (
-          <div className="rounded-[18px] bg-[#fbf8f1] px-4 py-4 text-sm text-[#50615b]">{emptyLabel}</div>
+          <div className="rounded-[18px] border border-white/65 bg-white/55 px-4 py-4 text-sm text-[#50615b] shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">{emptyLabel}</div>
         ) : (
           rows.map((row) => (
-            <article key={row.id} className="border-b border-[#10211d]/7 py-3 last:border-b-0">
+            <article key={row.id} className="border-b border-[#10211d]/7 py-2 last:border-b-0">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -646,7 +869,7 @@ function ActivityGrid({currency, monthly}: {currency: string; monthly: MonthlyPo
       <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">Month-by-month summary</h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {monthly.map((point) => (
-          <article key={point.key} className="rounded-[18px] bg-[#fbf8f1] p-4">
+          <article key={point.key} className="rounded-[18px] border border-white/65 bg-white/55 p-4 shadow-[0_10px_28px_rgba(16,33,29,0.06)] backdrop-blur-sm">
             <div className="flex items-center justify-between gap-3">
               <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{point.label}</div>
               <div className="rounded-full bg-[#10211d] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white">

@@ -8,12 +8,62 @@
 
 ---
 
-CFO Stack is an open-source, AI-powered accounting system built on [Beancount](https://github.com/beancount/beancount) and operated through Claude Code / Codex slash commands. It follows the **C.L.E.A.R.** framework to give solo founders, freelancers, and small businesses a virtual finance function — Bookkeeper, Controller, Tax Strategist, Auditor, and CFO — all as Markdown skills, all free.
+CFO Stack is an open-source, AI-powered accounting system built on [Beancount](https://github.com/beancount/beancount) and operated through Claude Code / Codex slash commands. It follows the **C.L.E.A.R.** framework to give solo founders, freelancers, and small businesses a virtual finance function — Bookkeeper, Controller, Tax Strategist, Auditor, and CFO — all as Markdown skills, all open-source.
 
 > *"You have to know accounting. It's the language of practical business life. It was a very useful thing to deliver to civilization. I've heard it came to civilization through Venice which of course was once the great commercial power in the Mediterranean. However, double-entry bookkeeping was a hell of an invention."*
 > — Charlie Munger
 
 Inspired by [gstack](https://github.com/garrytan/gstack) (Garry Tan's "software factory" for Claude Code). Same philosophy, different domain: **accounting instead of engineering**.
+
+---
+
+## Why This Is Useful
+
+CFO Stack is not just a ledger template. It gives you:
+
+- A plain-text accounting system you can inspect, diff, version, and audit
+- Agent skills for capture, classification, reconciliation, tax planning, and reporting
+- Deterministic browser dashboards generated from `bean-query`, without requiring an LLM at runtime
+
+If you want to see the reporting layer first, start here:
+
+- Live docs landing page: https://cfo-stack.realmikechong.com/
+- Dashboard reference with embedded sample dashboards: https://cfo-stack.realmikechong.com/reference/report-dashboard
+
+The sample dashboards cover:
+
+- `examples/usa-company/` — US solo consulting business
+- `examples/canadian-company/` — incorporated Canadian service business
+- `examples/usa-individual/` — salaried US individual ledger
+- `examples/canadian-individual/` — salaried Canadian individual ledger
+- `examples/usa-family/` — US household ledger
+- `examples/canadian-family/` — Canadian household ledger
+
+The two company examples also include `capture/statement-export.yaml` so you can see how
+to declare institutions and ledger-account mappings for browser-assisted exports.
+
+## Double-Entry, Plain English
+
+If you are not an accountant, the shortest useful mental model is:
+
+- Every transaction touches at least two accounts.
+- Money never appears from nowhere and never disappears into nowhere.
+- One side explains **where value came from**; the other explains **where it went**.
+- When both sides are recorded correctly, the books stay internally consistent.
+
+Example:
+
+- You pay a software bill from your business bank account.
+- `Expenses:Software` goes up because you consumed software.
+- `Assets:Bank` goes down because cash left the account.
+
+That is why Beancount and CFO Stack use double-entry instead of a flat spreadsheet. You are not just listing transactions. You are preserving the relationship between cash, obligations, revenue, expenses, assets, and equity.
+
+You do **not** need to memorize accounting theory before using this repo. The practical goal is simpler:
+
+- Know what happened
+- Know which accounts changed
+- Keep the ledger traceable enough that reports and tax review are defensible
 
 ---
 
@@ -112,18 +162,6 @@ Optional cleanup flags:
 
 - `./uninstall --host auto --remove-local-tools`
 - `./uninstall --host auto --remove-state`
-
-### Included Samples
-
-- `examples/canadian-company/` — incorporated Canadian service business
-- `examples/usa-company/` — US solo consulting business
-- `examples/canadian-individual/` — salaried Canadian individual ledger
-- `examples/canadian-family/` — Canadian household ledger
-- `examples/usa-individual/` — salaried US individual ledger
-- `examples/usa-family/` — US household ledger
-
-The two company examples also include `capture/statement-export.yaml` so you can see how
-to declare institutions and ledger-account mappings for browser-assisted exports.
 
 ### Jurisdiction Pack Schema
 
