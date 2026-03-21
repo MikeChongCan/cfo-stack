@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/statement-export.schema.json
 version: 1
 browser:
-  engine: playwright
+  engine: chrome-devtools
   channel: chrome
-  profile_strategy: dedicated
-  user_data_dir: ~/.cfo-stack/playwright/sarah-export
+  profile_strategy: current_session
   downloads_dir: ~/Downloads/cfo-staging
+  existing_profile_hint: Sarah's primary signed-in Chrome profile
 institutions:
   - id: chase-banking
     name: Chase

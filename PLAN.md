@@ -158,7 +158,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 
 | Aspect | gstack | CFO Stack |
 |---|---|---|
-| Core executable | Compiled browse CLI (Bun + Playwright) | None — Python scripts only |
+| Core executable | Compiled browse CLI (Bun-based browser automation) | None — Python scripts only |
 | Build step | `bun build --compile` | `uv venv` + `uv pip install` |
 | Domain | Software engineering | Accounting / tax / finance |
 | Risk level | Code bugs | Financial errors, tax liability |

@@ -1,14 +1,15 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/statement-export.schema.json
 version: 1
 browser:
-  engine: playwright
+  engine: chrome-devtools
   channel: chrome
-  profile_strategy: dedicated
-  user_data_dir: ~/.cfo-stack/playwright/chrome-statement-export
+  profile_strategy: current_session
   downloads_dir: ~/Downloads/cfo-staging
+  existing_profile_hint: Primary signed-in Chrome profile
   notes: >-
-    Use a dedicated or copied profile for export sessions. Do not point
-    automation at your live daily-use Chrome profile.
+    Prefer the user's current Chrome session with remote debugging enabled.
+    Only fall back to a copied profile when Chrome DevTools MCP cannot
+    attach cleanly.
 institutions:
   - id: td-banking
     name: TD Canada Trust

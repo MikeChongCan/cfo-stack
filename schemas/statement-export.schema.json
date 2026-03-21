@@ -18,13 +18,12 @@
         "engine",
         "channel",
         "profile_strategy",
-        "user_data_dir",
         "downloads_dir"
       ],
       "properties": {
         "engine": {
           "type": "string",
-          "const": "playwright"
+          "const": "chrome-devtools"
         },
         "channel": {
           "type": "string",
@@ -32,7 +31,7 @@
         },
         "profile_strategy": {
           "type": "string",
-          "enum": ["dedicated", "copied_from_existing", "manual"]
+          "enum": ["current_session", "copied_from_existing", "manual"]
         },
         "user_data_dir": {
           "type": "string",
