@@ -38,6 +38,11 @@ Extract:
 3. **Recurring charges:** Identify subscriptions and recurring payments
 4. **Income stability:** Variation in income sources, client concentration risk
 
+If `/extract` is being used to produce shared planning, issue text, docs, or skill
+updates, reduce findings to de-identified patterns first. Focus on category movement,
+workflow failures, duplicate types, documentation gaps, and metadata coverage instead
+of exposing personal or business-sensitive transaction details.
+
 ### Step 3: Trend forecasting
 
 Based on historical data:
@@ -68,13 +73,19 @@ If approaching quarter-end or year-end:
 - Flag missing documentation
 - Estimate tax liability
 
+When turning `/extract` output into shared planning, issue creation, docs, or skill
+updates, rewrite examples to remove names, exact identifiers, and unnecessary
+transaction-level detail while preserving the operational lesson.
+
 ## Constraints
 
 - NEVER invent data — all numbers must trace to ledger entries
 - NEVER provide tax advice — provide data summaries for a tax professional
-- ALWAYS show the source data behind every insight
+- ALWAYS show the source data behind every insight in direct user reports, or make the
+  supporting ledger evidence easy to trace on request
 - ALWAYS caveat forecasts: "Based on X months of data, assuming trends continue"
 - Present the report in clear English
+- Default to privacy-safe summaries when extracting lessons for reusable project knowledge
 
 ## Output
 

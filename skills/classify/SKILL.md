@@ -39,6 +39,15 @@ Find transactions marked with `classify: pending` or using `Expenses:Uncategoriz
 3. **Historical:** Check if similar transactions were previously classified by the user
 4. **AI inference:** Analyze payee name, amount, date pattern, narration to suggest account
 
+When using historical classifications as evidence, extract the reusable rule rather than
+copying private ledger details into shared repo state. Learn from merchant patterns,
+counterparty types, amount bands, recurrence, and tax treatment, not from personal names,
+account numbers, or sensitive business descriptions.
+
+Public merchants and common software vendors can still appear as exact payees in
+ledger-local rules. "Private counterparties" means individuals, clients, employers,
+or relationship-specific names that reveal personal or business-sensitive context.
+
 ### Step 3: Present for review
 
 Show each classification with confidence level and a proposed patch. Nothing is
@@ -85,6 +94,11 @@ When the human approves or corrects a classification:
 2. Log the correction for pattern improvement
 3. If the same payee appears again, use the corrected classification
 
+If a correction contains personal or business-sensitive details, keep the rule ledger-local
+and generalize it before reusing it elsewhere. Shared examples, prompts, and future skills
+should reference sanitized vendor patterns and account intent only. Here, "ledger-local"
+means the user's own private ledger repository or local config, not this shared skill repo.
+
 ### Step 6: Summary
 
 Report:
@@ -124,6 +138,8 @@ rules:
 - ALWAYS flag transactions that could be personal vs business
 - ALWAYS apply tax treatment when classifying
 - ALWAYS show confidence level for every classification
+- NEVER turn private ledger history into shared example data without anonymizing it
+- Prefer normalized merchant patterns over exact private counterparties when adding durable rules
 
 ## Output
 

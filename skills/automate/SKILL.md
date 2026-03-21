@@ -30,6 +30,19 @@ Analyze the user's workflow history:
 - Is the same reconciliation sequence run each month?
 - Are the same reports generated each period?
 
+Reduce the history into reusable workflow facts before codifying anything:
+- `invariant` — should become a default validation or sequencing rule
+- `policy` — should remain configurable per ledger
+- `private-only` — useful context, but not appropriate for shared repo artifacts
+
+Do not copy personal names, client names, account identifiers, or sensitive ledger excerpts
+into reusable scripts, examples, or skill text unless the user explicitly wants a private,
+ledger-local automation.
+
+Generate shared automations only from `invariant` and `policy` facts. Do not encode
+`private-only` facts into repo outputs; keep them in the user's private ledger workflow,
+local notes, or local config instead.
+
 ### Step 2: Generate pipeline script
 
 Create a shell script or Python script that chains the steps without mutating the
@@ -47,6 +60,7 @@ TMP_MAIN="$(mktemp)"
 echo "Processing $MONTH..."
 
 # 1. Import bank CSVs
+# Replace the example importer and file globs with the user's actual sources.
 mkdir -p staging
 python3 importers/td_bank.py ~/Downloads/td-checking-*.csv >> "$STAGING_FILE"
 python3 importers/td_bank.py ~/Downloads/td-visa-*.csv >> "$STAGING_FILE"
@@ -72,6 +86,8 @@ rm -f "$TMP_MAIN"
 - Validate after each step
 - Report success/failure with counts
 - Suggest the next manual approval step
+- Prefer sanitized summaries in generated documentation and comments when the automation is
+  meant to be shared across ledgers or contributed back to the repo
 
 ### Step 4: Schedule (optional)
 
@@ -86,6 +102,7 @@ If the user wants automated runs:
 - ALWAYS include a validation step in every pipeline
 - ALWAYS make scripts idempotent (safe to run twice)
 - Generated scripts must be human-readable and well-commented
+- Shared automations must encode rules and workflow, not private ledger content
 
 ## Output
 
