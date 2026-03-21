@@ -79,11 +79,13 @@ Describe your business. CPA Stack creates your chart of accounts, initial Beanco
 
 ### 3. Import your data
 
-Drop bank CSVs into `~/Downloads/`, then:
+Drop bank CSVs into `~/Downloads/`, and put receipt photos / invoice PDFs in your capture folders, then:
 
 ```
 /capture
 ```
+
+`/capture` now routes receipt photos through document preprocessing first, prefers bounded-size WebP derivatives for image receipts, and only creates compressed PDF derivatives when that materially helps OCR or storage.
 
 ### 4. Classify transactions
 
@@ -103,13 +105,14 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 
 ---
 
-## All 20 Skills
+## All 21 Skills
 
 ### C — Capture
 
 | Skill | Role | What It Does |
 |---|---|---|
 | `/capture` | Data Clerk | Import from all sources: bank CSVs, receipts, invoices |
+| `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive |
 | `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection |
 | `/receipt-scan` | Receipt Clerk | OCR receipt photos, generate transactions |
 

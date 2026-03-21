@@ -2,7 +2,8 @@
 name: capture
 description: |
   Master data import orchestrator. Consolidates every "evidence of money" into one place:
-  bank CSVs, credit card statements, receipts, invoices, payment platform exports.
+  bank CSVs, credit card statements, receipts, invoices, payment platform exports, and
+  routes raw source documents through preprocessing before OCR when needed.
   Use when starting the monthly CLEAR cycle or importing new financial data.
   CLEAR step: C (Capture)
 ---
@@ -33,6 +34,13 @@ Ask the user or check the ledger config for known data sources:
 4. **Receipts** — check `~/receipts/` or configured receipt directory for photos/PDFs
 5. **Invoices** — check for incoming invoice PDFs
 
+Flag source documents that are likely to need normalization:
+
+- receipt photos still in `JPG`, `PNG`, or `HEIC`
+- skewed camera scans
+- scanned PDFs that are unusually large for the page count
+- born-digital PDFs with normal size and selectable text can usually skip preprocessing
+
 List all found files with dates and sizes. Ask user to confirm which to process.
 
 ### Step 2: Route to specialists
@@ -40,8 +48,9 @@ List all found files with dates and sizes. Ask user to confirm which to process.
 For each data source, delegate to the appropriate skill:
 
 - CSV bank/credit card statements → `/bank-import`
-- Receipt photos (JPG, PNG, HEIC) → `/receipt-scan`
-- PDF invoices → extract data and generate Beancount transactions
+- Receipt photos (JPG, PNG, HEIC, TIFF) → `/doc-preprocess` → `/receipt-scan`
+- Receipt PDFs or scanned invoice PDFs → `/doc-preprocess` → `/receipt-scan`
+- Born-digital PDF invoices → extract data directly; only run `/doc-preprocess` first if the file is image-heavy or materially oversized
 - Payment platform exports → `/bank-import` with platform-specific format
 
 ### Step 3: Consolidate results
@@ -61,7 +70,11 @@ documents/YYYY/MM/
 ├── bank-statements/
 ├── credit-card-statements/
 ├── receipts/
+│   ├── source/
+│   └── processed/
 └── invoices/
+    ├── source/
+    └── processed/
 ```
 
 ## Constraints
@@ -70,6 +83,8 @@ documents/YYYY/MM/
 - NEVER auto-commit imported transactions — they go to a staging file
 - ALWAYS show the user what was found before processing
 - ALWAYS report file counts and amounts for verification
+- ALWAYS preserve original receipt/invoice files before creating compressed derivatives
+- Prefer WebP derivatives for receipt images and conservative compression for scanned PDFs
 
 ## Output
 

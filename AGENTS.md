@@ -18,6 +18,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 
 ### C — Capture
 - `/capture` — Import from financial data sources
+- `/doc-preprocess` — Normalize receipt photos and oversized PDFs before OCR/archive
 - `/bank-import` — Smart CSV importer with format auto-detection
 - `/receipt-scan` — OCR receipt photos, extract data, generate transactions
 
@@ -60,7 +61,7 @@ Year-end: `/audit` → `/report` → `/snapshot`
 
 - Operating currencies: `CAD`, `USD` (configured per entity)
 - Account hierarchy: `Assets:Bank:InstitutionName`, `Expenses:Category:Subcategory`
-- Metadata tags: `classify: auto|confirmed|manual`, `receipt: path/to/file`
+- Metadata tags: `classify: auto|confirmed|manual`, `receipt: path/to/file`, `receipt-ocr: path/to/processed/file`
 - Balance assertions: required at every monthly close
 - Recoverable sales tax: book to asset receivable accounts, not expense accounts
 
