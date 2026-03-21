@@ -10,7 +10,10 @@
 
 CFO Stack is an open-source, AI-powered accounting system built on [Beancount](https://github.com/beancount/beancount) and operated through Claude Code / Codex slash commands. It follows the **C.L.E.A.R.** framework to give solo founders, freelancers, and small businesses a virtual finance function — Bookkeeper, Controller, Tax Strategist, Auditor, and CFO — all as Markdown skills, all free.
 
-Inspired by [gstack](https://github.com/garrytan/gstack) (Garry Tan's "software factory" for Claude Code). Same philosophy, different domain: accounting instead of engineering.
+> *"You have to know accounting. It's the language of practical business life. It was a very useful thing to deliver to civilization. I've heard it came to civilization through Venice which of course was once the great commercial power in the Mediterranean. However, double-entry bookkeeping was a hell of an invention."*
+> — Charlie Munger
+
+Inspired by [gstack](https://github.com/garrytan/gstack) (Garry Tan's "software factory" for Claude Code). Same philosophy, different domain: **accounting instead of engineering**.
 
 ---
 

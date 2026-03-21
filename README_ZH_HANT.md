@@ -13,6 +13,13 @@
 CFO Stack 是一套以 [Beancount](https://github.com/beancount/beancount) 為核心的開源 AI 記帳與財務作業系統。
 它把 Claude Code、Codex 這類 AI agent 變成你的記帳員、控制者、稅務策略助手與 CFO。
 
+> *"You have to know accounting. It's the language of practical business life. It was a very useful thing to deliver to civilization. I've heard it came to civilization through Venice which of course was once the great commercial power in the Mediterranean. However, double-entry bookkeeping was a hell of an invention."*
+> — Charlie Munger
+>
+> 你必須懂會計。它是實際商業生活的語言。這是人類文明中非常有用的發明。我聽說它是從威尼斯傳入文明世界的——當然，威尼斯曾是地中海最偉大的商業強國。不過，複式記帳法確實是一項了不起的發明。
+
+靈感來自 [gstack](https://github.com/garrytan/gstack)（Garry Tan 為 Claude Code 打造的「軟體工廠」）。相同理念，不同領域：**會計取代工程**。
+
 核心流程是 **C.L.E.A.R.**：
 
 - Capture：收集銀行、信用卡、收據、發票、平台資料
