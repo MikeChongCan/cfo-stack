@@ -21,6 +21,10 @@ store credentials in the repo. You help the user open the right portal, use a sa
 browser profile, confirm the right account/date range, and download the raw CSV/PDF
 evidence needed for bookkeeping.
 
+Detailed live-browser guidance for Playwright-assisted statement downloads lives in:
+
+`./.agents/skills/cfo-playwright-download-statements/SKILL.md`
+
 ## Configuration
 
 Prefer a ledger-local profile file:
@@ -48,7 +52,8 @@ Build an export checklist by account:
 - institution name
 - account nickname shown in the portal
 - expected export formats, usually `csv` plus `pdf`
-- target statement period
+- prior confirmed export context if available
+- candidate periods or activity windows for LLM + human review
 
 If an account is missing from the export plan, call it out before launching the browser.
 
@@ -81,12 +86,18 @@ Human responsibilities:
 
 Agent responsibilities:
 - open the browser with the configured profile
+- use web search on official institution domains when the login or export page is unclear
 - help navigate to the transaction or statements area
 - confirm which raw files were downloaded
 - label the files to the right ledger account after download
 
 Do not encode brittle CSS selectors or institution-specific scraping logic in the skill.
 This is a guided export pattern, not a site automation pack.
+
+Keep export selection non-deterministic:
+- The LLM may infer likely missing periods from prior manifests
+- The LLM may use the live portal state to decide what to fetch next
+- The human must confirm the exact account, date range, and export type before download
 
 ### Step 4: Preserve the raw evidence
 

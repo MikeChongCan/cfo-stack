@@ -20,6 +20,9 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
     Do not guess template-driving answers.
 11. Do not require deterministic accounting classification, posting, or reporting as a product goal.
     CFO Stack may use non-deterministic, human-reviewed AI workflows for accounting decisions.
+12. For browser-assisted statement downloads, prefer the repo-local skill
+    `./.agents/skills/cfo-playwright-download-statements/SKILL.md` over deterministic helper scripts.
+    Let the LLM drive navigation and use web search on official institution domains when needed.
 
 ## Available Skills
 

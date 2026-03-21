@@ -129,6 +129,11 @@ Use this config to declare institutions such as TD, BMO, Chase, Cheese, Wealthsi
 IBKR, Wise, or other portals, then let `/statement-export` guide the human through login,
 account/date confirmation, and CSV/PDF download.
 
+The statement download pattern is intentionally LLM-driven and human-in-the-loop.
+This repo does not depend on deterministic bank-site scripts. The repo-local skill
+`./.agents/skills/cfo-playwright-download-statements/SKILL.md` is the preferred pattern
+for Playwright-assisted navigation, official-domain web search, and download guidance.
+
 ### 2. Set up your ledger
 
 ```
@@ -153,6 +158,8 @@ use:
 
 That workflow is human-in-the-loop: Chrome-family browser, dedicated reusable profile,
 manual login/MFA, agent-guided navigation, and raw CSV/PDF downloads preserved for archive.
+When the correct login or export page is unclear, the agent should use web search against
+official institution domains before navigating.
 
 Then run:
 
