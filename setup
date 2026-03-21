@@ -4,18 +4,21 @@
 set -euo pipefail
 
 CFO_STACK_DIR="$(cd "$(dirname "$0")" && pwd)"
-SKILLS_DIR="$(dirname "$CFO_STACK_DIR")"
 VENV_DIR="$CFO_STACK_DIR/.venv"
 VENV_BIN="$VENV_DIR/bin"
 VENV_PY="$VENV_BIN/python"
 RUN_DIR="$(pwd -P)"
 
 # ─── Parse --host flag ─────────────────────────────────────────
-HOST="claude"
+HOST="auto"
 SCOPE="machine"
 PROJECT_DIR=""
 while [ $# -gt 0 ]; do
   case "$1" in
+    claude|codex|openclaw|antigravity|auto)
+      HOST="$1"
+      shift
+      ;;
     --host)
       if [ $# -lt 2 ]; then
         echo "Error: --host requires a value (claude, codex, openclaw, antigravity, or auto)" >&2
@@ -43,7 +46,10 @@ while [ $# -gt 0 ]; do
       shift 2
       ;;
     --project-dir=*) PROJECT_DIR="${1#--project-dir=}"; shift ;;
-    *) shift ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      exit 1
+      ;;
   esac
 done
 
@@ -259,7 +265,6 @@ if [ "$SCOPE" = "project" ]; then
 fi
 
 # ─── 8. Install for Claude Code ───────────────────────────────
-SKILLS_BASENAME="$(basename "$SKILLS_DIR")"
 if [ "$INSTALL_CLAUDE" -eq 1 ]; then
   echo ""
   echo "Registering with Claude Code..."
@@ -268,12 +273,12 @@ if [ "$INSTALL_CLAUDE" -eq 1 ]; then
     link_skill_dirs "$CFO_STACK_DIR" "$PROJECT_CLAUDE_SKILLS" "cfo-"
     echo "  claude project skills: $PROJECT_CLAUDE_SKILLS"
     echo "  cfo-stack ready (claude project scope)."
-  elif [ "$SKILLS_BASENAME" = "skills" ]; then
-    link_skill_dirs "$CFO_STACK_DIR" "$SKILLS_DIR" "cfo-"
-    echo "  cfo-stack ready (claude)."
   else
-    echo "  Claude machine-scope registration skipped."
-    echo "  Clone CFO Stack under ~/.claude/skills/, or use --scope project."
+    CLAUDE_SKILLS="$HOME/.claude/skills"
+    mkdir -p "$CLAUDE_SKILLS"
+    link_skill_dirs "$CFO_STACK_DIR" "$CLAUDE_SKILLS" "cfo-"
+    echo "  cfo-stack ready (claude)."
+    echo "  claude skills: $CLAUDE_SKILLS"
   fi
 fi
 
@@ -284,7 +289,7 @@ if [ "$INSTALL_CODEX" -eq 1 ]; then
   if [ "$SCOPE" = "project" ]; then
     CODEX_SKILLS="$PROJECT_AGENTS_SKILLS"
   else
-    CODEX_SKILLS="$HOME/.codex/skills"
+    CODEX_SKILLS="$HOME/.agents/skills"
   fi
   mkdir -p "$CODEX_SKILLS"
   link_skill_dirs "$CFO_STACK_DIR" "$CODEX_SKILLS" "cfo-"

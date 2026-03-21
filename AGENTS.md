@@ -23,6 +23,14 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 12. For browser-assisted statement downloads, prefer the repo-local skill
     `./.agents/skills/cfo-playwright-download-statements/SKILL.md` over deterministic helper scripts.
     Let the LLM drive navigation and use web search on official institution domains when needed.
+13. Setup installs are path-agnostic at machine scope. Do not require this repo to live under
+    `~/.claude/skills/` or `~/.agents/skills/`; `./setup` registers Claude skills in
+    `~/.claude/skills/`, Codex skills in `~/.agents/skills/`, OpenClaw skills in
+    `~/.openclaw/skills/`, and Antigravity skills in `~/.gemini/antigravity/skills/`.
+14. When documenting setup commands, accept both explicit flags such as `./setup --host codex`
+    and the shorthand positional form `./setup codex`. Keep `setup` and `uninstall` behavior
+    symmetric.
+15. `./setup` defaults to `--host auto` unless the user explicitly selects a host.
 
 ## Available Skills
 

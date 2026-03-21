@@ -171,6 +171,11 @@ Repo setup supports two install scopes:
 
 - `./setup` or `./setup --scope machine` — default machine-level install
   - may register skills in home-directory agent paths
+  - supports both `./setup --host codex` and the shorthand `./setup codex`
+  - registers Claude skills in `~/.claude/skills/`
+  - registers Codex skills in `~/.agents/skills/`
+  - registers OpenClaw skills in `~/.openclaw/skills/`
+  - registers Antigravity skills in `~/.gemini/antigravity/skills/`
   - creates the global fallback config at `~/.cfo-stack/config.yaml`
 - `./setup --scope project --project-dir /path/to/project` — project-only install
   - registers skills inside the target project

@@ -3,7 +3,6 @@
 set -euo pipefail
 
 CFO_STACK_DIR="$(cd "$(dirname "$0")" && pwd)"
-SKILLS_DIR="$(dirname "$CFO_STACK_DIR")"
 STATE_DIR="$HOME/.cfo-stack"
 GLOBAL_CONFIG="$STATE_DIR/config.yaml"
 REMOVE_LOCAL_TOOLS=0
@@ -15,6 +14,10 @@ RUN_DIR="$(pwd -P)"
 
 while [ $# -gt 0 ]; do
   case "$1" in
+    claude|codex|openclaw|antigravity|auto)
+      HOST="$1"
+      shift
+      ;;
     --host)
       if [ $# -lt 2 ]; then
         echo "Error: --host requires a value (claude, codex, openclaw, antigravity, or auto)" >&2
@@ -160,15 +163,12 @@ remove_skill_links() {
   fi
 }
 
-SKILLS_BASENAME="$(basename "$SKILLS_DIR")"
 if [ "$REMOVE_CLAUDE" -eq 1 ]; then
   echo "Unregistering from Claude Code..."
   if [ "$SCOPE" = "project" ]; then
     remove_skill_links "$PROJECT_DIR/.claude/skills" "cfo-"
-  elif [ "$SKILLS_BASENAME" = "skills" ]; then
-    remove_skill_links "$SKILLS_DIR" "cfo-"
   else
-    echo "  Skipped Claude symlink cleanup — repo is not inside a skills directory"
+    remove_skill_links "$HOME/.claude/skills" "cfo-"
   fi
   echo ""
 fi
@@ -178,6 +178,7 @@ if [ "$REMOVE_CODEX" -eq 1 ]; then
   if [ "$SCOPE" = "project" ]; then
     remove_skill_links "$PROJECT_DIR/.agents/skills" "cfo-"
   else
+    remove_skill_links "$HOME/.agents/skills" "cfo-"
     remove_skill_links "$HOME/.codex/skills" "cfo-"
   fi
   echo ""

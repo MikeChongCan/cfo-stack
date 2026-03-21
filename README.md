@@ -38,11 +38,19 @@ bun run start
 ### 1. Install (30 seconds)
 
 ```bash
-git clone https://github.com/MikeChongCan/cfo-stack.git ~/.claude/skills/cfo-stack
-cd ~/.claude/skills/cfo-stack && ./setup
+git clone https://github.com/MikeChongCan/cfo-stack.git ~/cfo-stack
+cd ~/cfo-stack && ./setup --host auto
 ```
 
-For Codex: `./setup --host codex` | For OpenClaw: `./setup --host openclaw` | For Antigravity: `./setup --host antigravity` | Auto-detect: `./setup --host auto`
+You can also use the shorthand positional host form:
+
+- `./setup codex`
+- `./setup claude`
+- `./setup openclaw`
+- `./setup antigravity`
+- `./setup auto`
+
+If you omit `--host`, `./setup` now defaults to `auto` and registers every detected supported host.
 
 Machine-level install remains the default. To keep setup scoped to one target project
 instead of writing host registrations and default policy into your home directory, use:
@@ -57,6 +65,14 @@ Project scope:
 - registers Claude skills under the target project's `.claude/skills/`
 - registers Codex, OpenClaw, and Antigravity skills under the target project's `.agents/skills/`
 - skips creating `~/.cfo-stack/config.yaml`, so policy should live in the ledger-local `cfo-stack.yaml`
+
+Machine scope:
+
+- registers Claude skills under `~/.claude/skills/`
+- registers Codex skills under `~/.agents/skills/`
+- keeps OpenClaw under `~/.openclaw/skills/`
+- keeps Antigravity under `~/.gemini/antigravity/skills/`
+- works even if this repo is cloned outside `~/.claude/skills/`
 
 After setup, use the generated helpers for validation and Fava:
 
@@ -83,6 +99,8 @@ To unregister skills later:
 ```bash
 ./uninstall --host auto
 ```
+
+The same positional shorthand also works for uninstall, for example `./uninstall codex`.
 
 Project-scoped uninstall uses the same target:
 
