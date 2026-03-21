@@ -63,6 +63,7 @@ Run providers sequentially, not in parallel browser sessions.
 
 - ambiguous bookkeeping treatment
 - tax categorization questions
+- IRS or CRA rule interpretation with official-source context
 - tradeoff analysis between two ledger modeling approaches
 - choosing how to structure a CFO Stack workflow
 - sanity-checking a reporting interpretation before presenting it
@@ -84,6 +85,11 @@ If the issue depends on jurisdiction, include:
 - province/state
 - entity type
 - tax year or effective period if relevant
+
+If the question involves IRS or CRA rules, also include:
+- the official-source excerpt or link you are working from
+- the relevant jurisdiction-pack excerpt if one exists
+- the exact uncertainty to compare across models
 
 ### Step 2: Build a tight markdown context bundle
 
@@ -190,6 +196,7 @@ Preferred brief format:
 If the question touches tax or compliance:
 - never present the answer as legal or tax advice
 - never invent statutory rates or filing requirements
+- prefer IRS, CRA, and jurisdiction-pack source text over model speculation
 - prefer jurisdiction-pack facts over model speculation
 - mark unresolved items clearly
 

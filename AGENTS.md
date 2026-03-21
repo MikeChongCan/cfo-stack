@@ -71,6 +71,15 @@ When files are not on disk yet: `/statement-export` → `/capture`
 Quarterly: `/quarterly-tax` → `/tax-plan`
 Year-end: `/audit` → `/report` → `/snapshot`
 
+Use `/consult` when the user needs cross-model thinking on:
+- ambiguous bookkeeping treatment
+- tax framing or IRS/CRA interpretation questions
+- competing ledger-modeling approaches
+- workflow or reporting tradeoffs that benefit from multiple external model views
+
+For IRS/CRA questions, anchor the consultation in official-source text or the jurisdiction pack first.
+Use model answers to compare interpretations and surface review items, not to invent rules.
+
 ## Beancount Conventions
 
 - Operating currencies: `CAD`, `USD` (configured per entity)
