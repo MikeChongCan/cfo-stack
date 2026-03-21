@@ -37,7 +37,7 @@ git clone https://github.com/MikeChongCan/cfo-stack.git ~/.claude/skills/cfo-sta
 cd ~/.claude/skills/cfo-stack && ./setup
 ```
 
-For Codex: `./setup --host codex` | Auto-detect: `./setup --host auto`
+For Codex: `./setup --host codex` | For OpenClaw: `./setup --host openclaw` | For Antigravity: `./setup --host antigravity` | Auto-detect: `./setup --host auto`
 
 After setup, use the generated helpers for validation and Fava:
 
@@ -45,6 +45,13 @@ After setup, use the generated helpers for validation and Fava:
 ./bin/cfo-check
 ./bin/cfo-fava ./ledger/main.beancount 5000
 ```
+
+OpenClaw setup uses its shared local skills directory, `~/.openclaw/skills`, so you
+can clone this repo anywhere and still register the skills with `./setup --host openclaw`.
+
+Antigravity setup uses its documented global skills directory, `~/.gemini/antigravity/skills`.
+That keeps CFO Stack available across workspaces without requiring you to vendor the repo
+into each project's `.agents/skills/`.
 
 ### Included Samples
 

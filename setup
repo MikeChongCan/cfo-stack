@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# cfo-stack setup — install dependencies + register skills with Claude Code / Codex
+# cfo-stack setup — install dependencies + register skills with Claude Code / Codex / OpenClaw / Antigravity
 # Modeled after gstack's setup script
 set -euo pipefail
 
@@ -15,7 +15,7 @@ while [ $# -gt 0 ]; do
   case "$1" in
     --host)
       if [ $# -lt 2 ]; then
-        echo "Error: --host requires a value (claude, codex, or auto)" >&2
+        echo "Error: --host requires a value (claude, codex, openclaw, antigravity, or auto)" >&2
         exit 1
       fi
       HOST="$2"
@@ -27,23 +27,31 @@ while [ $# -gt 0 ]; do
 done
 
 case "$HOST" in
-  claude|codex|auto) ;;
-  *) echo "Unknown --host value: $HOST (expected claude, codex, or auto)" >&2; exit 1 ;;
+  claude|codex|openclaw|antigravity|auto) ;;
+  *) echo "Unknown --host value: $HOST (expected claude, codex, openclaw, antigravity, or auto)" >&2; exit 1 ;;
 esac
 
 # For auto: detect which agents are installed
 INSTALL_CLAUDE=0
 INSTALL_CODEX=0
+INSTALL_OPENCLAW=0
+INSTALL_ANTIGRAVITY=0
 if [ "$HOST" = "auto" ]; then
   command -v claude >/dev/null 2>&1 && INSTALL_CLAUDE=1
   command -v codex >/dev/null 2>&1 && INSTALL_CODEX=1
-  if [ "$INSTALL_CLAUDE" -eq 0 ] && [ "$INSTALL_CODEX" -eq 0 ]; then
+  command -v openclaw >/dev/null 2>&1 && INSTALL_OPENCLAW=1
+  command -v antigravity >/dev/null 2>&1 && INSTALL_ANTIGRAVITY=1
+  if [ "$INSTALL_CLAUDE" -eq 0 ] && [ "$INSTALL_CODEX" -eq 0 ] && [ "$INSTALL_OPENCLAW" -eq 0 ] && [ "$INSTALL_ANTIGRAVITY" -eq 0 ]; then
     INSTALL_CLAUDE=1
   fi
 elif [ "$HOST" = "claude" ]; then
   INSTALL_CLAUDE=1
 elif [ "$HOST" = "codex" ]; then
   INSTALL_CODEX=1
+elif [ "$HOST" = "openclaw" ]; then
+  INSTALL_OPENCLAW=1
+elif [ "$HOST" = "antigravity" ]; then
+  INSTALL_ANTIGRAVITY=1
 fi
 
 echo "╔══════════════════════════════════════════╗"
@@ -169,32 +177,14 @@ else
 fi
 
 # ─── 7. Helper: symlink skill subdirectories ──────────────────
-link_claude_skill_dirs() {
+link_skill_dirs() {
   local cfo_dir="$1"
   local skills_dir="$2"
+  local prefix="$3"
   local linked=()
   for skill_dir in "$cfo_dir"/skills/*/; do
     if [ -f "$skill_dir/SKILL.md" ]; then
-      skill_name="cfo-$(basename "$skill_dir")"
-      target="$skills_dir/$skill_name"
-      if [ -L "$target" ] || [ ! -e "$target" ]; then
-        ln -snf "$skill_dir" "$target"
-        linked+=("$skill_name")
-      fi
-    fi
-  done
-  if [ ${#linked[@]} -gt 0 ]; then
-    echo "  Linked skills: ${linked[*]}"
-  fi
-}
-
-link_codex_skill_dirs() {
-  local cfo_dir="$1"
-  local skills_dir="$2"
-  local linked=()
-  for skill_dir in "$cfo_dir"/skills/*/; do
-    if [ -f "$skill_dir/SKILL.md" ]; then
-      skill_name="cfo-$(basename "$skill_dir")"
+      skill_name="${prefix}$(basename "$skill_dir")"
       target="$skills_dir/$skill_name"
       if [ -L "$target" ] || [ ! -e "$target" ]; then
         ln -snf "$skill_dir" "$target"
@@ -213,7 +203,7 @@ if [ "$INSTALL_CLAUDE" -eq 1 ]; then
   echo ""
   echo "Registering with Claude Code..."
   if [ "$SKILLS_BASENAME" = "skills" ]; then
-    link_claude_skill_dirs "$CFO_STACK_DIR" "$SKILLS_DIR"
+    link_skill_dirs "$CFO_STACK_DIR" "$SKILLS_DIR" "cfo-"
     echo "  cfo-stack ready (claude)."
   else
     echo "  cfo-stack ready (claude)."
@@ -227,12 +217,34 @@ if [ "$INSTALL_CODEX" -eq 1 ]; then
   echo "Registering with Codex..."
   CODEX_SKILLS="$HOME/.codex/skills"
   mkdir -p "$CODEX_SKILLS"
-  link_codex_skill_dirs "$CFO_STACK_DIR" "$CODEX_SKILLS"
+  link_skill_dirs "$CFO_STACK_DIR" "$CODEX_SKILLS" "cfo-"
   echo "  cfo-stack ready (codex)."
   echo "  codex skills: $CODEX_SKILLS"
 fi
 
-# ─── 10. Create helper scripts ────────────────────────────────
+# ─── 10. Install for OpenClaw ─────────────────────────────────
+if [ "$INSTALL_OPENCLAW" -eq 1 ]; then
+  echo ""
+  echo "Registering with OpenClaw..."
+  OPENCLAW_SKILLS="$HOME/.openclaw/skills"
+  mkdir -p "$OPENCLAW_SKILLS"
+  link_skill_dirs "$CFO_STACK_DIR" "$OPENCLAW_SKILLS" "cfo-"
+  echo "  cfo-stack ready (openclaw)."
+  echo "  openclaw skills: $OPENCLAW_SKILLS"
+fi
+
+# ─── 11. Install for Antigravity ──────────────────────────────
+if [ "$INSTALL_ANTIGRAVITY" -eq 1 ]; then
+  echo ""
+  echo "Registering with Antigravity..."
+  ANTIGRAVITY_SKILLS="$HOME/.gemini/antigravity/skills"
+  mkdir -p "$ANTIGRAVITY_SKILLS"
+  link_skill_dirs "$CFO_STACK_DIR" "$ANTIGRAVITY_SKILLS" "cfo-"
+  echo "  cfo-stack ready (antigravity)."
+  echo "  antigravity skills: $ANTIGRAVITY_SKILLS"
+fi
+
+# ─── 12. Create helper scripts ────────────────────────────────
 mkdir -p "$CFO_STACK_DIR/bin"
 
 # cfo-check: bean-check wrapper
@@ -296,7 +308,7 @@ echo "Starting Fava (read-only) on http://localhost:$PORT ..."
 SCRIPT
 chmod +x "$CFO_STACK_DIR/bin/cfo-fava"
 
-# ─── 11. Done ─────────────────────────────────────────────────
+# ─── 13. Done ─────────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════╗"
 echo "║          Setup Complete!                 ║"
@@ -306,7 +318,7 @@ echo "║  Quick start:                            ║"
 echo "║    1. Run /setup to create your ledger   ║"
 echo "║    2. Edit ~/.cfo-stack/config.yaml      ║"
 echo "║       if you want a different review     ║"
-echo "║       threshold than $1,000              ║"
+echo "║       threshold than \$1,000             ║"
 echo "║    3. Drop bank CSVs in ~/Downloads      ║"
 echo "║    4. Run /capture to import them        ║"
 echo "║    5. Run /classify to categorize        ║"
