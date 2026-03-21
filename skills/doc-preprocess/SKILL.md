@@ -4,7 +4,8 @@ description: |
   Normalize and compress receipt photos, scanned invoices, and oversized source documents
   before OCR or archival. Use when capture includes JPG/PNG/HEIC/TIFF receipts, camera
   scans, or image-heavy PDFs that should be made smaller without losing legibility. On
-  macOS, prefer doc-crop for document photos and WebP output for image receipts. CLEAR
+  macOS, prefer doc-crop for document photos and WebP output for image receipts.
+  `doc-crop` is a macOS-only tool and should only be installed or run on macOS. CLEAR
   step: C (Capture)
 ---
 
@@ -63,6 +64,9 @@ doc-crop input.jpg output.webp --quality 75 --max-size 200
 ```
 
 This should crop margins, correct perspective, and iteratively compress to a bounded size.
+
+`doc-crop` is macOS-only. Do not tell users to install it on Linux or Windows, and do not
+attempt to run it unless the current host is macOS.
 
 ### Step 4: Handle PDFs conservatively
 
