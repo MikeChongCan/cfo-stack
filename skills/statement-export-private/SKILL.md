@@ -53,6 +53,9 @@ For each declared account, summarize:
 - suggested staging directory for raw downloads
 
 Treat candidate periods as suggestions for human confirmation, not deterministic instructions.
+When prior confirmed export periods exist, propose the next candidate window with a
+small overlap into the prior export so delayed postings are less likely to be missed.
+Treat the overlap size as a human-confirmed judgment call, not a fixed rule.
 
 ### Step 2: Find official URLs without browser automation
 
@@ -70,6 +73,7 @@ For each institution, provide:
 - official statement or activity-export URL if known
 - account label to verify after login
 - suggested date range or duration to download
+- suggested overlap versus the prior export window when applicable
 - suggested export types
 - suggested local staging directory, usually `~/Downloads/cfo-staging`
 
@@ -87,6 +91,8 @@ After the human downloads the files, tell them to run:
 - NEVER use browser tools, Chrome DevTools MCP, Playwright, or remote-debugging workflows
 - NEVER ask the user to share credentials, OTP codes, screenshots of sensitive pages, or session data
 - NEVER claim the suggested date range is certain; label it as a candidate for confirmation
+- NEVER assume prior exports are clean cutoffs; recommend a small overlap when delayed
+  posting risk exists
 - ALWAYS prefer official institution domains when listing URLs
 - ALWAYS tell the user where to stage downloads before they begin
 

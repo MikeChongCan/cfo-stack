@@ -58,6 +58,11 @@ Build an export checklist by account:
 - prior confirmed export context if available
 - candidate periods or activity windows for LLM + human review
 
+When prior confirmed export periods exist, propose the next candidate window with a
+small overlap into the previously exported range so delayed postings are less likely
+to be missed. Treat the overlap size as a human-confirmed judgment call based on the
+institution's posting behavior, not a fixed rule.
+
 If an account is missing from the export plan, call it out before launching the browser.
 
 ### Step 2: Choose browser mode
@@ -93,6 +98,7 @@ Human responsibilities:
 - complete MFA / 2FA
 - confirm the exact account
 - confirm the exact export period
+- confirm the overlap window against the prior export when applicable
 - confirm each download action when the portal wording is ambiguous
 
 Agent responsibilities:
@@ -107,6 +113,8 @@ This is a guided export pattern, not a site automation pack.
 
 Keep export selection non-deterministic:
 - The LLM may infer likely missing periods from prior manifests
+- The LLM should prefer candidate periods that overlap slightly with the prior export
+  when an institution is known to post transactions late
 - The LLM may use the live portal state to decide what to fetch next
 - The human must confirm the exact account, date range, and export type before download
 
@@ -116,7 +124,8 @@ For each account:
 - Prefer CSV for line-item transaction import
 - Also keep the monthly or account-statement PDF when available
 - Preserve original filenames in the archive before any normalization
-- Record the account, period, and downloaded file paths in an export manifest
+- Record the account, period, overlap used if any, and downloaded file paths in an
+  export manifest
 
 Archive layout:
 

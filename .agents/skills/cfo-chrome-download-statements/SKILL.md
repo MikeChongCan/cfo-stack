@@ -102,6 +102,10 @@ Read the configured institutions and accounts, then summarize:
 - prior confirmed export periods if any
 - likely missing periods or activity windows that should be reviewed
 
+If prior confirmed export periods exist, propose a candidate overlap into the prior
+range so delayed postings are less likely to be missed. Treat the overlap size as
+human-confirmed context based on the institution's actual posting lag.
+
 This summary is for the LLM and the human. It is not a deterministic instruction set.
 
 ### 2. Find the right portal
@@ -142,11 +146,13 @@ The LLM may propose likely next exports based on prior manifests, but it must pr
 - candidate periods
 - candidate export types
 - candidate account views
+- candidate overlap windows versus the prior export when delayed posting risk exists
 
 The human must confirm:
 
 - correct account
 - correct date range
+- overlap size if re-exporting part of the prior window
 - CSV vs PDF vs both
 - whether the portal view is statements, transactions, tax slips, or something else
 
@@ -157,6 +163,7 @@ After each successful download, record:
 - institution
 - ledger account
 - confirmed period
+- confirmed overlap used if any
 - export type
 - original filename
 - saved path
@@ -172,6 +179,7 @@ After each successful download, record:
 
 - hardcoded selectors for a specific institution
 - hardcoded month-stepping logic
+- assuming the prior export end date is always a safe hard cutoff
 - assuming the newest statement is always the correct target
 - storing login secrets or browser session artifacts in the repo
 - silently downloading files without human confirmation
