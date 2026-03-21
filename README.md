@@ -191,6 +191,32 @@ Describe your business. CFO Stack creates your chart of accounts, initial Beanco
 It should also create a ledger-local `cfo-stack.yaml` so review thresholds and other
 policy knobs are part of the ledger, not buried in agent prose.
 
+If you want to hand the onboarding task to OpenClaw directly, you can paste a prompt like this:
+
+```text
+Set up my accounting system using CFO Stack.
+
+Work inside this repo and use the repo's /setup workflow.
+Ask me only the minimum blocking intake questions first:
+- whether this is personal, family, or business bookkeeping
+- country
+- entity type
+- legal or operating name
+- province/state if relevant
+- operating currency
+
+After that:
+- create the ledger structure
+- create ledger-local cfo-stack.yaml
+- create tax/jurisdiction.yaml from the closest template
+- validate the ledger with the repo helper
+- tell me the next commands to run for capture and classification
+
+Do not guess jurisdiction, entity type, or tax settings when the intake is incomplete.
+Do not claim compliance.
+Show diffs before any ledger mutations.
+```
+
 ### 3. Get your raw files onto disk
 
 If you already exported files manually, drop bank CSVs into `~/Downloads/cfo-staging/`, and put
@@ -392,7 +418,7 @@ Fork it, improve it, make it yours. Priority contributions:
 - Bank importers (especially Canadian and US banks)
 - Tax rule packs for additional jurisdictions
 - Multi-region invoice templates
-- Beancount plugins for common tax scenarios
+- LLM-reviewed accounting and tax workflows
 
 ---
 

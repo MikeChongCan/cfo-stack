@@ -220,12 +220,6 @@ cfo-stack/
 │   ├── alipay.py                  # Alipay
 │   └── generic_csv.py             # Auto-detect format
 │
-├── plugins/                       # Beancount plugins
-│   ├── gst_hst.py                 # Auto-calculate GST/HST
-│   ├── sales_tax.py               # US state sales tax
-│   ├── smart_classify.py          # AI-powered classification
-│   └── tax_lots.py                # Capital gains (ACB for CA / FIFO for US)
-│
 ├── templates/                     # Starting ledger templates
 │   ├── canada-corp/               # Canadian corporation
 │   ├── canada-sole-prop/          # Canadian sole proprietorship
@@ -373,7 +367,7 @@ The setup script:
 
 ### Phase 3: Tax Compliance (Weeks 5-8)
 
-- [ ] GST/HST plugin + `/quarterly-tax` for Canada
+- [ ] GST/HST review workflow + `/quarterly-tax` for Canada
 - [ ] US estimated tax support
 - [ ] `/tax-plan` — tax strategy with scenario modeling
 - [ ] `/invoice` — multi-region invoicing

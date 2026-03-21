@@ -35,5 +35,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Run unit tests
-        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Run test suite
+        run: uv run --no-project --with pytest pytest

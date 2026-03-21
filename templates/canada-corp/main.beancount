@@ -6,10 +6,6 @@
 option "title" "Your Company Name Inc."
 option "operating_currency" "CAD"
 
-;; Plugins
-;; plugin "plugins.gst_hst"          ; uncomment when plugin is ready
-;; plugin "plugins.smart_classify"   ; uncomment when plugin is ready
-
 include "accounts.beancount"
 include "opening-balances.beancount"
 
