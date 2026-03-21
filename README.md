@@ -4,6 +4,8 @@
 
 **Author:** Mike Chong ([realmikechong.com](https://realmikechong.com))
 
+[繁體中文說明](README_ZH_HANT.md)
+
 ---
 
 CFO Stack is an open-source, AI-powered accounting system built on [Beancount](https://github.com/beancount/beancount) and operated through Claude Code / Codex slash commands. It follows the **C.L.E.A.R.** framework to give solo founders, freelancers, and small businesses a virtual finance function — Bookkeeper, Controller, Tax Strategist, Auditor, and CFO — all as Markdown skills, all free.
