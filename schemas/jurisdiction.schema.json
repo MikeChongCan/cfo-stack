@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/MikeChongCan/cpa-stack/main/schemas/jurisdiction.schema.json",
-  "title": "CPA Stack Jurisdiction Pack",
+  "$id": "https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/jurisdiction.schema.json",
+  "title": "CFO Stack Jurisdiction Pack",
   "description": "Schema for tax/jurisdiction.yaml files used by templates and example ledgers.",
   "type": "object",
   "additionalProperties": false,

@@ -21,7 +21,7 @@ at year-end.
 
 ## CRITICAL DISCLAIMER
 
-**This is NOT tax advice.** CPA Stack produces data summaries, scenario models,
+**This is NOT tax advice.** CFO Stack produces data summaries, scenario models,
 and checklists. A licensed tax professional must review and approve all tax
 decisions. Tax rules change. Jurisdictions vary. Your situation is unique.
 

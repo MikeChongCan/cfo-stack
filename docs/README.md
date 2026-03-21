@@ -1,6 +1,6 @@
-# CPA Stack Docs
+# CFO Stack Docs
 
-This directory contains the Docusaurus documentation site for CPA Stack.
+This directory contains the Docusaurus documentation site for CFO Stack.
 
 ## Local development
 

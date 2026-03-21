@@ -11,8 +11,8 @@ Jordan Lee is a salaried individual in Ontario.
 ## Commands
 
 ```bash
-./bin/cpa-check main.beancount
-./bin/cpa-fava main.beancount 5000
+./bin/cfo-check ./main.beancount
+./bin/cfo-fava ./main.beancount 5000
 ```
 
 This sample is for illustration only.

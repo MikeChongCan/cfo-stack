@@ -1,4 +1,4 @@
-# cpa-stack — Agent Instructions
+# cfo-stack — Agent Instructions
 
 AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system and Beancount.
 

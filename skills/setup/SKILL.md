@@ -3,7 +3,7 @@ name: setup
 description: |
   Initialize a new Beancount ledger from scratch. Chart of accounts for your
   business type, opening balances, Fava config, git initialization.
-  Use when starting with CPA Stack for the first time.
+  Use when starting with CFO Stack for the first time.
   CLEAR step: Meta
 ---
 
@@ -123,8 +123,9 @@ For pass-through entities, keep owner-only items out of the business chart:
 
 Use the helper scripts created by repo setup:
 
-1. Run `./bin/cpa-check main.beancount` — must pass
-2. Launch Fava to verify: `./bin/cpa-fava main.beancount 5000`
+1. Run `./bin/cfo-check ./ledger/main.beancount` when the ledger lives under `ledger/`
+2. Or run `./bin/cfo-check` and let it auto-discover `./main.beancount`, `./ledger/main.beancount`, or the first matching `main.beancount` in the working tree
+3. Launch Fava to verify: `./bin/cfo-fava ./ledger/main.beancount 5000`
 3. Show the user their empty but valid ledger
 
 ### Step 8: Initialize git

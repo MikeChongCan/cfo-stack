@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# cpa-stack setup — install dependencies + register skills with Claude Code / Codex
+# cfo-stack setup — install dependencies + register skills with Claude Code / Codex
 # Modeled after gstack's setup script
 set -euo pipefail
 
-CPA_STACK_DIR="$(cd "$(dirname "$0")" && pwd)"
-SKILLS_DIR="$(dirname "$CPA_STACK_DIR")"
-VENV_DIR="$CPA_STACK_DIR/.venv"
+CFO_STACK_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILLS_DIR="$(dirname "$CFO_STACK_DIR")"
+VENV_DIR="$CFO_STACK_DIR/.venv"
 VENV_BIN="$VENV_DIR/bin"
 VENV_PY="$VENV_BIN/python"
 
@@ -47,7 +47,7 @@ elif [ "$HOST" = "codex" ]; then
 fi
 
 echo "╔══════════════════════════════════════════╗"
-echo "║          CPA Stack Setup                 ║"
+echo "║          CFO Stack Setup                 ║"
 echo "║    AI-Powered Accounting with CLEAR      ║"
 echo "╚══════════════════════════════════════════╝"
 echo ""
@@ -145,17 +145,17 @@ if [ ! -x "$VENV_BIN/fava" ]; then
 fi
 
 # ─── 6. Create state directory ─────────────────────────────────
-mkdir -p "$HOME/.cpa-stack"
-echo "  State dir: ~/.cpa-stack/"
+mkdir -p "$HOME/.cfo-stack"
+echo "  State dir: ~/.cfo-stack/"
 
 # ─── 7. Helper: symlink skill subdirectories ──────────────────
 link_claude_skill_dirs() {
-  local cpa_dir="$1"
+  local cfo_dir="$1"
   local skills_dir="$2"
   local linked=()
-  for skill_dir in "$cpa_dir"/skills/*/; do
+  for skill_dir in "$cfo_dir"/skills/*/; do
     if [ -f "$skill_dir/SKILL.md" ]; then
-      skill_name="cpa-$(basename "$skill_dir")"
+      skill_name="cfo-$(basename "$skill_dir")"
       target="$skills_dir/$skill_name"
       if [ -L "$target" ] || [ ! -e "$target" ]; then
         ln -snf "$skill_dir" "$target"
@@ -169,12 +169,12 @@ link_claude_skill_dirs() {
 }
 
 link_codex_skill_dirs() {
-  local cpa_dir="$1"
+  local cfo_dir="$1"
   local skills_dir="$2"
   local linked=()
-  for skill_dir in "$cpa_dir"/skills/*/; do
+  for skill_dir in "$cfo_dir"/skills/*/; do
     if [ -f "$skill_dir/SKILL.md" ]; then
-      skill_name="cpa-$(basename "$skill_dir")"
+      skill_name="cfo-$(basename "$skill_dir")"
       target="$skills_dir/$skill_name"
       if [ -L "$target" ] || [ ! -e "$target" ]; then
         ln -snf "$skill_dir" "$target"
@@ -193,10 +193,10 @@ if [ "$INSTALL_CLAUDE" -eq 1 ]; then
   echo ""
   echo "Registering with Claude Code..."
   if [ "$SKILLS_BASENAME" = "skills" ]; then
-    link_claude_skill_dirs "$CPA_STACK_DIR" "$SKILLS_DIR"
-    echo "  cpa-stack ready (claude)."
+    link_claude_skill_dirs "$CFO_STACK_DIR" "$SKILLS_DIR"
+    echo "  cfo-stack ready (claude)."
   else
-    echo "  cpa-stack ready (claude)."
+    echo "  cfo-stack ready (claude)."
     echo "  (skipped skill symlinks — not inside .claude/skills/)"
   fi
 fi
@@ -207,22 +207,35 @@ if [ "$INSTALL_CODEX" -eq 1 ]; then
   echo "Registering with Codex..."
   CODEX_SKILLS="$HOME/.codex/skills"
   mkdir -p "$CODEX_SKILLS"
-  link_codex_skill_dirs "$CPA_STACK_DIR" "$CODEX_SKILLS"
-  echo "  cpa-stack ready (codex)."
+  link_codex_skill_dirs "$CFO_STACK_DIR" "$CODEX_SKILLS"
+  echo "  cfo-stack ready (codex)."
   echo "  codex skills: $CODEX_SKILLS"
 fi
 
 # ─── 10. Create helper scripts ────────────────────────────────
-mkdir -p "$CPA_STACK_DIR/bin"
+mkdir -p "$CFO_STACK_DIR/bin"
 
-# cpa-check: bean-check wrapper
-cat > "$CPA_STACK_DIR/bin/cpa-check" << 'SCRIPT'
+# cfo-check: bean-check wrapper
+cat > "$CFO_STACK_DIR/bin/cfo-check" << 'SCRIPT'
 #!/usr/bin/env bash
 # Wrapper around bean-check with colored output
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 VENV_BIN="$ROOT_DIR/.venv/bin"
-LEDGER="${1:-main.beancount}"
+LEDGER="${1:-}"
+if [ -z "$LEDGER" ]; then
+  if [ -f "./main.beancount" ]; then
+    LEDGER="./main.beancount"
+  elif [ -f "./ledger/main.beancount" ]; then
+    LEDGER="./ledger/main.beancount"
+  else
+    LEDGER="$(find . -type f -name main.beancount | head -n 1 || true)"
+  fi
+fi
+if [ -z "$LEDGER" ]; then
+  echo "Error: no ledger found. Pass a Beancount file explicitly or create main.beancount." >&2
+  exit 1
+fi
 if [ ! -f "$LEDGER" ]; then
   echo "Error: $LEDGER not found" >&2
   exit 1
@@ -230,17 +243,30 @@ fi
 "$VENV_BIN/bean-check" "$LEDGER" 2>&1
 echo "Ledger OK: $LEDGER"
 SCRIPT
-chmod +x "$CPA_STACK_DIR/bin/cpa-check"
+chmod +x "$CFO_STACK_DIR/bin/cfo-check"
 
-# cpa-fava: Fava launcher
-cat > "$CPA_STACK_DIR/bin/cpa-fava" << 'SCRIPT'
+# cfo-fava: Fava launcher
+cat > "$CFO_STACK_DIR/bin/cfo-fava" << 'SCRIPT'
 #!/usr/bin/env bash
 # Launch Fava web UI
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 VENV_BIN="$ROOT_DIR/.venv/bin"
-LEDGER="${1:-main.beancount}"
+LEDGER="${1:-}"
 PORT="${2:-5000}"
+if [ -z "$LEDGER" ]; then
+  if [ -f "./main.beancount" ]; then
+    LEDGER="./main.beancount"
+  elif [ -f "./ledger/main.beancount" ]; then
+    LEDGER="./ledger/main.beancount"
+  else
+    LEDGER="$(find . -type f -name main.beancount | head -n 1 || true)"
+  fi
+fi
+if [ -z "$LEDGER" ]; then
+  echo "Error: no ledger found. Pass a Beancount file explicitly or create main.beancount." >&2
+  exit 1
+fi
 if [ ! -f "$LEDGER" ]; then
   echo "Error: $LEDGER not found" >&2
   exit 1
@@ -248,7 +274,7 @@ fi
 echo "Starting Fava (read-only) on http://localhost:$PORT ..."
 "$VENV_BIN/fava" "$LEDGER" --port "$PORT" --read-only
 SCRIPT
-chmod +x "$CPA_STACK_DIR/bin/cpa-fava"
+chmod +x "$CFO_STACK_DIR/bin/cfo-fava"
 
 # ─── 11. Done ─────────────────────────────────────────────────
 echo ""

@@ -1,6 +1,6 @@
 # Example Ledgers
 
-Illustration-only sample ledgers for CPA Stack.
+Illustration-only sample ledgers for CFO Stack.
 
 ## Business Samples
 

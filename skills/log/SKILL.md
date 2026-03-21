@@ -56,7 +56,7 @@ Prepare a unified diff from staging to the appropriate ledger file:
 Show the patch, explain any non-trivial normalization, and ask for explicit approval.
 Only after approval:
 1. Apply the patch
-2. Re-run `./bin/cpa-check main.beancount`
+2. Re-run `./bin/cfo-check` or pass the ledger path explicitly
 3. Report the exact file(s) changed
 
 ## Double-Entry Primer

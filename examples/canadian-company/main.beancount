@@ -1,9 +1,9 @@
 ;; ═══════════════════════════════════════════════════════
 ;; MapleTech Solutions Inc.
-;; Canadian Corporation — CPA Stack Example
+;; Canadian Corporation — CFO Stack Example
 ;;
 ;; This is a realistic example of a small Canadian tech
-;; consulting company managed entirely with CPA Stack.
+;; consulting company managed entirely with CFO Stack.
 ;; ═══════════════════════════════════════════════════════
 
 option "title" "MapleTech Solutions Inc."

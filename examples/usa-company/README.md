@@ -1,6 +1,6 @@
 # Sarah Chen — Freelance Software Consultant (Example)
 
-A realistic US freelancer example managed with CPA Stack.
+A realistic US freelancer example managed with CFO Stack.
 
 ## About This Freelancer
 
@@ -23,12 +23,12 @@ A realistic US freelancer example managed with CPA Stack.
 
 ```bash
 # Validate the ledger
-./bin/cpa-check main.beancount
+./bin/cfo-check ./main.beancount
 
 # Launch Fava to explore
-./bin/cpa-fava main.beancount 5000
+./bin/cfo-fava ./main.beancount 5000
 
-# Run CPA Stack skills
+# Run CFO Stack skills
 /report          # see P&L mapped to Schedule C
 /tax-plan        # quarterly estimated tax planning
 /advisor         # FIRE progress tracking

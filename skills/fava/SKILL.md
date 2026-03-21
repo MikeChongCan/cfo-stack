@@ -28,12 +28,21 @@ Fava won't start if there are parse errors.
 ### Step 2: Launch Fava
 
 ```bash
-# Default: main.beancount on port 5000
-fava main.beancount --port 5000 --read-only
+# Prefer explicit path when you know it
+fava ./ledger/main.beancount --port 5000 --read-only
 
-# Or use the helper script
-./bin/cpa-fava main.beancount 5000
+# Or use the helper script with auto-discovery
+./bin/cfo-fava
+
+# Or pass the ledger explicitly
+./bin/cfo-fava ./ledger/main.beancount 5000
 ```
+
+Helper discovery order:
+1. The explicit path passed to `./bin/cfo-fava`
+2. `./main.beancount`
+3. `./ledger/main.beancount`
+4. The first `main.beancount` found under the current working tree
 
 Tell the user: "Fava is running in read-only mode at http://localhost:5000"
 

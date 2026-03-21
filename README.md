@@ -1,12 +1,12 @@
-# CPA Stack
+# CFO Stack
 
-### Replace Your CPA with AI + Plain-Text Accounting
+### AI-Powered Finance Ops + Plain-Text Accounting
 
 **Author:** Mike Chong ([realmikechong.com](https://realmikechong.com))
 
 ---
 
-CPA Stack is an open-source, AI-powered accounting system built on [Beancount](https://github.com/beancount/beancount) and operated through Claude Code / Codex slash commands. It follows the **C.L.E.A.R.** framework to give solo founders, freelancers, and small businesses a virtual accounting firm — Bookkeeper, Controller, Tax Strategist, Auditor, and CFO — all as Markdown skills, all free.
+CFO Stack is an open-source, AI-powered accounting system built on [Beancount](https://github.com/beancount/beancount) and operated through Claude Code / Codex slash commands. It follows the **C.L.E.A.R.** framework to give solo founders, freelancers, and small businesses a virtual finance function — Bookkeeper, Controller, Tax Strategist, Auditor, and CFO — all as Markdown skills, all free.
 
 Inspired by [gstack](https://github.com/garrytan/gstack) (Garry Tan's "software factory" for Claude Code). Same philosophy, different domain: accounting instead of engineering.
 
@@ -33,8 +33,8 @@ npm start
 ### 1. Install (30 seconds)
 
 ```bash
-git clone https://github.com/realmikechong/cpa-stack.git ~/.claude/skills/cpa-stack
-cd ~/.claude/skills/cpa-stack && ./setup
+git clone https://github.com/MikeChongCan/cfo-stack.git ~/.claude/skills/cfo-stack
+cd ~/.claude/skills/cfo-stack && ./setup
 ```
 
 For Codex: `./setup --host codex` | Auto-detect: `./setup --host auto`
@@ -42,8 +42,8 @@ For Codex: `./setup --host codex` | Auto-detect: `./setup --host auto`
 After setup, use the generated helpers for validation and Fava:
 
 ```bash
-./bin/cpa-check main.beancount
-./bin/cpa-fava main.beancount 5000
+./bin/cfo-check
+./bin/cfo-fava ./ledger/main.beancount 5000
 ```
 
 ### Included Samples
@@ -63,7 +63,7 @@ After setup, use the generated helpers for validation and Fava:
 
 Each template and example pack includes a YAML schema comment pointing at:
 
-`https://raw.githubusercontent.com/MikeChongCan/cpa-stack/main/schemas/jurisdiction.schema.json`
+`https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/jurisdiction.schema.json`
 
 That gives editor validation and a stable contract for LLM workflows.
 Generated `tax/` review packets are intentionally tracked by default so the filing
@@ -75,7 +75,7 @@ workflow keeps an audit trail.
 /setup
 ```
 
-Describe your business. CPA Stack creates your chart of accounts, initial Beancount ledger, and git repo.
+Describe your business. CFO Stack creates your chart of accounts, initial Beancount ledger, and git repo.
 
 ### 3. Import your data
 
@@ -185,9 +185,9 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 
 ---
 
-## CPA Stack vs Traditional CPA
+## CFO Stack vs Traditional CPA
 
-| | Traditional CPA | CPA Stack |
+| | Traditional CPA | CFO Stack |
 |---|---|---|
 | **Cost** | $3,000-$10,000/year | Free (MIT) |
 | **Speed** | Days to weeks | Seconds to minutes |
@@ -198,7 +198,7 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 | **Data ownership** | Locked in proprietary software | Plain text you own forever |
 | **Learning** | Doesn't learn your patterns | Gets smarter with every correction |
 
-**Important:** CPA Stack replaces the 90% of CPA work that is repetitive. For complex situations (audits, litigation, estate planning, reorganizations), you still want a licensed professional.
+**Important:** CFO Stack replaces the repetitive operational accounting work that usually creates CPA overhead. For complex situations (audits, litigation, estate planning, reorganizations), you still want a licensed professional.
 
 ---
 

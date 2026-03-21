@@ -22,8 +22,18 @@ You are the quality gate. Nothing gets committed without passing your checks.
 ### Step 1: Run validation helper
 
 ```bash
-./bin/cpa-check main.beancount
+# Prefer explicit path when you know it
+./bin/cfo-check ./ledger/main.beancount
+
+# Or rely on auto-discovery
+./bin/cfo-check
 ```
+
+Discovery order:
+1. The explicit path passed to `./bin/cfo-check`
+2. `./main.beancount`
+3. `./ledger/main.beancount`
+4. The first `main.beancount` found under the current working tree
 
 Report any errors with file, line number, and description.
 

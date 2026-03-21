@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'CPA Stack',
-  tagline: 'AI-powered accounting on top of Beancount and the C.L.E.A.R. framework',
+  title: 'CFO Stack',
+  tagline: 'AI-powered finance ops on top of Beancount and the C.L.E.A.R. framework',
   favicon: 'img/logo.svg',
 
   future: {
@@ -12,9 +12,9 @@ const config: Config = {
   },
 
   url: process.env.DOCS_URL ?? 'https://mikechongcan.github.io',
-  baseUrl: process.env.DOCS_BASE_URL ?? '/cpa-stack/',
+  baseUrl: process.env.DOCS_BASE_URL ?? '/cfo-stack/',
   organizationName: 'MikeChongCan',
-  projectName: 'cpa-stack',
+  projectName: 'cfo-stack',
 
   onBrokenLinks: 'throw',
   markdown: {
@@ -37,7 +37,7 @@ const config: Config = {
           routeBasePath: '/',
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/MikeChongCan/cpa-stack/tree/main/docs/',
+            'https://github.com/MikeChongCan/cfo-stack/tree/main/docs/',
         },
         blog: false,
         theme: {
@@ -59,9 +59,9 @@ const config: Config = {
       },
     },
     navbar: {
-      title: 'CPA Stack',
+      title: 'CFO Stack',
       logo: {
-        alt: 'CPA Stack',
+        alt: 'CFO Stack',
         src: 'img/logo.svg',
       },
       items: [
@@ -74,7 +74,7 @@ const config: Config = {
         {to: '/framework/clear', label: 'CLEAR', position: 'left'},
         {to: '/roadmap/tooling', label: 'Roadmap', position: 'left'},
         {
-          href: 'https://github.com/MikeChongCan/cpa-stack',
+          href: 'https://github.com/MikeChongCan/cfo-stack',
           label: 'GitHub',
           position: 'right',
         },
@@ -105,7 +105,7 @@ const config: Config = {
             },
             {
               label: 'Repository',
-              href: 'https://github.com/MikeChongCan/cpa-stack',
+              href: 'https://github.com/MikeChongCan/cfo-stack',
             },
           ],
         },
@@ -114,7 +114,7 @@ const config: Config = {
           items: [
             {
               label: 'License',
-              href: 'https://github.com/MikeChongCan/cpa-stack/blob/main/LICENSE',
+              href: 'https://github.com/MikeChongCan/cfo-stack/blob/main/LICENSE',
             },
           ],
         },

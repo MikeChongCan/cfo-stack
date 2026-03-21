@@ -1,4 +1,4 @@
-# CPA Stack — Master Plan
+# CFO Stack — Master Plan
 
 **Author:** Mike Chong (realmikechong.com)
 **Date:** March 2026
@@ -8,9 +8,9 @@
 
 ## Vision
 
-CPA Stack is an open-source, AI-powered accounting system that replaces 90% of what you pay a CPA for. Built on Beancount (plain-text double-entry accounting) and operated through Claude Code / Codex slash commands — all Markdown, all free.
+CFO Stack is an open-source, AI-powered accounting system that replaces most of the repetitive accounting operations small businesses overpay for. It is built on Beancount (plain-text double-entry accounting) and operated through Claude Code / Codex slash commands.
 
-**Inspired by [gstack](https://github.com/garrytan/gstack)** — Garry Tan's "software factory" that turns Claude Code into a virtual engineering team. CPA Stack applies the same philosophy to accounting: instead of a virtual eng team, you get a **virtual accounting firm**.
+**Inspired by [gstack](https://github.com/garrytan/gstack)** — Garry Tan's "software factory" that turns Claude Code into a virtual engineering team. CFO Stack applies the same philosophy to accounting and finance operations: instead of a virtual eng team, you get a **virtual finance function**.
 
 ---
 
@@ -120,7 +120,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 │            Claude Code / Codex / Gemini          │
 │         (AI agent executing skills)              │
 ├─────────────────────────────────────────────────┤
-│          CPA Stack Skills (Markdown)             │
+│          CFO Stack Skills (Markdown)             │
 │  /capture /log /extract /automate /report ...    │
 ├─────────────────────────────────────────────────┤
 │            Beancount v3 (Core Engine)            │
@@ -139,7 +139,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 
 ### Key Design Decisions (borrowed from gstack)
 
-| gstack Pattern | CPA Stack Equivalent |
+| gstack Pattern | CFO Stack Equivalent |
 |---|---|
 | Skills live in `~/.claude/skills/` or `.claude/skills/` | Same |
 | Each skill = folder with `SKILL.md` | Same |
@@ -152,7 +152,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 
 ### What's Different from gstack
 
-| Aspect | gstack | CPA Stack |
+| Aspect | gstack | CFO Stack |
 |---|---|---|
 | Core executable | Compiled browse CLI (Bun + Playwright) | None — Python scripts only |
 | Build step | `bun build --compile` | `uv venv` + `uv pip install` |
@@ -167,7 +167,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 ## Directory Structure
 
 ```
-cpa-stack/
+cfo-stack/
 ├── AGENTS.md                      # Canonical agent instructions
 ├── CLAUDE.md                      # Symlink to AGENTS.md
 ├── GEMINI.md                      # Symlink to AGENTS.md
@@ -242,8 +242,8 @@ cpa-stack/
 │   └── sidebars.ts
 │
 ├── bin/                           # Helper scripts
-│   ├── cpa-check                  # Wrapper: bean-check + custom rules
-│   └── cpa-fava                   # Wrapper: launch Fava
+│   ├── cfo-check                  # Wrapper: bean-check + custom rules
+│   └── cfo-fava                   # Wrapper: launch Fava
 │
 └── tests/                         # Test suite
     ├── fixtures/                  # Sample CSVs, receipts, ledgers
@@ -254,7 +254,7 @@ cpa-stack/
 
 ## The Accounting Cycle (Process)
 
-Just like gstack's sprint (Think → Plan → Build → Review → Test → Ship), CPA Stack follows the CLEAR cycle:
+Just like gstack's sprint (Think → Plan → Build → Review → Test → Ship), CFO Stack follows the CLEAR cycle:
 
 ### Monthly Close
 
@@ -315,8 +315,8 @@ You:    /tax-plan
 
 ```bash
 # Clone into Claude Code skills directory
-git clone https://github.com/realmikechong/cpa-stack.git ~/.claude/skills/cpa-stack
-cd ~/.claude/skills/cpa-stack && ./setup
+git clone https://github.com/MikeChongCan/cfo-stack.git ~/.claude/skills/cfo-stack
+cd ~/.claude/skills/cfo-stack && ./setup
 
 # Or for Codex
 ./setup --host codex
@@ -327,7 +327,7 @@ cd ~/.claude/skills/cpa-stack && ./setup
 
 The setup script:
 1. Installs Python dependencies (beancount, fava, beangulp, beanquery)
-2. Creates `~/.cpa-stack/` state directory
+2. Creates `~/.cfo-stack/` state directory
 3. Symlinks skill subdirectories for Claude Code / Codex
 4. Validates Beancount installation
 5. Prints quick-start guide
@@ -391,9 +391,9 @@ The setup script:
 
 ---
 
-## Comparison: CPA Stack vs Traditional CPA
+## Comparison: CFO Stack vs Traditional CPA
 
-| | Traditional CPA | CPA Stack |
+| | Traditional CPA | CFO Stack |
 |---|---|---|
 | **Cost** | $3,000-$10,000/year | Free (MIT) |
 | **Turnaround** | Days to weeks | Seconds to minutes |
@@ -404,12 +404,12 @@ The setup script:
 | **Data ownership** | Locked in QuickBooks/Xero | Plain text files you own forever |
 | **Learning** | They don't learn your patterns | Learns from every correction |
 
-**Important:** CPA Stack does NOT replace a CPA for complex situations (litigation, CRA/IRS audits, reorganizations, estate planning). It replaces the 90% that is repetitive bookkeeping, standard compliance, and basic tax planning.
+**Important:** CFO Stack does NOT replace a CPA for complex situations (litigation, CRA/IRS audits, reorganizations, estate planning). It replaces repetitive bookkeeping, standard compliance preparation, and routine finance operations.
 
 ---
 
 ## Licensing
 
-CPA Stack itself: **MIT** — free forever.
+CFO Stack itself: **MIT** — free forever.
 
-Dependencies keep their own licenses. CPA Stack repository content is MIT-licensed.
+Dependencies keep their own licenses. CFO Stack repository content is MIT-licensed.

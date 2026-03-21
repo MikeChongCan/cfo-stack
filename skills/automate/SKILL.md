@@ -53,16 +53,16 @@ python3 importers/td_bank.py ~/Downloads/td-visa-*.csv >> "$STAGING_FILE"
 
 # 2. Validate the proposed import file in a temporary combined ledger
 cat > "$TMP_MAIN" <<EOF
-include "$(pwd)/main.beancount"
+include "$(pwd)/ledger/main.beancount"
 include "$(pwd)/$STAGING_FILE"
 EOF
-./bin/cpa-check "$TMP_MAIN"
+./bin/cfo-check "$TMP_MAIN"
 
 # 3. Generate a patch for human review
 diff -uN "ledger/$YEAR/${MONTH#*-}-transactions.beancount" "$STAGING_FILE" || true
 
 echo "Review the patch, then apply it explicitly."
-echo "Archive source files only after approval and a successful ./bin/cpa-check main.beancount."
+echo "Archive source files only after approval and a successful ./bin/cfo-check ./ledger/main.beancount."
 rm -f "$TMP_MAIN"
 ```
 

@@ -11,8 +11,8 @@ Nguyen household is a two-income Canadian family ledger with a mortgage, RESP sa
 ## Commands
 
 ```bash
-./bin/cpa-check main.beancount
-./bin/cpa-fava main.beancount 5000
+./bin/cfo-check ./main.beancount
+./bin/cfo-fava ./main.beancount 5000
 ```
 
 This sample is for illustration only.

@@ -1,6 +1,6 @@
 # MapleTech Solutions Inc. — Example
 
-A realistic Canadian corporation example managed with CPA Stack.
+A realistic Canadian corporation example managed with CFO Stack.
 
 ## About This Company
 
@@ -22,12 +22,12 @@ A realistic Canadian corporation example managed with CPA Stack.
 
 ```bash
 # Validate the ledger
-./bin/cpa-check main.beancount
+./bin/cfo-check ./main.beancount
 
 # Launch Fava to explore
-./bin/cpa-fava main.beancount 5000
+./bin/cfo-fava ./main.beancount 5000
 
-# Run CPA Stack skills
+# Run CFO Stack skills
 /report          # see financial statements
 /reconcile       # verify balances
 /quarterly-tax   # prepare Q1 GST return
