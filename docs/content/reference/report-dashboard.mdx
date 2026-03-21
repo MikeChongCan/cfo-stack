@@ -1,0 +1,62 @@
+---
+title: Report Dashboard
+description: Generate deterministic HTML dashboards for company and household ledgers.
+sidebar_position: 2
+---
+
+import companyShot from '@site/static/img/report-dashboard/canadian-company.png';
+import familyShot from '@site/static/img/report-dashboard/canadian-family.png';
+
+# `/report-dashboard`
+
+`/report-dashboard` is the design-forward reporting path for CFO Stack. It turns a valid `main.beancount` entrypoint into a static dashboard bundle:
+
+- `index.html`
+- `dashboard.css`
+- `dashboard-data.json`
+
+The generator is deterministic. It reads Beancount through `bean-query`, infers whether the ledger looks like a business or a household profile, and renders a polished HTML dashboard with Bun, React, TypeScript, and Tailwind v4. No model is required at runtime.
+
+## Use it
+
+After `./setup`:
+
+```bash
+./bin/cfo-dashboard ./ledger/main.beancount
+./bin/cfo-dashboard examples/canadian-company/main.beancount
+./bin/cfo-dashboard examples/canadian-family/main.beancount --profile household
+./bin/cfo-dashboard --sample-set all
+```
+
+Default output goes under ignored `reports/` directories so generated artifacts do not pollute git history.
+
+## What It Shows
+
+- Business ledgers: income statement, balance sheet, direct cash flow, revenue mix, expense mix, asset/liability load, and recent activity.
+- Household ledgers: net worth, liquid cash, savings rate, income/spending mix, direct cash flow, and review queue context.
+- Review thresholds respect policy lookup order: ledger-local `cfo-stack.yaml`, then global `~/.cfo-stack/config.yaml`, then the setup default.
+
+## Showcase
+
+The screenshots below are committed documentation assets. The underlying sample dashboards are generated locally into ignored `reports/dashboard-showcase/`.
+
+### Canadian Company Sample
+
+<img src={companyShot} alt="Canadian company dashboard showcase" />
+
+### Canadian Family Sample
+
+<img src={familyShot} alt="Canadian family dashboard showcase" />
+
+## Refresh the Showcase
+
+```bash
+./bin/cfo-dashboard --sample-set all
+```
+
+Then capture fresh screenshots from:
+
+- `reports/dashboard-showcase/canadian-company/index.html`
+- `reports/dashboard-showcase/canadian-family/index.html`
+
+and overwrite the images in `docs/static/img/report-dashboard/`.

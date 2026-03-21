@@ -1,0 +1,25 @@
+{
+  "name": "cfo-report-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "bun run ./src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "check": "bun run typecheck"
+  },
+  "dependencies": {
+    "csv-parse": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "yaml": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "bun-types": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  },
+  "packageManager": "bun@1.3.10"
+}

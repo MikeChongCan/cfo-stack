@@ -308,6 +308,28 @@ echo "Starting Fava (read-only) on http://localhost:$PORT ..."
 SCRIPT
 chmod +x "$CFO_STACK_DIR/bin/cfo-fava"
 
+# cfo-dashboard: deterministic HTML dashboard generator
+cat > "$CFO_STACK_DIR/bin/cfo-dashboard" << 'SCRIPT'
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+SCRIPTS_DIR="$ROOT_DIR/skills/report-dashboard/scripts"
+
+if ! command -v bun >/dev/null 2>&1; then
+  echo "Error: bun is required for cfo-dashboard." >&2
+  echo "Install Bun from https://bun.sh and run this command again." >&2
+  exit 1
+fi
+
+if [ ! -d "$SCRIPTS_DIR/node_modules" ]; then
+  echo "Installing dashboard dependencies with Bun..."
+  (cd "$SCRIPTS_DIR" && bun install)
+fi
+
+exec bun --cwd "$SCRIPTS_DIR" run generate -- "$@"
+SCRIPT
+chmod +x "$CFO_STACK_DIR/bin/cfo-dashboard"
+
 # ─── 13. Done ─────────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════╗"
@@ -323,6 +345,7 @@ echo "║    3. Drop bank CSVs in ~/Downloads      ║"
 echo "║    4. Run /capture to import them        ║"
 echo "║    5. Run /classify to categorize        ║"
 echo "║    6. Run /report to see your finances   ║"
+echo "║    7. Run ./bin/cfo-dashboard            ║"
 echo "║                                          ║"
 echo "║  The CLEAR cycle:                        ║"
 echo "║    Capture → Log → Extract →              ║"

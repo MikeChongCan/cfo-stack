@@ -191,6 +191,7 @@ venv/
 /documents/
 /receipts/
 /reports/
+dashboard-output/
 
 # Generated local helpers
 /bin/

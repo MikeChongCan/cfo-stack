@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@source "./src/**/*.{ts,tsx}";
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 32%),
+    radial-gradient(circle at top right, rgba(217, 119, 6, 0.12), transparent 28%),
+    linear-gradient(180deg, #f5efe2 0%, #f7f4ec 28%, #fcfbf8 100%);
+}
+
+body {
+  min-height: 100%;
+}

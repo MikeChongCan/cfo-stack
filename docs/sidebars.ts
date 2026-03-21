@@ -11,7 +11,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Reference',
-      items: ['reference/skills'],
+      items: ['reference/skills', 'reference/report-dashboard'],
     },
     {
       type: 'category',

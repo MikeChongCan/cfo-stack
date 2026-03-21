@@ -49,6 +49,7 @@ After setup, use the generated helpers for validation and Fava:
 ```bash
 ./bin/cfo-check
 ./bin/cfo-fava ./ledger/main.beancount 5000
+./bin/cfo-dashboard ./ledger/main.beancount
 ```
 
 OpenClaw setup uses its shared local skills directory, `~/.openclaw/skills`, so you
@@ -177,9 +178,17 @@ AI proposes classifications and tax treatment diffs. You approve the patch, then
 
 Income statement, balance sheet, cash flow — your complete financial picture.
 
+For a shareable browser artifact instead of terminal-first reporting:
+
+```bash
+./bin/cfo-dashboard ./ledger/main.beancount
+```
+
+This generates static HTML, CSS, and JSON in `reports/`, using `bean-query` only. Generated dashboards stay ignored by git.
+
 ---
 
-## All 23 Skills
+## All 24 Skills
 
 ### C — Capture
 
@@ -221,6 +230,7 @@ Income statement, balance sheet, cash flow — your complete financial picture.
 | Skill | Role | What It Does |
 |---|---|---|
 | `/report` | CFO | P&L, Balance Sheet, Cash Flow, comparisons |
+| `/report-dashboard` | Design-forward CFO | Beautiful static HTML dashboards from deterministic Beancount extracts |
 | `/fava` | Dashboard | Launch Fava web UI for visual exploration |
 | `/advisor` | Financial Advisor | Net worth, FIRE planning, scenario modeling |
 
