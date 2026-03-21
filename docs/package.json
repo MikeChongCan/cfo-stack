@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "generate-demos": "bash ./scripts/generate-report-dashboard-demos.sh",
     "start": "docusaurus start --host 0.0.0.0",
-    "build": "docusaurus build",
+    "build": "bun run generate-demos && docusaurus build",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "typecheck": "tsc",

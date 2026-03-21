@@ -11,9 +11,9 @@ import type {
   TransactionSummary,
 } from './types';
 
-const pageShell = 'mx-auto w-full max-w-[1440px] px-5 py-6 sm:px-8 lg:px-10 lg:py-10';
+const pageShell = 'mx-auto w-full max-w-[1360px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6';
 const panel =
-  'rounded-[30px] border border-white/60 bg-white/80 shadow-[0_18px_70px_rgba(11,29,26,0.14)] backdrop-blur';
+  'rounded-[24px] border border-white/70 bg-white/84 shadow-[0_12px_40px_rgba(11,29,26,0.1)] backdrop-blur';
 
 export function renderDashboardHtml(data: DashboardData): string {
   const markup = renderToStaticMarkup(<DashboardPage data={data} />);
@@ -26,7 +26,7 @@ export function renderDashboardHtml(data: DashboardData): string {
     <meta name="description" content="Deterministic CFO Stack dashboard generated from Beancount data." />
     <link rel="stylesheet" href="./dashboard.css" />
   </head>
-  <body class="min-h-screen text-[#10211d]">
+  <body class="min-h-screen bg-[#f7f7f2] text-[#10211d]">
     ${markup}
     <script>
       const buttons = Array.from(document.querySelectorAll('[data-tab-button]'));
@@ -38,8 +38,8 @@ export function renderDashboardHtml(data: DashboardData): string {
           button.classList.toggle('bg-[#10211d]', active);
           button.classList.toggle('text-white', active);
           button.classList.toggle('shadow-[0_10px_35px_rgba(16,33,29,0.22)]', active);
-          button.classList.toggle('bg-white/70', !active);
-          button.classList.toggle('text-[#10211d]', !active);
+          button.classList.toggle('bg-transparent', !active);
+          button.classList.toggle('text-[#50615b]', !active);
         });
         panels.forEach((panel) => {
           panel.toggleAttribute('hidden', panel.getAttribute('data-tab-panel') !== tab);
@@ -57,64 +57,68 @@ function DashboardPage({data}: {data: DashboardData}) {
   return (
     <div className={pageShell} style={{fontFamily: '"Avenir Next", "IBM Plex Sans", "Segoe UI", sans-serif'}}>
       <header className={`${panel} overflow-hidden`}>
-        <div className="grid gap-6 px-6 py-7 sm:px-8 lg:grid-cols-[1.3fr_0.7fr] lg:px-10 lg:py-10">
-          <div className="space-y-5">
+        <div className="grid gap-5 px-5 py-5 sm:px-6 lg:grid-cols-[1.45fr_0.55fr] lg:px-7 lg:py-6">
+          <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#0f766e]">
               <span>{isBusiness ? 'Finance operating system' : 'Household operating system'}</span>
               <span className="rounded-full bg-[#10211d] px-3 py-1 text-[0.68rem] tracking-[0.22em] text-white">
                 {data.meta.profile}
               </span>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2">
               <h1
-                className="max-w-4xl text-4xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#10211d] sm:text-5xl lg:text-[4.15rem]"
+                className="max-w-4xl text-3xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#10211d] sm:text-4xl lg:text-[3.25rem]"
                 style={{fontFamily: '"Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif'}}
               >
                 {data.meta.title}
               </h1>
-              <p className="max-w-3xl text-base leading-7 text-[#42504b] sm:text-lg">
+              <p className="max-w-3xl text-sm leading-6 text-[#42504b] sm:text-[0.98rem]">
                 Deterministic dashboard generated from <code className="rounded bg-[#10211d]/6 px-1.5 py-0.5 text-[0.92em]">{data.meta.ledgerPath}</code>.
                 The renderer stays static, but the data comes directly from <code className="rounded bg-[#10211d]/6 px-1.5 py-0.5 text-[0.92em]">bean-query</code>.
               </p>
             </div>
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#fbf8f1] px-4 py-3">
               <MetaPill label="Report window" value={data.meta.periodLabel} />
               <MetaPill label="Latest month" value={data.meta.latestMonthLabel} />
               <MetaPill label="Review threshold" value={reviewThresholdLabel(data)} />
               <MetaPill label="Generated" value={timestampLabel(data.meta.generatedAt)} />
             </div>
           </div>
-          <aside className="flex flex-col justify-between gap-6 rounded-[26px] bg-[#10211d] p-6 text-white shadow-[0_16px_45px_rgba(16,33,29,0.28)]">
+          <aside className="flex flex-col justify-between gap-4 rounded-[20px] bg-[#10211d] p-5 text-white shadow-[0_12px_35px_rgba(16,33,29,0.22)]">
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#92d7cc]">What stands out</div>
-              <ul className="mt-4 space-y-3 text-sm leading-6 text-white/80">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#92d7cc]">What stands out</div>
+                <div className="flex flex-wrap gap-2">
+                  <ArtifactLink href="./dashboard-data.json" label="JSON" />
+                  <ArtifactLink href="./index.html" label="HTML" />
+                </div>
+              </div>
+              <ul className="mt-3 space-y-2 text-sm leading-5 text-white/80">
                 {data.highlights.map((highlight) => (
-                  <li key={highlight} className="rounded-2xl border border-white/8 bg-white/5 px-4 py-3">
+                  <li key={highlight} className="border-l-2 border-[#92d7cc]/60 pl-3">
                     {highlight}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-[24px] border border-white/8 bg-white/6 px-4 py-4">
-              <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#92d7cc]">Artifacts</div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <ArtifactLink href="./dashboard-data.json" label="Raw JSON" />
-                <ArtifactLink href="./index.html" label="Standalone HTML" />
-              </div>
+            <div className="grid grid-cols-3 gap-2 rounded-[18px] border border-white/8 bg-white/6 px-3 py-3 text-center">
+              <MiniStat label="Months" value={String(data.monthly.length)} />
+              <MiniStat label="Alerts" value={String(data.flaggedTransactions.length)} />
+              <MiniStat label="Currency" value={data.meta.currency} />
             </div>
           </aside>
         </div>
       </header>
 
-      <main className="mt-6 space-y-6">
-        <section className="grid gap-4 lg:grid-cols-4">
+      <main className="mt-4 space-y-4">
+        <section className="grid gap-3 lg:grid-cols-4">
           {data.metrics.map((metric) => (
             <MetricTile key={metric.label} currency={data.meta.currency} metric={metric} />
           ))}
         </section>
 
-        <section className={`${panel} p-3`}>
-          <div role="tablist" aria-label="Dashboard sections" className="flex flex-wrap gap-2">
+        <section>
+          <div role="tablist" aria-label="Dashboard sections" className="flex flex-wrap gap-2 border-b border-[#10211d]/10 pb-2">
             <TabButton id="overview" label="Overview" />
             <TabButton id="statements" label="Statements" />
             <TabButton id="activity" label="Activity" />
@@ -184,9 +188,9 @@ function DashboardPage({data}: {data: DashboardData}) {
 
 function MetaPill({label, value}: {label: string; value: string}) {
   return (
-    <div className="rounded-[22px] border border-[#10211d]/8 bg-[#fbf8f1] px-4 py-4">
-      <div className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#6a756f]">{label}</div>
-      <div className="mt-2 text-sm font-medium text-[#122722]">{value}</div>
+    <div className="flex items-center gap-2 text-xs leading-5">
+      <div className="font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{label}</div>
+      <div className="font-medium text-[#122722]">{value}</div>
     </div>
   );
 }
@@ -195,10 +199,19 @@ function ArtifactLink({href, label}: {href: string; label: string}) {
   return (
     <a
       href={href}
-      className="rounded-full border border-white/12 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white/14"
+      className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white/14"
     >
       {label}
     </a>
+  );
+}
+
+function MiniStat({label, value}: {label: string; value: string}) {
+  return (
+    <div>
+      <div className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-white/55">{label}</div>
+      <div className="mt-1 text-sm font-semibold text-white">{value}</div>
+    </div>
   );
 }
 
@@ -211,16 +224,16 @@ function MetricTile({metric, currency}: {metric: MetricCard; currency: string}) 
         : 'text-[#10211d]';
 
   return (
-    <article className={`${panel} px-5 py-5`}>
+    <article className={`${panel} px-4 py-4`}>
       <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#6a756f]">{metric.label}</div>
-      <div className={`mt-4 text-3xl font-semibold tracking-[-0.04em] ${toneClasses}`}>
+      <div className={`mt-2 text-2xl font-semibold tracking-[-0.04em] ${toneClasses}`}>
         {metric.value === null
           ? 'N/A'
           : metric.label === 'Savings rate'
             ? percent(metric.value)
             : money(metric.value, currency)}
       </div>
-      <p className="mt-2 text-sm leading-6 text-[#50615b]">{metric.note}</p>
+      <p className="mt-1 text-xs leading-5 text-[#50615b]">{metric.note}</p>
     </article>
   );
 }
@@ -234,7 +247,7 @@ function TabButton({id, label}: {id: string; label: string}) {
       type="button"
       data-tab-button={id}
       aria-selected="false"
-      className="rounded-full bg-white/70 px-5 py-3 text-sm font-semibold tracking-[-0.02em] text-[#10211d] transition"
+      className="rounded-full bg-transparent px-4 py-2 text-sm font-semibold tracking-[-0.02em] text-[#50615b] transition"
     >
       {label}
     </button>
@@ -256,45 +269,45 @@ function TrendPanel({
   );
   return (
     <section className={`${panel} overflow-hidden`}>
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#10211d]/7 px-6 py-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#10211d]/7 px-5 py-4">
         <div>
           <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#0f766e]">Trendline</div>
-          <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#10211d]">
+          <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">
             {profile === 'business' ? 'Revenue, cost, and margin' : 'Income, spending, and surplus'}
           </h2>
         </div>
-        <div className="rounded-full bg-[#10211d]/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#50615b]">
-          Last {monthly.length} months
+        <div className="rounded-full bg-[#10211d]/5 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#50615b]">
+          {monthWindowLabel(monthly.length)}
         </div>
       </div>
       <div className="relative">
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#f7f4ec] to-transparent sm:hidden" />
-        <div className="overflow-x-auto px-6 py-6">
-          <div className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6a756f] sm:hidden">
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-white/90 to-transparent sm:hidden" />
+        <div className="overflow-x-auto px-5 py-4">
+          <div className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6a756f] sm:hidden">
             Swipe for month detail
           </div>
-        <div className="grid min-w-[720px] grid-cols-6 gap-4">
-          {monthly.map((point) => (
-            <div key={point.key} className="rounded-[24px] bg-[#fbf8f1] p-4">
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a756f]">{point.label}</div>
-              <div className="mt-4 flex h-52 items-end gap-3">
-                <TrendBar color="bg-[#0f766e]" height={Math.max(14, (point.revenue / max) * 180)} value={point.revenue} currency={currency} label="Revenue" />
-                <TrendBar color="bg-[#d97706]" height={Math.max(14, (point.expenses / max) * 180)} value={point.expenses} currency={currency} label="Expenses" />
-                <TrendBar color={point.netIncome >= 0 ? 'bg-[#10211d]' : 'bg-[#9a3412]'} height={Math.max(14, (Math.abs(point.netIncome) / max) * 180)} value={point.netIncome} currency={currency} label="Net" />
-              </div>
-              <div className="mt-4 space-y-2 text-xs text-[#50615b]">
-                <div className="flex items-center justify-between">
-                  <span>Ending cash</span>
-                  <span className="font-semibold text-[#10211d]">{money(point.cashBalance, currency)}</span>
+          <div className="grid gap-3" style={monthGridStyle(monthly.length, 220)}>
+            {monthly.map((point) => (
+              <div key={point.key} className="rounded-[18px] bg-[#fbf8f1] p-3">
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a756f]">{point.label}</div>
+                <div className="mt-3 flex h-36 items-end gap-1.5">
+                  <TrendBar color="bg-[#0f766e]" height={Math.max(12, (point.revenue / max) * 120)} value={point.revenue} currency={currency} label="Revenue" />
+                  <TrendBar color="bg-[#d97706]" height={Math.max(12, (point.expenses / max) * 120)} value={point.expenses} currency={currency} label="Expenses" />
+                  <TrendBar color={point.netIncome >= 0 ? 'bg-[#10211d]' : 'bg-[#9a3412]'} height={Math.max(12, (Math.abs(point.netIncome) / max) * 120)} value={point.netIncome} currency={currency} label="Net" />
                 </div>
-                <div className="flex items-center justify-between">
-                  <span>Net worth</span>
-                  <span className="font-semibold text-[#10211d]">{money(point.netWorth, currency)}</span>
+                <div className="mt-3 space-y-1.5 text-[0.7rem] text-[#50615b]">
+                  <div className="flex items-center justify-between gap-3">
+                    <span>Ending cash</span>
+                    <span className="text-right font-semibold text-[#10211d]">{money(point.cashBalance, currency)}</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span>Net worth</span>
+                    <span className="text-right font-semibold text-[#10211d]">{money(point.netWorth, currency)}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -315,24 +328,24 @@ function TrendBar({
   label: string;
 }) {
   return (
-    <div className="flex flex-1 flex-col items-center justify-end gap-2">
-      <div className="text-[0.68rem] font-semibold text-[#6a756f]">{label}</div>
+    <div className="flex flex-1 flex-col items-center justify-end gap-1.5">
+      <div className="text-[0.62rem] font-semibold text-[#6a756f]">{label}</div>
       <div
         title={`${label}: ${money(value, currency)}`}
-        className={`w-full rounded-t-[20px] ${color} shadow-[0_10px_30px_rgba(16,33,29,0.15)]`}
+        className={`w-full rounded-t-[14px] ${color} shadow-[0_8px_22px_rgba(16,33,29,0.12)]`}
         style={{height}}
       />
-      <div className="text-[0.7rem] font-medium text-[#10211d]">{compactMoney(value, currency)}</div>
+      <div className="text-[0.66rem] font-medium text-[#10211d]">{compactMoney(value, currency)}</div>
     </div>
   );
 }
 
 function FlowPanel({currency, monthly}: {currency: string; monthly: MonthlyPoint[]}) {
   return (
-    <section className={`${panel} px-6 py-6`}>
+    <section className={`${panel} px-5 py-4`}>
       <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#0f766e]">Cash movement</div>
-      <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#10211d]">Operating, investing, and financing</h2>
-      <div className="mt-6 space-y-4">
+      <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">Operating, investing, and financing</h2>
+      <div className="mt-4 space-y-3">
         {[
           {key: 'operating', label: 'Operating', tone: 'bg-[#0f766e]'},
           {key: 'investing', label: 'Investing', tone: 'bg-[#d97706]'},
@@ -341,21 +354,21 @@ function FlowPanel({currency, monthly}: {currency: string; monthly: MonthlyPoint
           const values = monthly.map((point) => point[flow.key as keyof MonthlyPoint] as number);
           const peak = Math.max(1, ...values.map((value) => Math.abs(value)));
           return (
-            <div key={flow.key} className="rounded-[22px] bg-[#fbf8f1] p-4">
+            <div key={flow.key} className="rounded-[18px] bg-[#fbf8f1] p-3">
               <div className="flex items-center justify-between gap-3">
                 <div className="text-sm font-semibold text-[#10211d]">{flow.label}</div>
                 <div className="text-sm font-semibold text-[#10211d]">
                   {money(values.reduce((total, value) => total + value, 0), currency)}
                 </div>
               </div>
-              <div className="mt-4 grid grid-cols-6 gap-2">
+              <div className="mt-3 grid gap-2" style={monthGridStyle(monthly.length, 92)}>
                 {monthly.map((point) => {
                   const value = point[flow.key as keyof MonthlyPoint] as number;
                   const width = `${Math.max(8, (Math.abs(value) / peak) * 100)}%`;
                   const barTone = value < 0 ? 'bg-[#b45309]' : flow.tone;
                   return (
-                    <div key={`${flow.key}:${point.key}`} className="space-y-2">
-                      <div className="text-[0.68rem] uppercase tracking-[0.18em] text-[#6a756f]">{point.label}</div>
+                    <div key={`${flow.key}:${point.key}`} className="space-y-1.5">
+                      <div className="text-[0.62rem] uppercase tracking-[0.16em] text-[#6a756f]">{point.label}</div>
                       <div className="h-2 rounded-full bg-[#10211d]/8">
                         <div
                           title={`${flow.label}: ${money(value, currency)}`}
@@ -393,21 +406,21 @@ function BreakdownCard({
           ? 'bg-[#10211d]'
           : 'bg-[#475569]';
   return (
-    <section className={`${panel} px-6 py-6`}>
+    <section className={`${panel} px-5 py-4`}>
       <div className="flex items-center justify-between gap-3">
         <div>
           <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#0f766e]">Composition</div>
-          <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#10211d]">{block.title}</h2>
-          <p className="mt-2 text-sm leading-6 text-[#50615b]">{block.subtitle}</p>
+          <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">{block.title}</h2>
+          <p className="mt-1 text-sm leading-5 text-[#50615b]">{block.subtitle}</p>
         </div>
-        <div className={`h-12 w-12 rounded-2xl ${toneClass}`} />
+        <div className={`h-10 w-10 rounded-xl ${toneClass}`} />
       </div>
-      <div className="mt-6 space-y-4">
+      <div className="mt-4 space-y-2.5">
         {block.rows.map((row) => (
-          <div key={row.label} className="space-y-2">
+          <div key={row.label} className="space-y-1.5">
             <div className="flex items-center justify-between gap-3">
-              <div className="text-sm font-medium text-[#10211d]">{row.label}</div>
-              <div className="text-sm font-semibold text-[#10211d]">{money(row.amount, currency)}</div>
+              <div className="text-[0.92rem] font-medium text-[#10211d]">{row.label}</div>
+              <div className="text-[0.92rem] font-semibold text-[#10211d]">{money(row.amount, currency)}</div>
             </div>
             <div className="h-2 rounded-full bg-[#10211d]/8">
               <div className={`h-2 rounded-full ${toneClass}`} style={{width: `${Math.max(8, (row.share ?? 0) * 100)}%`}} />
@@ -431,17 +444,17 @@ function StatementCard({
   const accentClass = accent === 'emerald' ? 'text-[#0f766e]' : accent === 'amber' ? 'text-[#b45309]' : 'text-[#10211d]';
   return (
     <section className={`${panel} overflow-hidden`}>
-      <div className="border-b border-[#10211d]/7 px-6 py-5">
+      <div className="border-b border-[#10211d]/7 px-5 py-4">
         <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#0f766e]">Statement</div>
-        <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#10211d]">{summary.title}</h2>
+        <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">{summary.title}</h2>
       </div>
-      <div className="space-y-6 px-6 py-6">
+      <div className="space-y-4 px-5 py-4">
         {summary.sections.map((section) => (
           <StatementSectionView key={section.title} currency={currency} section={section} />
         ))}
-        <div className="rounded-[24px] bg-[#10211d] px-5 py-4 text-white">
+        <div className="rounded-[18px] bg-[#10211d] px-4 py-3 text-white">
           <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/60">{summary.totalLabel}</div>
-          <div className={`mt-2 text-3xl font-semibold tracking-[-0.04em] ${accentClass} text-white`}>
+          <div className={`mt-1 text-2xl font-semibold tracking-[-0.04em] ${accentClass} text-white`}>
             {money(summary.total, currency)}
           </div>
           {summary.comparisonLabel && summary.comparisonValue !== undefined ? (
@@ -457,12 +470,12 @@ function StatementCard({
 
 function StatementSectionView({currency, section}: {currency: string; section: StatementSection}) {
   return (
-    <div className="rounded-[24px] bg-[#fbf8f1] p-5">
+    <div className="rounded-[18px] bg-[#fbf8f1] p-4">
       <div className="flex items-center justify-between gap-3">
         <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{section.title}</div>
         <div className="text-sm font-semibold text-[#10211d]">{money(section.total, currency)}</div>
       </div>
-      <div className="mt-4 space-y-3">
+      <div className="mt-3 space-y-2">
         {section.rows.map((row) => (
           <StatementRowView key={row.label} currency={currency} row={row} />
         ))}
@@ -498,31 +511,33 @@ function TransactionCard({
 }) {
   return (
     <section className={`${panel} overflow-hidden`}>
-      <div className="border-b border-[#10211d]/7 px-6 py-5">
+      <div className="border-b border-[#10211d]/7 px-5 py-4">
         <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#0f766e]">Activity</div>
-        <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#10211d]">{title}</h2>
-        <p className="mt-2 text-sm leading-6 text-[#50615b]">{subtitle}</p>
+        <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">{title}</h2>
+        <p className="mt-1 text-sm leading-5 text-[#50615b]">{subtitle}</p>
       </div>
-      <div className="space-y-3 px-6 py-6">
+      <div className="px-5 py-3">
         {rows.length === 0 ? (
-          <div className="rounded-[24px] bg-[#fbf8f1] px-5 py-5 text-sm text-[#50615b]">{emptyLabel}</div>
+          <div className="rounded-[18px] bg-[#fbf8f1] px-4 py-4 text-sm text-[#50615b]">{emptyLabel}</div>
         ) : (
           rows.map((row) => (
-            <article key={row.id} className="rounded-[24px] bg-[#fbf8f1] px-5 py-5">
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{row.date}</div>
-                  <div className="mt-2 text-lg font-semibold tracking-[-0.03em] text-[#10211d]">{row.payee}</div>
-                  <div className="mt-1 text-sm leading-6 text-[#50615b]">{row.narration}</div>
+            <article key={row.id} className="border-b border-[#10211d]/7 py-3 last:border-b-0">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <div className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#6a756f]">{row.date}</div>
+                    <div className="text-base font-semibold tracking-[-0.02em] text-[#10211d]">{row.payee}</div>
+                    <div className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#6a756f]">{row.category}</div>
+                  </div>
+                  <div className="mt-1 text-sm text-[#42504b]">{row.narration}</div>
+                  <div className="mt-1 text-xs leading-5 text-[#66726d]">{row.note}</div>
                 </div>
-                <div className="text-right">
-                  <div className={`text-lg font-semibold tracking-[-0.03em] ${row.flagged ? 'text-[#b45309]' : 'text-[#10211d]'}`}>
+                <div className="shrink-0 text-right">
+                  <div className={`text-base font-semibold tracking-[-0.02em] ${row.flagged ? 'text-[#b45309]' : 'text-[#10211d]'}`}>
                     {money(row.amount, currency)}
                   </div>
-                  <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{row.category}</div>
                 </div>
               </div>
-              <div className="mt-4 text-sm leading-6 text-[#42504b]">{row.note}</div>
             </article>
           ))
         )}
@@ -533,19 +548,19 @@ function TransactionCard({
 
 function ActivityGrid({currency, monthly}: {currency: string; monthly: MonthlyPoint[]}) {
   return (
-    <section className={`${panel} px-6 py-6`}>
+    <section className={`${panel} px-5 py-4`}>
       <div className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#0f766e]">Monthly pulse</div>
-      <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#10211d]">Month-by-month summary</h2>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-[#10211d]">Month-by-month summary</h2>
+      <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {monthly.map((point) => (
-          <article key={point.key} className="rounded-[24px] bg-[#fbf8f1] p-5">
+          <article key={point.key} className="rounded-[18px] bg-[#fbf8f1] p-4">
             <div className="flex items-center justify-between gap-3">
               <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#6a756f]">{point.label}</div>
               <div className="rounded-full bg-[#10211d] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white">
                 {point.netIncome >= 0 ? 'positive' : 'negative'}
               </div>
             </div>
-            <dl className="mt-4 space-y-3 text-sm">
+            <dl className="mt-3 space-y-2 text-sm">
               <MetricRow currency={currency} label="Revenue / income" value={point.revenue} />
               <MetricRow currency={currency} label="Expenses / spending" value={point.expenses} />
               <MetricRow currency={currency} label="Net result" value={point.netIncome} />
@@ -609,6 +624,16 @@ function reviewThresholdLabel(data: DashboardData): string {
     return `Policy uses ${threshold.currency}`;
   }
   return `${money(threshold.amount, threshold.currency)}+`;
+}
+
+function monthWindowLabel(monthCount: number): string {
+  return monthCount === 1 ? 'Last month' : `Last ${monthCount} months`;
+}
+
+function monthGridStyle(monthCount: number, minColumnWidth: number) {
+  return {
+    gridTemplateColumns: `repeat(${Math.max(monthCount, 1)}, minmax(${minColumnWidth}px, 1fr))`,
+  };
 }
 
 function flaggedSubtitle(data: DashboardData): string {

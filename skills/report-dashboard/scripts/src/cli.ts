@@ -17,9 +17,10 @@ const repoRoot = await findRepoRoot(process.cwd());
 
 if (options.sampleSet === 'all') {
   const ledgers = await discoverSampleLedgers(repoRoot);
+  const outputRoot = resolveSampleOutputRoot(options.outputDir, repoRoot);
   for (const ledgerPath of ledgers) {
     const slug = path.basename(path.dirname(ledgerPath));
-    const outputDir = path.join(repoRoot, 'reports', 'dashboard-showcase', slug);
+    const outputDir = path.join(outputRoot, slug);
     await generateDashboard({
       ledgerPath,
       outputDir,
@@ -86,7 +87,7 @@ function parseArgs(args: string[]): CliOptions {
         options.outputDir = args[++index];
         break;
       case '--profile':
-        options.profile = args[++index] as DashboardProfile;
+        options.profile = parseProfile(args[++index]);
         break;
       case '--sample-set':
         if (args[index + 1] === 'all') {
@@ -116,17 +117,33 @@ function resolveOutputDir(outputDir: string | undefined, repoRoot: string): stri
   return path.join(repoRoot, 'reports', 'dashboards', 'latest');
 }
 
+function resolveSampleOutputRoot(outputDir: string | undefined, repoRoot: string): string {
+  if (outputDir) {
+    return path.resolve(process.cwd(), outputDir);
+  }
+  return path.join(repoRoot, 'reports', 'dashboard-showcase');
+}
+
 function printHelp() {
   console.log(`cfo-dashboard
 
 Usage:
   bun run generate -- --ledger ../../../examples/canadian-company/main.beancount
   bun run generate -- --sample-set all
+  bun run generate -- --sample-set all --output ../../../docs/static/demo/report-dashboard
 
 Options:
   --ledger <path>       Explicit ledger entrypoint.
-  --output <dir>        Output directory for index.html, dashboard.css, and dashboard-data.json.
+  --output <dir>        Output directory, or output root when used with --sample-set all.
   --profile <type>      Force profile: business or household.
   --sample-set all      Generate dashboards for every repo example ledger.
 `);
+}
+
+function parseProfile(value: string | undefined): DashboardProfile {
+  if (value === 'business' || value === 'household') {
+    return value;
+  }
+  console.error(`Invalid --profile value: ${value ?? '(missing)'}. Expected "business" or "household".`);
+  process.exit(1);
 }

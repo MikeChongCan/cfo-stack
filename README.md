@@ -185,6 +185,7 @@ For a shareable browser artifact instead of terminal-first reporting:
 ```
 
 This generates static HTML, CSS, and JSON in `reports/`, using `bean-query` only. Generated dashboards stay ignored by git.
+The docs demo page also embeds the full sample set from `examples/`: US and Canadian company, individual, and family ledgers.
 
 ---
 

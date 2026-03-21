@@ -4,8 +4,7 @@ description: Generate deterministic HTML dashboards for company and household le
 sidebar_position: 2
 ---
 
-import companyShot from '@site/static/img/report-dashboard/canadian-company.png';
-import familyShot from '@site/static/img/report-dashboard/canadian-family.png';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # `/report-dashboard`
 
@@ -36,27 +35,109 @@ Default output goes under ignored `reports/` directories so generated artifacts 
 - Household ledgers: net worth, liquid cash, savings rate, income/spending mix, direct cash flow, and review queue context.
 - Review thresholds respect policy lookup order: ledger-local `cfo-stack.yaml`, then global `~/.cfo-stack/config.yaml`, then the setup default.
 
-## Showcase
+## Live Demos
 
-The screenshots below are committed documentation assets. The underlying sample dashboards are generated locally into ignored `reports/dashboard-showcase/`.
+These demos are generated during the docs build and shipped as static HTML under `/demo/report-dashboard/`.
+This page embeds all six sample dashboards generated from the `examples/` ledgers.
+
+## Included Sample Ledgers
+
+- `examples/usa-company/` — US solo consulting business
+- `examples/canadian-company/` — incorporated Canadian service business
+- `examples/usa-individual/` — salaried US individual ledger
+- `examples/canadian-individual/` — salaried Canadian individual ledger
+- `examples/usa-family/` — US household ledger
+- `examples/canadian-family/` — Canadian household ledger
+
+### US Company Sample
+
+<div className="dashboard-demo-frame">
+  <iframe
+    src="/demo/report-dashboard/usa-company/index.html"
+    title="US company dashboard demo"
+    loading="lazy"
+  />
+</div>
+
+<p>
+  <a href="/demo/report-dashboard/usa-company/index.html">Open standalone HTML demo</a>
+</p>
 
 ### Canadian Company Sample
 
-<img src={companyShot} alt="Canadian company dashboard showcase" />
+<div className="dashboard-demo-frame">
+  <iframe
+    src={useBaseUrl('/demo/report-dashboard/canadian-company/index.html')}
+    title="Canadian company dashboard demo"
+    loading="lazy"
+  />
+</div>
+
+<p>
+  <a href={useBaseUrl('/demo/report-dashboard/canadian-company/index.html')}>Open standalone HTML demo</a>
+</p>
+
+### US Individual Sample
+
+<div className="dashboard-demo-frame">
+  <iframe
+    src={useBaseUrl('/demo/report-dashboard/usa-individual/index.html')}
+    title="US individual dashboard demo"
+    loading="lazy"
+  />
+</div>
+
+<p>
+  <a href={useBaseUrl('/demo/report-dashboard/usa-individual/index.html')}>Open standalone HTML demo</a>
+</p>
+
+### Canadian Individual Sample
+
+<div className="dashboard-demo-frame">
+  <iframe
+    src={useBaseUrl('/demo/report-dashboard/canadian-individual/index.html')}
+    title="Canadian individual dashboard demo"
+    loading="lazy"
+  />
+</div>
+
+<p>
+  <a href={useBaseUrl('/demo/report-dashboard/canadian-individual/index.html')}>Open standalone HTML demo</a>
+</p>
+
+### US Family Sample
+
+<div className="dashboard-demo-frame">
+  <iframe
+    src={useBaseUrl('/demo/report-dashboard/usa-family/index.html')}
+    title="US family dashboard demo"
+    loading="lazy"
+  />
+</div>
+
+<p>
+  <a href={useBaseUrl('/demo/report-dashboard/usa-family/index.html')}>Open standalone HTML demo</a>
+</p>
 
 ### Canadian Family Sample
 
-<img src={familyShot} alt="Canadian family dashboard showcase" />
+<div className="dashboard-demo-frame">
+  <iframe
+    src={useBaseUrl('/demo/report-dashboard/canadian-family/index.html')}
+    title="Canadian family dashboard demo"
+    loading="lazy"
+  />
+</div>
 
-## Refresh the Showcase
+<p>
+  <a href={useBaseUrl('/demo/report-dashboard/canadian-family/index.html')}>Open standalone HTML demo</a>
+</p>
+
+## Refresh the Demos
 
 ```bash
-./bin/cfo-dashboard --sample-set all
+cd docs
+bun run generate-demos
 ```
 
-Then capture fresh screenshots from:
-
-- `reports/dashboard-showcase/canadian-company/index.html`
-- `reports/dashboard-showcase/canadian-family/index.html`
-
-and overwrite the images in `docs/static/img/report-dashboard/`.
+This writes fresh demo bundles to ignored `docs/static/demo/report-dashboard/`.
