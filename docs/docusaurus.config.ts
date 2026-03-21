@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: process.env.DOCS_URL ?? 'https://mikechongcan.github.io',
-  baseUrl: process.env.DOCS_BASE_URL ?? '/cfo-stack/',
+  url: process.env.DOCS_URL ?? 'https://cfo-stack.realmikechong.com',
+  baseUrl: process.env.DOCS_BASE_URL ?? '/',
   organizationName: 'MikeChongCan',
   projectName: 'cfo-stack',
 

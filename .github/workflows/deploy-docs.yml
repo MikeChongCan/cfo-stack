@@ -43,8 +43,8 @@ jobs:
 
       - name: Validate and build
         env:
-          DOCS_URL: https://${{ github.repository_owner }}.github.io
-          DOCS_BASE_URL: /${{ github.event.repository.name }}/
+          DOCS_URL: https://cfo-stack.realmikechong.com
+          DOCS_BASE_URL: /
         run: bun run check
 
       - name: Upload Pages artifact
