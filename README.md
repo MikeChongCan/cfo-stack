@@ -44,6 +44,20 @@ cd ~/.claude/skills/cfo-stack && ./setup
 
 For Codex: `./setup --host codex` | For OpenClaw: `./setup --host openclaw` | For Antigravity: `./setup --host antigravity` | Auto-detect: `./setup --host auto`
 
+Machine-level install remains the default. To keep setup scoped to one target project
+instead of writing host registrations and default policy into your home directory, use:
+
+```bash
+./setup --scope project --project-dir /path/to/your/project --host codex
+```
+
+Project scope:
+
+- keeps the Python environment and helper scripts in this CFO Stack repo
+- registers Claude skills under the target project's `.claude/skills/`
+- registers Codex, OpenClaw, and Antigravity skills under the target project's `.agents/skills/`
+- skips creating `~/.cfo-stack/config.yaml`, so policy should live in the ledger-local `cfo-stack.yaml`
+
 After setup, use the generated helpers for validation and Fava:
 
 ```bash
@@ -51,6 +65,11 @@ After setup, use the generated helpers for validation and Fava:
 ./bin/cfo-fava ./ledger/main.beancount 5000
 ./bin/cfo-dashboard ./ledger/main.beancount
 ```
+
+Those helper paths are relative to the CFO Stack repo where you ran `./setup`.
+If you installed in project scope for some other target project, run the helpers
+from this repo's `bin/` with either an absolute ledger path or from inside the
+target project so ledger auto-discovery still works.
 
 OpenClaw setup uses its shared local skills directory, `~/.openclaw/skills`, so you
 can clone this repo anywhere and still register the skills with `./setup --host openclaw`.
@@ -63,6 +82,12 @@ To unregister skills later:
 
 ```bash
 ./uninstall --host auto
+```
+
+Project-scoped uninstall uses the same target:
+
+```bash
+./uninstall --scope project --project-dir /path/to/your/project --host auto
 ```
 
 Optional cleanup flags:
@@ -191,6 +216,9 @@ For a shareable browser artifact instead of terminal-first reporting:
 ./bin/cfo-dashboard ./ledger/main.beancount
 ./bin/cfo-dashboard ./ledger/main.beancount --variant social --output reports/social-share
 ```
+
+If your ledger lives in another project, invoke `cfo-dashboard` from the CFO Stack
+repo's `bin/` with that ledger path explicitly.
 
 This generates static HTML, CSS, and JSON in `reports/`, using `bean-query` only. Generated dashboards stay ignored by git.
 The docs demo page also embeds the full sample set from `examples/`: US and Canadian company, individual, and family ledgers.

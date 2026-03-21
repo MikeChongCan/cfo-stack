@@ -8,9 +8,12 @@ SKILLS_DIR="$(dirname "$CFO_STACK_DIR")"
 VENV_DIR="$CFO_STACK_DIR/.venv"
 VENV_BIN="$VENV_DIR/bin"
 VENV_PY="$VENV_BIN/python"
+RUN_DIR="$(pwd -P)"
 
 # ─── Parse --host flag ─────────────────────────────────────────
 HOST="claude"
+SCOPE="machine"
+PROJECT_DIR=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --host)
@@ -22,6 +25,24 @@ while [ $# -gt 0 ]; do
       shift 2
       ;;
     --host=*) HOST="${1#--host=}"; shift ;;
+    --scope)
+      if [ $# -lt 2 ]; then
+        echo "Error: --scope requires a value (machine or project)" >&2
+        exit 1
+      fi
+      SCOPE="$2"
+      shift 2
+      ;;
+    --scope=*) SCOPE="${1#--scope=}"; shift ;;
+    --project-dir)
+      if [ $# -lt 2 ]; then
+        echo "Error: --project-dir requires a directory path" >&2
+        exit 1
+      fi
+      PROJECT_DIR="$2"
+      shift 2
+      ;;
+    --project-dir=*) PROJECT_DIR="${1#--project-dir=}"; shift ;;
     *) shift ;;
   esac
 done
@@ -30,6 +51,31 @@ case "$HOST" in
   claude|codex|openclaw|antigravity|auto) ;;
   *) echo "Unknown --host value: $HOST (expected claude, codex, openclaw, antigravity, or auto)" >&2; exit 1 ;;
 esac
+
+case "$SCOPE" in
+  machine|project) ;;
+  *) echo "Unknown --scope value: $SCOPE (expected machine or project)" >&2; exit 1 ;;
+esac
+
+if [ "$SCOPE" = "machine" ] && [ -n "$PROJECT_DIR" ]; then
+  echo "Error: --project-dir is only valid with --scope project" >&2
+  exit 1
+fi
+
+if [ "$SCOPE" = "project" ]; then
+  if [ -z "$PROJECT_DIR" ]; then
+    if [ "$RUN_DIR" = "$CFO_STACK_DIR" ]; then
+      echo "Error: --scope project requires --project-dir when run from the CFO Stack repo." >&2
+      exit 1
+    fi
+    PROJECT_DIR="$RUN_DIR"
+  fi
+  if [ ! -d "$PROJECT_DIR" ]; then
+    echo "Error: project directory not found: $PROJECT_DIR" >&2
+    exit 1
+  fi
+  PROJECT_DIR="$(cd "$PROJECT_DIR" && pwd -P)"
+fi
 
 # For auto: detect which agents are installed
 INSTALL_CLAUDE=0
@@ -59,6 +105,10 @@ echo "║          CFO Stack Setup                 ║"
 echo "║    AI-Powered Accounting with CLEAR      ║"
 echo "╚══════════════════════════════════════════╝"
 echo ""
+echo "  Scope: $SCOPE"
+if [ "$SCOPE" = "project" ]; then
+  echo "  Project dir: $PROJECT_DIR"
+fi
 
 # ─── 1. Check Python ─────────────────────────────────────────
 PYTHON=""
@@ -155,11 +205,12 @@ fi
 # ─── 6. Create state directory + default policy config ─────────
 STATE_DIR="$HOME/.cfo-stack"
 GLOBAL_CONFIG="$STATE_DIR/config.yaml"
-mkdir -p "$STATE_DIR"
-echo "  State dir: ~/.cfo-stack/"
+if [ "$SCOPE" = "machine" ]; then
+  mkdir -p "$STATE_DIR"
+  echo "  State dir: ~/.cfo-stack/"
 
-if [ ! -f "$GLOBAL_CONFIG" ]; then
-  cat > "$GLOBAL_CONFIG" <<'YAML'
+  if [ ! -f "$GLOBAL_CONFIG" ]; then
+    cat > "$GLOBAL_CONFIG" <<'YAML'
 # yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/policy.schema.json
 version: 1
 review_policy:
@@ -171,9 +222,12 @@ review_policy:
       Default review threshold installed by CFO Stack setup. Ledger-local
       cfo-stack.yaml may override this value.
 YAML
-  echo "  Default policy: $GLOBAL_CONFIG"
+    echo "  Default policy: $GLOBAL_CONFIG"
+  else
+    echo "  Default policy: $GLOBAL_CONFIG (existing)"
+  fi
 else
-  echo "  Default policy: $GLOBAL_CONFIG (existing)"
+  echo "  Default policy: skipped (project scope keeps policy in the target ledger)"
 fi
 
 # ─── 7. Helper: symlink skill subdirectories ──────────────────
@@ -197,17 +251,29 @@ link_skill_dirs() {
   fi
 }
 
+PROJECT_CLAUDE_SKILLS=""
+PROJECT_AGENTS_SKILLS=""
+if [ "$SCOPE" = "project" ]; then
+  PROJECT_CLAUDE_SKILLS="$PROJECT_DIR/.claude/skills"
+  PROJECT_AGENTS_SKILLS="$PROJECT_DIR/.agents/skills"
+fi
+
 # ─── 8. Install for Claude Code ───────────────────────────────
 SKILLS_BASENAME="$(basename "$SKILLS_DIR")"
 if [ "$INSTALL_CLAUDE" -eq 1 ]; then
   echo ""
   echo "Registering with Claude Code..."
-  if [ "$SKILLS_BASENAME" = "skills" ]; then
+  if [ "$SCOPE" = "project" ]; then
+    mkdir -p "$PROJECT_CLAUDE_SKILLS"
+    link_skill_dirs "$CFO_STACK_DIR" "$PROJECT_CLAUDE_SKILLS" "cfo-"
+    echo "  claude project skills: $PROJECT_CLAUDE_SKILLS"
+    echo "  cfo-stack ready (claude project scope)."
+  elif [ "$SKILLS_BASENAME" = "skills" ]; then
     link_skill_dirs "$CFO_STACK_DIR" "$SKILLS_DIR" "cfo-"
     echo "  cfo-stack ready (claude)."
   else
-    echo "  cfo-stack ready (claude)."
-    echo "  (skipped skill symlinks — not inside .claude/skills/)"
+    echo "  Claude machine-scope registration skipped."
+    echo "  Clone CFO Stack under ~/.claude/skills/, or use --scope project."
   fi
 fi
 
@@ -215,33 +281,60 @@ fi
 if [ "$INSTALL_CODEX" -eq 1 ]; then
   echo ""
   echo "Registering with Codex..."
-  CODEX_SKILLS="$HOME/.codex/skills"
+  if [ "$SCOPE" = "project" ]; then
+    CODEX_SKILLS="$PROJECT_AGENTS_SKILLS"
+  else
+    CODEX_SKILLS="$HOME/.codex/skills"
+  fi
   mkdir -p "$CODEX_SKILLS"
   link_skill_dirs "$CFO_STACK_DIR" "$CODEX_SKILLS" "cfo-"
-  echo "  cfo-stack ready (codex)."
-  echo "  codex skills: $CODEX_SKILLS"
+  if [ "$SCOPE" = "project" ]; then
+    echo "  cfo-stack ready (codex project scope)."
+    echo "  codex project skills: $CODEX_SKILLS"
+  else
+    echo "  cfo-stack ready (codex)."
+    echo "  codex skills: $CODEX_SKILLS"
+  fi
 fi
 
 # ─── 10. Install for OpenClaw ─────────────────────────────────
 if [ "$INSTALL_OPENCLAW" -eq 1 ]; then
   echo ""
   echo "Registering with OpenClaw..."
-  OPENCLAW_SKILLS="$HOME/.openclaw/skills"
+  if [ "$SCOPE" = "project" ]; then
+    OPENCLAW_SKILLS="$PROJECT_AGENTS_SKILLS"
+  else
+    OPENCLAW_SKILLS="$HOME/.openclaw/skills"
+  fi
   mkdir -p "$OPENCLAW_SKILLS"
   link_skill_dirs "$CFO_STACK_DIR" "$OPENCLAW_SKILLS" "cfo-"
-  echo "  cfo-stack ready (openclaw)."
-  echo "  openclaw skills: $OPENCLAW_SKILLS"
+  if [ "$SCOPE" = "project" ]; then
+    echo "  cfo-stack ready (openclaw project scope)."
+    echo "  openclaw project skills: $OPENCLAW_SKILLS"
+  else
+    echo "  cfo-stack ready (openclaw)."
+    echo "  openclaw skills: $OPENCLAW_SKILLS"
+  fi
 fi
 
 # ─── 11. Install for Antigravity ──────────────────────────────
 if [ "$INSTALL_ANTIGRAVITY" -eq 1 ]; then
   echo ""
   echo "Registering with Antigravity..."
-  ANTIGRAVITY_SKILLS="$HOME/.gemini/antigravity/skills"
+  if [ "$SCOPE" = "project" ]; then
+    ANTIGRAVITY_SKILLS="$PROJECT_AGENTS_SKILLS"
+  else
+    ANTIGRAVITY_SKILLS="$HOME/.gemini/antigravity/skills"
+  fi
   mkdir -p "$ANTIGRAVITY_SKILLS"
   link_skill_dirs "$CFO_STACK_DIR" "$ANTIGRAVITY_SKILLS" "cfo-"
-  echo "  cfo-stack ready (antigravity)."
-  echo "  antigravity skills: $ANTIGRAVITY_SKILLS"
+  if [ "$SCOPE" = "project" ]; then
+    echo "  cfo-stack ready (antigravity project scope)."
+    echo "  antigravity project skills: $ANTIGRAVITY_SKILLS"
+  else
+    echo "  cfo-stack ready (antigravity)."
+    echo "  antigravity skills: $ANTIGRAVITY_SKILLS"
+  fi
 fi
 
 # ─── 12. Create helper scripts ────────────────────────────────
@@ -250,7 +343,7 @@ mkdir -p "$CFO_STACK_DIR/bin"
 # cfo-check: bean-check wrapper
 cat > "$CFO_STACK_DIR/bin/cfo-check" << 'SCRIPT'
 #!/usr/bin/env bash
-# Wrapper around bean-check with colored output
+# Wrapper around bean-check with ledger auto-discovery
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 VENV_BIN="$ROOT_DIR/.venv/bin"
@@ -338,17 +431,30 @@ echo "╠═══════════════════════�
 echo "║                                          ║"
 echo "║  Quick start:                            ║"
 echo "║    1. Run /setup to create your ledger   ║"
-echo "║    2. Edit ~/.cfo-stack/config.yaml      ║"
-echo "║       if you want a different review     ║"
-echo "║       threshold than \$1,000             ║"
+if [ "$SCOPE" = "machine" ]; then
+  echo "║    2. Edit ~/.cfo-stack/config.yaml      ║"
+  echo "║       if you want a different review     ║"
+  echo "║       threshold than \$1,000             ║"
+else
+  echo "║    2. Create ledger-local cfo-stack.yaml ║"
+  echo "║       in your target project if you want ║"
+  echo "║       policy overrides                   ║"
+fi
 echo "║    3. Drop bank CSVs in ~/Downloads      ║"
 echo "║    4. Run /capture to import them        ║"
 echo "║    5. Run /classify to categorize        ║"
 echo "║    6. Run /report to see your finances   ║"
-echo "║    7. Run ./bin/cfo-dashboard            ║"
+echo "║    7. Run cfo-dashboard from this repo   ║"
 echo "║                                          ║"
 echo "║  The CLEAR cycle:                        ║"
 echo "║    Capture → Log → Extract →              ║"
 echo "║    Automate → Report                      ║"
 echo "║                                          ║"
 echo "╚══════════════════════════════════════════╝"
+echo ""
+echo "Helper scripts live in: $CFO_STACK_DIR/bin"
+if [ "$SCOPE" = "project" ]; then
+  echo "Run them from your target project, for example:"
+  echo "  (cd $PROJECT_DIR && $CFO_STACK_DIR/bin/cfo-check)"
+  echo "  (cd $PROJECT_DIR && $CFO_STACK_DIR/bin/cfo-dashboard)"
+fi

@@ -136,7 +136,7 @@ The approval policy file must define at least:
 
 Lookup order:
 1. Ledger-local `cfo-stack.yaml`
-2. Global `~/.cfo-stack/config.yaml` created by `./setup`
+2. Global `~/.cfo-stack/config.yaml` created by machine-scope `./setup`
 
 The pack must contain:
 - Jurisdiction name
@@ -154,12 +154,28 @@ For pass-through entities, keep owner-only items out of the business chart:
 
 ### Step 7: Validate and launch
 
-Use the helper scripts created by repo setup:
+Use the helper scripts created by repo setup. Those helpers always live in the
+CFO Stack install directory's `bin/`, not in the target ledger project unless
+the user installed CFO Stack there.
 
-1. Run `./bin/cfo-check ./ledger/main.beancount` when the ledger lives under `ledger/`
-2. Or run `./bin/cfo-check` and let it auto-discover `./main.beancount`, `./ledger/main.beancount`, or the first matching `main.beancount` in the working tree
-3. Launch Fava to verify: `./bin/cfo-fava ./ledger/main.beancount 5000`
-3. Show the user their empty but valid ledger
+1. If you are working from the CFO Stack repo, run `./bin/cfo-check ./ledger/main.beancount` when the ledger lives under `ledger/`
+2. If the ledger lives in another project, run the helper from the CFO Stack install directory, for example `/path/to/cfo-stack/bin/cfo-check /path/to/project/ledger/main.beancount`
+3. You may also run the helper without an argument and let it auto-discover `./main.beancount`, `./ledger/main.beancount`, or the first matching `main.beancount` in the current working tree
+4. Launch Fava to verify, for example `/path/to/cfo-stack/bin/cfo-fava /path/to/project/ledger/main.beancount 5000`
+5. Show the user their empty but valid ledger
+
+If the CFO Stack install directory is unknown and the helper path cannot be resolved
+confidently, ask the user for that path instead of guessing.
+
+Repo setup supports two install scopes:
+
+- `./setup` or `./setup --scope machine` — default machine-level install
+  - may register skills in home-directory agent paths
+  - creates the global fallback config at `~/.cfo-stack/config.yaml`
+- `./setup --scope project --project-dir /path/to/project` — project-only install
+  - registers skills inside the target project
+  - skips global `~/.cfo-stack/config.yaml`
+  - expects policy overrides to live in the ledger-local `cfo-stack.yaml`
 
 ### Step 8: Initialize git
 
