@@ -2,7 +2,7 @@
 
 ### Replace Your CPA with AI + Plain-Text Accounting
 
-**Author:** Mike Chong ([realmikechong.com](https://realmikechong.com)) / RockieStar Inc.
+**Author:** Mike Chong ([realmikechong.com](https://realmikechong.com))
 
 ---
 
@@ -14,19 +14,17 @@ Inspired by [gstack](https://github.com/garrytan/gstack) (Garry Tan's "software 
 
 ## The C.L.E.A.R. System
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    C.L.E.A.R. SYSTEM                    │
-├────────┬────────────────────────────────────────────────┤
-│   C    │  Capture     Grab all raw financial data       │
-│   L    │  Log         Single/double-entry booking       │
-│   E    │  Extract     AI analysis → insights            │
-│   A    │  Automate    Scripts + pipeline                 │
-│   R    │  Report      Statements + full picture          │
-└────────┴────────────────────────────────────────────────┘
-```
+Capture → Log → Extract → Automate → Report.
 
-Each letter maps to a set of slash commands. Run them in order for your monthly close, or individually as needed.
+The detailed framework, skill map, and future tooling notes now live in the Docusaurus site under `./docs/`.
+
+### Docs Site
+
+```bash
+cd docs
+npm install
+npm start
+```
 
 ---
 

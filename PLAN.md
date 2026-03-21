@@ -1,6 +1,6 @@
 # CPA Stack — Master Plan
 
-**Author:** Mike Chong (realmikechong.com / RockieStar Inc.)
+**Author:** Mike Chong (realmikechong.com)
 **Date:** March 2026
 **License:** MIT
 
@@ -227,11 +227,16 @@ cpa-stack/
 │   ├── year-end-close.md
 │   └── receipt-management.md
 │
-├── docs/                          # Documentation
-│   ├── beancount-primer.md        # Beancount for beginners
-│   ├── clear-framework.md         # Deep dive on CLEAR system
-│   ├── canada-tax-guide.md
-│   └── us-tax-guide.md
+├── docs/                          # Docusaurus documentation site
+│   ├── content/                   # MDX docs content
+│   │   ├── intro.mdx
+│   │   ├── framework/
+│   │   ├── reference/
+│   │   └── roadmap/
+│   ├── src/                       # TS/TSX components and theme code
+│   ├── static/
+│   ├── docusaurus.config.ts
+│   └── sidebars.ts
 │
 ├── bin/                           # Helper scripts
 │   ├── cpa-check                  # Wrapper: bean-check + custom rules

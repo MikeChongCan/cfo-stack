@@ -1,0 +1,43 @@
+---
+id: intro
+title: CPA Stack Docs
+slug: /
+description: AI-powered accounting on top of Beancount and the C.L.E.A.R. framework.
+---
+
+import StageGrid from '@site/src/components/StageGrid';
+
+CPA Stack is an AI-assisted accounting system built on top of Beancount, slash-command skills, and explicit validation gates. The docs site is where the operating model lives now instead of scattering the framework across top-level markdown files.
+
+<StageGrid />
+
+## What this documentation is for
+
+- Explain the C.L.E.A.R. operating model clearly enough that new contributors can extend it without guessing.
+- Turn the current README-level guidance into docs that can grow into implementation notes, example walkthroughs, and tooling references.
+- Leave room for future dashboard generators, Fava integrations, Beancount exports, and Python or Bun utilities.
+
+## Start here
+
+If you are new to CPA Stack, read the framework first and then the skill reference.
+
+1. Read [the CLEAR framework](/framework/clear) to understand the five-stage operating model.
+2. Review [the skill reference](/reference/skills) to see how the slash commands map onto each stage.
+3. Use [the tooling roadmap](/roadmap/tooling) to shape future work around dashboards, reports, and automation scripts.
+
+## Local docs workflow
+
+```bash
+cd docs
+npm install
+npm run check
+npm start
+```
+
+## Design constraints
+
+:::caution Financial system, not tax authority
+
+CPA Stack should never invent tax rules, claim compliance, or mutate ledgers silently. The docs need to reinforce that the product produces traceable packets and proposed diffs, not final legal judgments.
+
+:::

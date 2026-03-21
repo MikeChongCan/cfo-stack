@@ -28,7 +28,7 @@ Based on what changed:
 - **Reconcile:** `reconcile: TD checking balanced at $42,567.89 (2026-03-31)`
 - **Close:** `close: March 2026 — all accounts reconciled`
 - **Fix:** `fix: corrected Amazon classification (office supplies → technology)`
-- **Setup:** `init: ledger setup for RockieStar Inc.`
+- **Setup:** `init: ledger setup for your company`
 
 ### Step 3: Commit
 

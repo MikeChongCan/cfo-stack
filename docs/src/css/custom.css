@@ -1,0 +1,79 @@
+:root {
+  --ifm-color-primary: #0f766e;
+  --ifm-color-primary-dark: #0c655e;
+  --ifm-color-primary-darker: #0b5f58;
+  --ifm-color-primary-darkest: #094e49;
+  --ifm-color-primary-light: #12877e;
+  --ifm-color-primary-lighter: #149087;
+  --ifm-color-primary-lightest: #1aa59a;
+  --ifm-background-color: #f7f7f2;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-navbar-background-color: rgba(247, 247, 242, 0.92);
+  --ifm-footer-background-color: #132420;
+  --ifm-heading-color: #12201d;
+  --ifm-font-family-base: "Avenir Next", "Segoe UI", sans-serif;
+  --ifm-font-family-monospace: "IBM Plex Mono", "SFMono-Regular", monospace;
+  --ifm-code-font-size: 95%;
+  --ifm-link-color: #0b5f58;
+  --ifm-link-hover-color: #149087;
+  --ifm-menu-color-active: #0f766e;
+  --ifm-toc-border-color: rgba(18, 32, 29, 0.08);
+  --ifm-global-shadow-lw: 0 12px 40px rgba(18, 32, 29, 0.08);
+  --docusaurus-highlighted-code-line-bg: rgba(15, 118, 110, 0.08);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #5fd0c4;
+  --ifm-color-primary-dark: #42c8ba;
+  --ifm-color-primary-darker: #35c4b5;
+  --ifm-color-primary-darkest: #2bafa1;
+  --ifm-color-primary-light: #7cd8ce;
+  --ifm-color-primary-lighter: #8addd4;
+  --ifm-color-primary-lightest: #b5ebe5;
+  --ifm-background-color: #0f1715;
+  --ifm-background-surface-color: #14201d;
+  --ifm-navbar-background-color: rgba(15, 23, 21, 0.92);
+  --ifm-footer-background-color: #0b1110;
+  --ifm-heading-color: #edf7f4;
+  --ifm-link-color: #8addd4;
+  --ifm-link-hover-color: #b5ebe5;
+  --ifm-toc-border-color: rgba(237, 247, 244, 0.08);
+  --docusaurus-highlighted-code-line-bg: rgba(95, 208, 196, 0.12);
+}
+
+.navbar {
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(18, 32, 29, 0.08);
+}
+
+.footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.theme-doc-markdown {
+  max-width: 48rem;
+}
+
+.theme-doc-markdown h1 {
+  letter-spacing: -0.03em;
+}
+
+.theme-doc-markdown h2 {
+  margin-top: 3rem;
+}
+
+.theme-doc-markdown blockquote {
+  border-left: 4px solid var(--ifm-color-primary);
+  background: rgba(15, 118, 110, 0.05);
+  border-radius: 0 14px 14px 0;
+}
+
+.theme-admonition {
+  border-radius: 18px;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.pagination-nav__link {
+  border-radius: 18px;
+  box-shadow: var(--ifm-global-shadow-lw);
+}

@@ -105,7 +105,7 @@ Net change:   +$1,072.32
 
 Write a plain-English summary:
 
-> "RockieStar Inc. had a strong March with $9,000 revenue and $4,571 net income.
+> "The business had a strong March with $9,000 revenue and $4,571 net income.
 > The major expense was a $3,499 MacBook (capital equipment — CCA eligible).
 > Cash position is healthy at $47,802 across accounts. GST remittance of $910
 > is due April 30. No outstanding concerns."

@@ -1,0 +1,93 @@
+---
+title: The C.L.E.A.R. Framework
+description: The five-stage operating model behind CPA Stack.
+sidebar_position: 1
+---
+
+import StageGrid from '@site/src/components/StageGrid';
+
+C.L.E.A.R. is the operating model for CPA Stack: **Capture, Log, Extract, Automate, Report**.
+
+<StageGrid />
+
+## Overview
+
+CLEAR is a five-step framework for AI-powered financial management. Each step builds on the previous one, creating a complete cycle from raw evidence to structured books, operational insight, automation, and decision-ready reporting.
+
+## C — Capture
+
+**Definition:** Consolidate every piece of evidence of money into one place.
+
+**Typical inputs**
+
+- Bank CSV exports
+- Credit card statements
+- WeChat and Alipay bills
+- Receipt photos
+- Invoice PDFs
+
+**Core question:** Where is every piece of evidence of my money right now?
+
+**Skills:** `/capture`, `/bank-import`, `/receipt-scan`
+
+## L — Log
+
+**Definition:** Transform captured data into structured double-entry records.
+
+**What happens here**
+
+- Raw CSV becomes cleaned, deduplicated transactions
+- Transactions become Beancount entries
+- Classification is AI-assisted instead of manual copy-paste
+
+**Core question:** For every dollar, do I know where it came from and where it went?
+
+**Skills:** `/log`, `/classify`, `/validate`
+
+## E — Extract
+
+**Definition:** Distill action from the books instead of stopping at raw numbers.
+
+**Typical analysis**
+
+- Spending pattern analysis
+- Anomaly detection
+- Trend forecasting
+- Tax preparation summaries
+
+**Core question:** What are these numbers telling me? What should I do next?
+
+**Skills:** `/extract`, `/reconcile`, `/tax-plan`
+
+## A — Automate
+
+**Definition:** Turn repeated logging and extraction work into scripts and repeatable pipelines.
+
+**What automation should target**
+
+- Code-generated processing scripts
+- Scheduled close routines
+- Alerting for validation errors or missing evidence
+
+**Core question:** Have I done this more than three times? Can a machine do it instead?
+
+**Skills:** `/automate`, `/monthly-close`, `/quarterly-tax`
+
+## R — Report
+
+**Definition:** Produce a clear financial picture for decisions, review, and filing prep.
+
+**Typical outputs**
+
+- Fava visual reports
+- The three core financial statements
+- GST/VAT filing packets
+- Plain-English summaries of financial health
+
+**Core question:** Can I describe the current financial health of the business in one paragraph?
+
+**Skills:** `/report`, `/fava`, `/advisor`
+
+## Why the stages matter
+
+Without capture, the ledger is incomplete. Without logging, the evidence is not queryable. Without extraction, the books stay inert. Without automation, the system does not scale. Without reporting, the numbers never turn into decisions.

@@ -49,7 +49,7 @@ Produce a Markdown invoice (convertible to PDF):
 ```markdown
 # INVOICE
 
-**From:** RockieStar Inc.
+**From:** Your Company Name
 **To:** Client Name
 **Invoice #:** INV-2026-0042
 **Date:** March 15, 2026
@@ -61,7 +61,7 @@ Produce a Markdown invoice (convertible to PDF):
 | Sales tax (from jurisdiction pack) |   $XXX.XX |
 | **Total**                      | **$X,XXX.XX** |
 
-**Payment:** E-transfer to payments@rockiestar.com
+**Payment:** [Payment instructions]
 **Tax Registration #:** [From jurisdiction pack]
 ```
 

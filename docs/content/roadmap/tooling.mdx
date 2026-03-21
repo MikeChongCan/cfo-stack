@@ -1,0 +1,49 @@
+---
+title: Tooling Roadmap
+description: Planned documentation and tooling beyond the framework pages.
+sidebar_position: 1
+---
+
+The docs site is not just for narrative framework pages. It is the place to grow the implementation surface around CPA Stack.
+
+## Near-term documentation targets
+
+- Beancount primer pages for operators who know accounting but not Beancount syntax
+- Example-driven walkthroughs that show how a raw CSV becomes reviewed entries
+- Validation and reconciliation guides that explain how `bean-check` fits into the monthly workflow
+
+## Example-driven dashboard work
+
+The most valuable next step is likely building from the existing example ledgers to generate usable dashboards and reports instead of only documenting theory.
+
+Possible directions:
+
+- Use Beancount queries or exported data to generate static KPI dashboards from the `examples/` ledgers
+- Wrap Fava views with opinionated starter dashboards for founders who want P&L, runway, tax payable, and cash snapshots quickly
+- Produce snapshot reports that can be versioned alongside the ledger and attached to `/snapshot` commits
+
+## Python and Bun tooling
+
+There is room for two complementary tooling tracks:
+
+### Python
+
+- Importers, validators, and Beancount-native data pipelines
+- Report builders that consume ledger data directly
+- Tax-packet generators based on jurisdiction packs
+
+### Bun or TypeScript
+
+- Static dashboard generation from normalized ledger exports
+- Fast CSV and receipt-processing helpers around the examples directory
+- Developer tooling for docs, schema validation, and publishing workflows
+
+## Suggested repo shape
+
+If that tooling work lands, keep the split explicit:
+
+- `docs/` for the Docusaurus site and implementation notes
+- `examples/` for canonical sample ledgers and fixtures
+- `scripts/` or `packages/` for Python and Bun tooling once the interfaces stabilize
+
+That keeps the documentation site useful now while leaving a clean path for real productized tooling later.
