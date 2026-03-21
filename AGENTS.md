@@ -1,5 +1,7 @@
 # cfo-stack — Agent Instructions
 
+> Note: `AGENTS.md` is the high-order instruction file for CFO Stack. `CLAUDE.md` is a symlink to this file, so update `AGENTS.md` when repo-level agent behavior changes materially. Keep it lean and move project-specific or domain-heavy guidance into `./.agents/skills/*` when needed. Keep onboarding/setup behavior aligned with [skills/setup/SKILL.md](skills/setup/SKILL.md).
+
 AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system and Beancount.
 
 ## Global Rules
@@ -13,6 +15,9 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 7. Never modify reconciled transactions without explicit approval.
 8. Always include tax treatment for transactions when applicable.
 9. Commit every meaningful approved change via `/snapshot`.
+10. During setup or onboarding, ask blocking intake questions when scope is unclear:
+    personal vs business, country, entity type, province/state, and operating currency.
+    Do not guess template-driving answers.
 
 ## Available Skills
 
