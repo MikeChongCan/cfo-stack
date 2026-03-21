@@ -5,7 +5,7 @@ browser:
   channel: chrome
   profile_strategy: dedicated
   user_data_dir: ~/.cfo-stack/playwright/sarah-export
-  downloads_dir: ~/Downloads/cfo-stack/sarah
+  downloads_dir: ~/Downloads/cfo-staging
 institutions:
   - id: chase-banking
     name: Chase

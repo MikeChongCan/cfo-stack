@@ -62,8 +62,8 @@ echo "Processing $MONTH..."
 # 1. Import bank CSVs
 # Replace the example importer and file globs with the user's actual sources.
 mkdir -p staging
-python3 importers/td_bank.py ~/Downloads/td-checking-*.csv >> "$STAGING_FILE"
-python3 importers/td_bank.py ~/Downloads/td-visa-*.csv >> "$STAGING_FILE"
+python3 importers/td_bank.py ~/Downloads/cfo-staging/td-checking-*.csv >> "$STAGING_FILE"
+python3 importers/td_bank.py ~/Downloads/cfo-staging/td-visa-*.csv >> "$STAGING_FILE"
 
 # 2. Validate the proposed import file in a temporary combined ledger
 cat > "$TMP_MAIN" <<EOF

@@ -5,7 +5,7 @@ browser:
   channel: chrome
   profile_strategy: dedicated
   user_data_dir: ~/.cfo-stack/playwright/chrome-statement-export
-  downloads_dir: ~/Downloads/cfo-stack
+  downloads_dir: ~/Downloads/cfo-staging
   notes: >-
     Use a dedicated or copied profile for export sessions. Do not point
     automation at your live daily-use Chrome profile.

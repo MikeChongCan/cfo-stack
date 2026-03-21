@@ -62,7 +62,7 @@ If an account is missing from the export plan, call it out before launching the 
 Prefer the user's current Chrome session via Chrome DevTools MCP remote debugging:
 - Ask the human to enable remote debugging in `chrome://inspect/#remote-debugging`
 - Use the current signed-in Chrome session instead of launching a separate automation browser
-- Keep downloads in a known directory before export starts
+- Keep downloads in `~/Downloads/cfo-staging` or the configured `downloads_dir` before export starts
 - Only fall back to a separate browser instance when the current Chrome session is unavailable
 
 Recommended MCP config example:

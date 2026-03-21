@@ -39,6 +39,37 @@ Notes:
 - `--autoConnect` helps the MCP attach to the active Chrome session.
 - Do not tell the user to launch a separate browser instance unless the current Chrome session cannot be used.
 
+## Fallback: MCPorter CLI
+
+If the current agent environment does not expose `chrome-devtools` as an MCP server,
+fall back to `mcporter`.
+
+MCPorter can discover already-configured servers, call them directly, and generate
+shareable CLIs, including ad-hoc stdio commands such as `npx -y chrome-devtools-mcp@latest`.
+
+Useful examples:
+
+```bash
+# discover configured MCP servers
+npx mcporter@latest list
+
+# inspect available chrome-devtools tools if already configured
+npx mcporter@latest list chrome-devtools
+
+# call a chrome-devtools tool directly
+npx mcporter@latest call chrome-devtools.list_pages --output markdown
+
+# ad-hoc fallback if chrome-devtools is not already configured
+npx mcporter@latest generate-cli \
+  --command "npx -y chrome-devtools-mcp@latest --autoConnect" \
+  --output ./tmp/chrome-devtools.ts
+```
+
+Use this fallback when:
+- the host agent does not have a working `chrome-devtools` MCP integration
+- you need to inspect or call the server outside the current agent runtime
+- you want a temporary dedicated CLI for the statement-download workflow
+
 ## Inputs
 
 Prefer ledger-local context when present:

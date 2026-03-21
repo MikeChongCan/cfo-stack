@@ -31,7 +31,7 @@ Ask the user or check the ledger config for known data sources:
 
 0. **Statement export profiles** — check `capture/statement-export.yaml` for declared banks,
    cards, brokerages, and payment platforms that may need browser-assisted export
-1. **Bank accounts** — check for CSV exports in `~/Downloads/`, `~/Documents/`, or a configured import directory
+1. **Bank accounts** — check for CSV exports in `~/Downloads/cfo-staging/`, `~/Documents/`, or a configured import directory
 2. **Credit cards** — same locations
 3. **Brokerages and cash platforms** — IBKR, Wealthsimple, and similar portals with downloadable history
 4. **Payment platforms** — Stripe, PayPal, Wise, WeChat Pay, Alipay

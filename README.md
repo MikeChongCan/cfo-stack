@@ -190,7 +190,7 @@ policy knobs are part of the ledger, not buried in agent prose.
 
 ### 3. Get your raw files onto disk
 
-If you already exported files manually, drop bank CSVs into `~/Downloads/`, and put
+If you already exported files manually, drop bank CSVs into `~/Downloads/cfo-staging/`, and put
 receipt photos / invoice PDFs in your capture folders.
 
 If you have declared accounts and want guided browser-based export instead of bank APIs,

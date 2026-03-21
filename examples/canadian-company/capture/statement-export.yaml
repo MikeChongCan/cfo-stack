@@ -5,7 +5,7 @@ browser:
   channel: chrome
   profile_strategy: dedicated
   user_data_dir: ~/.cfo-stack/playwright/mapletech-export
-  downloads_dir: ~/Downloads/cfo-stack/mapletech
+  downloads_dir: ~/Downloads/cfo-staging
 institutions:
   - id: td-banking
     name: TD Canada Trust
