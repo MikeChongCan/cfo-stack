@@ -292,7 +292,7 @@ Then run:
 /capture
 ```
 
-`/capture` now routes receipt photos through document preprocessing first, fingerprints candidate sources before staging, prefers bounded-size WebP derivatives for image receipts, and only creates compressed PDF derivatives when that materially helps OCR or storage.
+`/capture` now routes receipt photos through document preprocessing first, fingerprints candidate sources before staging, prefers bounded-size WebP derivatives for image receipts, uses `doc-crop` on macOS when available, falls back to ImageMagick-based WebP conversion on Linux/Windows, and only creates compressed PDF derivatives when that materially helps OCR or storage.
 
 ### 4. Classify transactions
 
