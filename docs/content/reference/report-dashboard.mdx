@@ -1,6 +1,6 @@
 ---
 title: Report Dashboard
-description: Generate deterministic HTML dashboards for company and household ledgers.
+description: Generate traceable HTML dashboards for company and household ledgers.
 sidebar_position: 2
 ---
 
@@ -14,7 +14,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 - `dashboard.css`
 - `dashboard-data.json`
 
-The generator is deterministic. It reads Beancount through `bean-query`, infers whether the ledger looks like a business or a household profile, and renders a polished HTML dashboard with Bun, React, TypeScript, and Tailwind v4. No model is required at runtime.
+The generator reads Beancount through `bean-query`, infers whether the ledger looks like a business or a household profile, and renders a polished HTML dashboard with Bun, React, TypeScript, and Tailwind v4. No model is required at runtime, and every figure stays traceable to ledger-backed extracts.
 
 ## Use it
 

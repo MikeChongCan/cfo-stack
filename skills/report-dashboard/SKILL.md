@@ -8,7 +8,7 @@ description: |
   CLEAR step: R (Report)
 ---
 
-# /report-dashboard — Deterministic HTML Dashboards
+# /report-dashboard — Traceable HTML Dashboards
 
 ## When to use
 
@@ -55,7 +55,7 @@ bun run generate -- --ledger ../../../examples/usa-company/main.beancount
 ## Constraints
 
 - Never invent numbers. Every figure must come from `bean-query` output.
-- Treat cash flow as a deterministic direct-method summary based on cash-account transactions and transparent account heuristics.
+- Treat cash flow as a direct-method summary based on cash-account transactions and transparent account heuristics.
 - Keep generated artifacts out of git. Use ignored output paths such as `reports/` or `dashboard-output/`.
 - Run `bean-check` before relying on the dashboard.
 

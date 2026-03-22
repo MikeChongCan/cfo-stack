@@ -370,7 +370,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 | Skill | Role | What It Does |
 |---|---|---|
 | `/report` | CFO | P&L, Balance Sheet, Cash Flow, comparisons |
-| `/report-dashboard` | Design-forward CFO | Beautiful static HTML dashboards from deterministic Beancount extracts |
+| `/report-dashboard` | Design-forward CFO | Beautiful static HTML dashboards from traceable Beancount extracts |
 | `/fava` | Dashboard | Launch Fava web UI for visual exploration |
 | `/advisor` | Financial Advisor | Net worth, FIRE planning, scenario modeling |
 

@@ -33,7 +33,7 @@ export function renderDashboardHtml(
       ? 'Share-safe CFO Stack dashboard with redacted values.'
       : variant === 'preview'
         ? 'Compact CFO Stack dashboard preview for docs embeds.'
-        : 'Deterministic CFO Stack dashboard generated from Beancount data.';
+        : 'Traceable CFO Stack dashboard generated from Beancount data.';
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -90,8 +90,8 @@ function DashboardPage({data}: {data: DashboardData}) {
                 {data.meta.title}
               </h1>
               <p className="max-w-3xl text-sm leading-6 text-[#42504b] sm:text-[0.98rem]">
-                Deterministic dashboard generated from <code className="rounded bg-[#10211d]/6 px-1.5 py-0.5 text-[0.92em]">{data.meta.ledgerPath}</code>.
-                The renderer stays static, but the data comes directly from <code className="rounded bg-[#10211d]/6 px-1.5 py-0.5 text-[0.92em]">bean-query</code>.
+                Traceable dashboard generated from <code className="rounded bg-[#10211d]/6 px-1.5 py-0.5 text-[0.92em]">{data.meta.ledgerPath}</code>.
+                The renderer stays static, and the data comes directly from <code className="rounded bg-[#10211d]/6 px-1.5 py-0.5 text-[0.92em]">bean-query</code>.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[18px] border border-[#10211d]/8 bg-[#10211d]/[0.045] px-4 py-3 backdrop-blur-sm">
