@@ -62,6 +62,7 @@ Primary entry points:
 - `/setup` — initialize a new ledger
 - `/statement-export` or `/statement-export-private` — get raw files onto disk
 - `/capture` — inventory and preprocess raw files
+- `/history-search` — retrieve historical precedent from journals, ledgers, and notes
 - `/classify`, `/reconcile`, `/validate` — operate the working ledger
 - `/report`, `/audit`, `/snapshot` — review, validate, and persist meaningful changes
 

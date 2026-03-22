@@ -4,7 +4,7 @@ description: |
   Root onboarding and routing command for CFO Stack. Start here when the user
   does not know which skill to use, needs first-run guidance, or wants the agent
   to decide whether to set up a ledger, download statements, consult external models,
-  or review current books.
+  search historical precedent, or review current books.
   CLEAR step: Meta
 ---
 
@@ -21,6 +21,7 @@ Use `/cfo` when:
 - the user says "help me get started"
 - the user has a finance/accounting/tax question but has not chosen a skill
 - the user does not know whether they need setup, capture, consulting, or reporting
+- the user wants to find how something was handled historically but has not chosen a history-search workflow
 
 ## First Questions
 
@@ -69,12 +70,23 @@ Use `/capture` when:
 - files already exist locally
 - the user needs inventory, staging, preprocessing, or import handoff
 
+### Route to `/history-search`
+
+Use `/history-search` when:
+- the user wants prior examples before making a bookkeeping decision
+- the question is "how did we handle this before?"
+- the answer likely lives in prior ledgers, journals, notes, or memos
+- exact or fuzzy historical retrieval is more useful than immediate freeform reasoning
+
 ### Route to `/consult`
 
 Use `/consult` when:
 - the user needs cross-model thinking on bookkeeping treatment
 - the user has an IRS or CRA interpretation question
 - the user wants external-model comparison before deciding on a finance workflow
+
+If the question depends on prior internal precedent, run `/history-search` first or in parallel
+to gather the strongest local examples before asking external models.
 
 For IRS/CRA questions:
 - anchor the question in official-source text or the jurisdiction pack first
@@ -99,7 +111,7 @@ If the user is new and vague, route in this order:
 1. establish scope and jurisdiction
 2. determine whether a ledger exists
 3. determine whether source files are already on disk
-4. determine whether the immediate need is setup, capture, consulting, or reporting
+4. determine whether the immediate need is setup, capture, history-search, consulting, or reporting
 
 ## Constraints
 

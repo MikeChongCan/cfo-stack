@@ -69,6 +69,9 @@ Run providers sequentially, not in parallel browser sessions.
 - sanity-checking a reporting interpretation before presenting it
 - generating a brief or full markdown research memo from multiple model opinions
 
+If the question depends on your own prior books or internal notes, use `/history-search`
+first to gather the strongest local precedent before consulting external models.
+
 ## Workflow
 
 ### Step 1: Frame the question
