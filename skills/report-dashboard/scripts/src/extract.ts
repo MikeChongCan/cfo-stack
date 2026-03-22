@@ -837,12 +837,30 @@ async function runBeanQuery(ledgerPath: string, query: string): Promise<CsvRecor
     throw new Error(stderr.trim() || `bean-query failed with exit code ${exitCode}`);
   }
 
-  return parseCsv(stdout, {
+  const rows = parseCsv(stdout, {
     columns: true,
     skip_empty_lines: true,
     trim: false,
     relax_column_count: true,
   }) as CsvRecord[];
+
+  return rows.map((row) => normalizeCsvRecord(row));
+}
+
+function normalizeCsvRecord(row: CsvRecord): CsvRecord {
+  const normalized: CsvRecord = {...row};
+  for (const [key, value] of Object.entries(row)) {
+    const compactKey = key
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '');
+
+    if (compactKey && normalized[compactKey] === undefined) {
+      normalized[compactKey] = value;
+    }
+  }
+  return normalized;
 }
 
 function inferProfile(accounts: string[]): DashboardProfile {
