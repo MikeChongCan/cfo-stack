@@ -94,7 +94,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 | `/statement-export` | **Export Clerk** — guides human export from portals | C |
 | `/statement-export-private` | **Private Export Planner** — prepares manual export checklists without browser tools | C |
 | `/capture-dedupe` | **Import Provenance Clerk** — suppress duplicate reruns | C |
-| `/doc-preprocess` | **Document Prep Clerk** — normalize source documents | C |
+| `/doc-preprocess` | **Document Prep Clerk** — normalize source documents, with `doc-crop` on macOS and ImageMagick fallback elsewhere | C |
 | `/bank-import` | **Bank Specialist** — knows CSV formats | C |
 | `/receipt-scan` | **Receipt Clerk** — OCR + data extraction | C |
 | `/log` | **Bookkeeper** — structured double-entry | L |
