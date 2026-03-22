@@ -10,3 +10,9 @@ Guidelines:
   agent behavior in `./.agents/skills/*`.
 - When repo-level governance changes materially, update `AGENTS.md` and keep these
   project skills aligned with it.
+
+Current repo-level skills:
+
+- `cfo-ledger-ops` — canonical workflow, Beancount conventions, and ledger layout
+- `cfo-setup-governance` — setup/uninstall semantics, onboarding intake, and host registration rules
+- `cfo-chrome-download-statements` — browser-assisted statement export workflow

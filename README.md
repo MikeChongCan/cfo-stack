@@ -163,6 +163,32 @@ Optional cleanup flags:
 - `./uninstall --host auto --remove-local-tools`
 - `./uninstall --host auto --remove-state`
 
+Preview either flow without touching the filesystem:
+
+```bash
+./setup --host codex --dry-run
+./uninstall --host codex --dry-run
+```
+
+If you change the setup tooling itself, run the test suite with:
+
+```bash
+uv run --no-project --with pytest pytest
+# or
+./test-setup
+```
+
+### Included Samples
+
+- `examples/canadian-company/` — incorporated Canadian service business
+- `examples/usa-company/` — US solo consulting business
+- `examples/canadian-individual/` — salaried Canadian individual ledger
+- `examples/canadian-family/` — Canadian household ledger
+- `examples/usa-individual/` — salaried US individual ledger
+- `examples/usa-family/` — US household ledger
+
+The two company examples also include `capture/statement-export.yaml` so you can see how
+to declare institutions and ledger-account mappings for browser-assisted exports.
 ### Jurisdiction Pack Schema
 
 `tax/jurisdiction.yaml` files are governed by:

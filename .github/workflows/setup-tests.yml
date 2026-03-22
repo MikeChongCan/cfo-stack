@@ -5,7 +5,9 @@ on:
     paths:
       - setup
       - uninstall
-      - cfo_stack_setup.py
+      - test-setup
+      - cfo_stack_setup*.py
+      - pyproject.toml
       - tests/**
       - .github/workflows/setup-tests.yml
   push:
@@ -14,7 +16,9 @@ on:
     paths:
       - setup
       - uninstall
-      - cfo_stack_setup.py
+      - test-setup
+      - cfo_stack_setup*.py
+      - pyproject.toml
       - tests/**
       - .github/workflows/setup-tests.yml
   workflow_dispatch:
@@ -25,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.13"]
+        python-version: ["3.10", "3.11", "3.13"]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -39,4 +43,54 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Run test suite
-        run: uv run --no-project --with pytest pytest
+        run: ./test-setup
+
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Smoke test setup and uninstall wrappers
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          tmp_root="$(mktemp -d)"
+          repo_copy="$tmp_root/repo"
+          home_dir="$tmp_root/home"
+          mkdir -p "$home_dir"
+          rsync -a --exclude '.git' ./ "$repo_copy"/
+
+          HOME="$home_dir" "$repo_copy/setup" --host codex
+
+          test -L "$home_dir/.agents/skills/cfo-setup"
+          test -x "$repo_copy/bin/cfo-check"
+          test -x "$repo_copy/bin/cfo-fava"
+          test -x "$repo_copy/bin/cfo-dashboard"
+
+          HOME="$home_dir" "$repo_copy/uninstall" --host codex --remove-local-tools --remove-state
+
+          test ! -e "$home_dir/.agents/skills/cfo-setup"
+          test ! -e "$repo_copy/.venv"
+          test ! -e "$home_dir/.cfo-stack/config.yaml"
+
+          project_dir="$tmp_root/project"
+          mkdir -p "$project_dir"
+
+          HOME="$home_dir" "$repo_copy/setup" --host codex --scope project --project-dir "$project_dir"
+
+          test -L "$project_dir/.agents/skills/cfo-setup"
+          test ! -e "$home_dir/.cfo-stack/config.yaml"
+
+          HOME="$home_dir" "$repo_copy/uninstall" --host codex --scope project --project-dir "$project_dir"
+
+          test ! -e "$project_dir/.agents/skills/cfo-setup"

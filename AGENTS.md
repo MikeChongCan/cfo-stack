@@ -1,8 +1,40 @@
 # cfo-stack — Agent Instructions
 
-> Note: `AGENTS.md` is the high-order instruction file for CFO Stack. `CLAUDE.md` is a symlink to this file, so update `AGENTS.md` when repo-level agent behavior changes materially. Keep it lean and move project-specific or domain-heavy guidance into `./.agents/skills/*` when needed. Keep onboarding/setup behavior aligned with [skills/setup/SKILL.md](skills/setup/SKILL.md).
+> Note: `AGENTS.md` is the high-order instruction file for CFO Stack. `CLAUDE.md` is a symlink to this file, so update `AGENTS.md` when repo-level agent behavior changes materially. Keep it lean. Move domain-heavy or workflow-heavy guidance into `./.agents/skills/*` and keep setup behavior aligned with [skills/setup/SKILL.md](skills/setup/SKILL.md).
 
 AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system and Beancount.
+
+## Scope
+
+`AGENTS.md` should stay short and stable.
+
+Keep only:
+
+- repository operating rules
+- hard product constraints
+- links to detailed references, charters, workflows, and skills
+
+## Instruction Order
+
+1. Root `AGENTS.md` for repo-wide rules
+2. Repo-local skills under `.agents/skills/` for repeatable workflows
+3. Repo-local charter and supporting references under `.agents/`
+4. Command-specific behavior under `skills/*/SKILL.md`
+
+## Canonical References
+
+Use these files instead of expanding this root guide:
+
+- `./.agents/charters/product-charter.md`
+  Product thesis, goals, AI-first accounting philosophy, and non-deterministic workflow direction
+- `./.agents/skills/cfo-ledger-ops/SKILL.md`
+  Canonical workflow, Beancount conventions, and ledger layout guidance
+- `./.agents/skills/cfo-setup-governance/SKILL.md`
+  Setup and uninstall semantics, onboarding intake, and host registration expectations
+- `./.agents/skills/cfo-chrome-download-statements/SKILL.md`
+  Browser-assisted statement export workflow
+- `skills/*/SKILL.md`
+  Command-specific instructions that should not live here
 
 ## Global Rules
 
@@ -15,106 +47,30 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 7. Never modify reconciled transactions without explicit approval.
 8. Always include tax treatment for transactions when applicable.
 9. Commit every meaningful approved change via `/snapshot`.
-10. During setup or onboarding, ask blocking intake questions when scope is unclear:
-    personal vs business, country, entity type, province/state, and operating currency.
+10. During setup or onboarding, ask blocking intake questions when scope is unclear.
     Do not guess template-driving answers.
-11. Do not require deterministic accounting classification, posting, or reporting as a product goal.
+11. Do not require deterministic capture, classification, or posting as a product goal.
     CFO Stack may use non-deterministic, human-reviewed AI workflows for accounting decisions.
 12. For browser-assisted statement downloads, prefer the repo-local skill
     `./.agents/skills/cfo-chrome-download-statements/SKILL.md` over deterministic helper scripts.
-    Let the LLM drive navigation through the user's current Chrome session and use web search
-    on official institution domains when needed.
-13. Setup installs are path-agnostic at machine scope. Do not require this repo to live under
-    `~/.claude/skills/` or `~/.agents/skills/`; `./setup` registers Claude skills in
-    `~/.claude/skills/`, Codex skills in `~/.agents/skills/`, OpenClaw skills in
-    `~/.openclaw/skills/`, and Antigravity skills in `~/.gemini/antigravity/skills/`.
-14. When documenting setup commands, accept both explicit flags such as `./setup --host codex`
-    and the shorthand positional form `./setup codex`. Keep `setup` and `uninstall` behavior
-    symmetric.
-15. `./setup` defaults to `--host auto` unless the user explicitly selects a host.
 
-## Available Skills
+## Key Slash Skills
 
-### C — Capture
-- `/capture` — Import from financial data sources
-- `/statement-export` — Guided browser export for bank, card, brokerage, and platform statements
-- `/statement-export-private` — Privacy-first manual export plan with official URLs and no browser tools
-- `/capture-dedupe` — Fingerprint sources and suppress duplicate capture reruns
-- `/doc-preprocess` — Normalize receipt photos and oversized PDFs before OCR/archive, with `doc-crop` on macOS and ImageMagick fallback elsewhere
-- `/bank-import` — Smart CSV importer with format auto-detection
-- `/receipt-scan` — OCR receipt photos, extract data, generate transactions
+Primary entry points:
 
-### L — Log
-- `/log` — Transform raw data into structured Beancount entries
-- `/classify` — AI-powered transaction categorization with learning
-- `/validate` — Run `bean-check` plus custom validation rules
+- `/cfo` — front door and router
+- `/setup` — initialize a new ledger
+- `/statement-export` or `/statement-export-private` — get raw files onto disk
+- `/capture` — inventory and preprocess raw files
+- `/classify`, `/reconcile`, `/validate` — operate the working ledger
+- `/report`, `/audit`, `/snapshot` — review, validate, and persist meaningful changes
 
-### E — Extract
-- `/extract` — Analyze spending patterns, anomalies, and trends
-- `/reconcile` — Match bank statements to ledger balances
-- `/tax-plan` — Tax strategy, deductions, income splitting, and estimates
-- `/consult` — Cross-model accounting and tax self-consulting via 10x-chat
+Detailed workflow and command-specific behavior belongs in `skills/*/SKILL.md`, not here.
 
-### A — Automate
-- `/automate` — Generate reusable processing scripts and pipelines
-- `/monthly-close` — Automated monthly close workflow
-- `/quarterly-tax` — GST/HST, sales tax, and estimated tax filing prep
+## Placement Rules
 
-### R — Report
-- `/report` — Financial statements: P&L, balance sheet, cash flow
-- `/fava` — Launch Fava for visual ledger exploration
-- `/advisor` — Financial health assessment, FIRE planning, net worth
-
-### Meta
-- `/cfo` — Root onboarding and routing command
-- `/setup` — Initialize a new Beancount ledger
-- `/snapshot` — Commit ledger changes with meaningful messages and tags
-- `/audit` — Comprehensive ledger validation and integrity check
-- `/invoice` — Multi-region invoicing for CA, US, TW, CN, and EU
-- `/careful` — Safety guardrails for financial data
-
-## Process
-
-The C.L.E.A.R. cycle: Capture → Log → Extract → Automate → Report
-
-Monthly: `/capture` → `/classify` → `/reconcile` → `/report` → `/snapshot`
-When files are not on disk yet: `/statement-export` or `/statement-export-private` → `/capture`
-Quarterly: `/quarterly-tax` → `/tax-plan`
-Year-end: `/audit` → `/report` → `/snapshot`
-
-Use `/consult` when the user needs cross-model thinking on:
-- ambiguous bookkeeping treatment
-- tax framing or IRS/CRA interpretation questions
-- competing ledger-modeling approaches
-- workflow or reporting tradeoffs that benefit from multiple external model views
-
-For IRS/CRA questions, anchor the consultation in official-source text or the jurisdiction pack first.
-Use model answers to compare interpretations and surface review items, not to invent rules.
-
-## Beancount Conventions
-
-- Operating currencies: `CAD`, `USD` (configured per entity)
-- Account hierarchy: `Assets:Bank:InstitutionName`, `Expenses:Category:Subcategory`
-- Policy lookup: ledger-local `cfo-stack.yaml`, then global `~/.cfo-stack/config.yaml`
-- Metadata tags: `classify: auto|confirmed|manual`, `receipt: path/to/file`, `receipt-ocr: path/to/processed/file`
-- Balance assertions: required at every monthly close
-- Recoverable sales tax: book to asset receivable accounts, not expense accounts
-
-## File Layout
-
-```text
-ledger/
-├── cfo-stack.yaml
-├── capture/
-│   └── statement-export.yaml
-├── main.beancount
-├── accounts.beancount
-├── YYYY/
-│   ├── MM-transactions.beancount
-│   └── MM-reconciliation.beancount
-├── prices.beancount
-├── tax/
-│   └── jurisdiction.yaml
-└── rules/
-    └── classify-rules.yaml
-```
+- Stable repository policy belongs in `AGENTS.md`.
+- Product thesis and architectural direction belong in `./.agents/charters/`.
+- Repeatable repo workflows belong in `./.agents/skills/`.
+- Command-specific operating instructions belong in `skills/*/SKILL.md`.
+- If a document starts behaving like a workflow, spec, or playbook, move it out of `AGENTS.md`.

@@ -1,6 +1,6 @@
 ---
 name: cfo-chrome-download-statements
-description: Use when statement files are not on disk yet and the agent should guide a human through downloading CSV or PDF evidence from financial institutions via the user's current Chrome session.
+description: Use when statement files are not on disk yet and the agent needs human-in-the-loop browser assistance through the user's current Chrome session to find official portals and download CSV or PDF statements.
 ---
 
 # CFO Chrome Download Statements

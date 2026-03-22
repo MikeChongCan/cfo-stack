@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import shutil
 import subprocess
-import tempfile
+from os import environ
 from pathlib import Path
 
 import pytest
@@ -18,9 +19,32 @@ from cfo_stack_setup import (
     remove_skill_links,
     validate_common_options,
 )
+from cfo_stack_setup_files import ensure_global_state
+from cfo_stack_setup_output import setup_banner_lines, setup_complete_lines, uninstall_banner_lines
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def make_setup_repo_copy(tmp_path: Path) -> Path:
+    repo_copy = tmp_path / "repo-copy"
+    repo_copy.mkdir()
+    for file_name in [
+        "setup",
+        "uninstall",
+        "cfo_stack_setup.py",
+        "cfo_stack_setup_cli.py",
+        "cfo_stack_setup_data.py",
+        "cfo_stack_setup_files.py",
+        "cfo_stack_setup_ops.py",
+        "cfo_stack_setup_output.py",
+        "cfo_stack_setup_parse.py",
+        "cfo_stack_setup_paths.py",
+        "cfo_stack_setup_system.py",
+    ]:
+        shutil.copy2(ROOT / file_name, repo_copy / file_name)
+    shutil.copytree(ROOT / "skills", repo_copy / "skills")
+    return repo_copy
 
 
 def test_parse_setup_defaults_to_auto() -> None:
@@ -28,6 +52,7 @@ def test_parse_setup_defaults_to_auto() -> None:
     assert options.host == "auto"
     assert options.scope == "machine"
     assert options.project_dir is None
+    assert options.dry_run is False
 
 
 def test_parse_setup_positional_host() -> None:
@@ -37,11 +62,20 @@ def test_parse_setup_positional_host() -> None:
 
 def test_parse_uninstall_flags() -> None:
     options = parse_uninstall_options(
-        ["codex", "--scope", "project", "--project-dir", "/tmp/project", "--remove-state"]
+        [
+            "codex",
+            "--scope",
+            "project",
+            "--project-dir",
+            "/tmp/project",
+            "--remove-state",
+            "--dry-run",
+        ]
     )
     assert options.host == "codex"
     assert options.scope == "project"
     assert options.project_dir == Path("/tmp/project")
+    assert options.dry_run is True
     assert options.remove_state is True
     assert options.remove_local_tools is False
 
@@ -70,6 +104,12 @@ def test_project_scope_defaults_to_current_directory_when_safe(tmp_path: Path) -
     context = RuntimeContext(cfo_stack_dir=root, run_dir=project, home_dir=home)
     validated = validate_common_options(SetupOptions(scope="project"), context)
     assert validated.project_dir == project.resolve()
+
+
+def test_validate_common_options_preserves_dry_run(tmp_path: Path) -> None:
+    context = RuntimeContext(cfo_stack_dir=tmp_path / "repo", run_dir=tmp_path, home_dir=tmp_path / "home")
+    validated = validate_common_options(SetupOptions(host="codex", scope="machine", dry_run=True), context)
+    assert validated.dry_run is True
 
 
 def test_detect_targets_uses_gemini_for_antigravity() -> None:
@@ -118,6 +158,117 @@ def test_link_and_remove_skill_dirs(tmp_path: Path, capsys: pytest.CaptureFixtur
     assert "Removed skills: cfo-report cfo-setup" in captured.out
 
 
+def test_link_skill_dirs_dry_run_has_no_side_effects(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    cfo_root = tmp_path / "repo"
+    skills_root = cfo_root / "skills"
+    target_root = tmp_path / "target"
+    (skills_root / "setup").mkdir(parents=True)
+    (skills_root / "setup" / "SKILL.md").write_text("test", encoding="utf-8")
+
+    linked = link_skill_dirs(cfo_root, target_root, "cfo-", dry_run=True)
+
+    assert linked == ["cfo-setup"]
+    assert not target_root.exists()
+    captured = capsys.readouterr()
+    assert "Would link skills: cfo-setup" in captured.out
+
+
+def test_link_skill_dirs_dry_run_reports_conflicts(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    cfo_root = tmp_path / "repo"
+    skills_root = cfo_root / "skills"
+    target_root = tmp_path / "target"
+    (skills_root / "setup").mkdir(parents=True)
+    (skills_root / "setup" / "SKILL.md").write_text("test", encoding="utf-8")
+    target_root.mkdir()
+    (target_root / "cfo-setup").mkdir()
+
+    linked = link_skill_dirs(cfo_root, target_root, "cfo-", dry_run=True)
+
+    assert linked == []
+    captured = capsys.readouterr()
+    assert "Would link skills" not in captured.out
+    assert "Skipped existing non-symlink targets: cfo-setup" in captured.out
+
+
+def test_ensure_global_state_dry_run_has_no_side_effects(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    context = RuntimeContext(cfo_stack_dir=tmp_path / "repo", run_dir=tmp_path, home_dir=tmp_path / "home")
+
+    ensure_global_state(context, "machine", dry_run=True)
+
+    assert not context.state_dir.exists()
+    captured = capsys.readouterr()
+    assert f"Dry run: would create {context.global_config}" in captured.out
+
+
+def test_setup_banner_snapshot_for_project_dry_run() -> None:
+    assert setup_banner_lines(
+        SetupOptions(scope="project", project_dir=Path("/tmp/project"), dry_run=True)
+    ) == [
+        "╔══════════════════════════════════════════╗",
+        "║          CFO Stack Setup                 ║",
+        "║    AI-Powered Accounting with CLEAR      ║",
+        "╚══════════════════════════════════════════╝",
+        "",
+        "  Scope: project",
+        "  Project dir: /tmp/project",
+        "  Mode: dry-run",
+    ]
+
+
+def test_uninstall_banner_snapshot_for_project_dry_run() -> None:
+    assert uninstall_banner_lines(
+        parse_uninstall_options(
+            ["codex", "--scope", "project", "--project-dir", "/tmp/project", "--dry-run"]
+        )
+    ) == [
+        "╔══════════════════════════════════════════╗",
+        "║        CFO Stack Uninstall               ║",
+        "║     Remove host registrations safely     ║",
+        "╚══════════════════════════════════════════╝",
+        "",
+        "  Scope: project",
+        "  Project dir: /tmp/project",
+        "  Mode: dry-run",
+    ]
+
+
+def test_setup_complete_snapshot_for_machine_scope() -> None:
+    assert setup_complete_lines(Path("/repo"), SetupOptions()) == [
+        "",
+        "╔══════════════════════════════════════════╗",
+        "║          Setup Complete!                 ║",
+        "╠══════════════════════════════════════════╣",
+        "║                                          ║",
+        "║  Quick start:                            ║",
+        "║    1. Run /setup to create your ledger   ║",
+        "║    2. Edit ~/.cfo-stack/config.yaml      ║",
+        "║       if you want a different review     ║",
+        "║       threshold than $1,000             ║",
+        "║    3. Drop bank CSVs in ~/Downloads      ║",
+        "║    4. Run /capture to import them        ║",
+        "║    5. Run /classify to categorize        ║",
+        "║    6. Run /report to see your finances   ║",
+        "║    7. Run cfo-dashboard from this repo   ║",
+        "║                                          ║",
+        "║  The CLEAR cycle:                        ║",
+        "║    Capture → Log → Extract →              ║",
+        "║    Automate → Report                      ║",
+        "║                                          ║",
+        "╚══════════════════════════════════════════╝",
+        "",
+        "Helper scripts live in: /repo/bin",
+    ]
+
+
 def test_setup_entrypoint_is_runnable_for_fast_fail() -> None:
     result = subprocess.run(
         [str(ROOT / "setup"), "--hsto", "auto"],
@@ -130,6 +281,30 @@ def test_setup_entrypoint_is_runnable_for_fast_fail() -> None:
     assert "Unknown argument: --hsto" in result.stderr
 
 
+def test_setup_entrypoint_supports_dry_run(tmp_path: Path) -> None:
+    repo_copy = make_setup_repo_copy(tmp_path)
+    home_dir = tmp_path / "home"
+    home_dir.mkdir()
+    env = dict(environ)
+    env["HOME"] = str(home_dir)
+
+    result = subprocess.run(
+        [str(repo_copy / "setup"), "--host", "codex", "--dry-run"],
+        cwd=repo_copy,
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+
+    assert result.returncode == 0
+    assert "Mode: dry-run" in result.stdout
+    assert "Would link skills:" in result.stdout
+    assert "Dry run: would create helper scripts" in result.stdout
+    assert not (home_dir / ".agents").exists()
+    assert not (repo_copy / "bin" / "cfo-check").exists()
+
+
 def test_uninstall_entrypoint_is_runnable_for_fast_fail() -> None:
     result = subprocess.run(
         [str(ROOT / "uninstall"), "--unknown-flag"],
@@ -140,3 +315,26 @@ def test_uninstall_entrypoint_is_runnable_for_fast_fail() -> None:
     )
     assert result.returncode != 0
     assert "Unknown argument: --unknown-flag" in result.stderr
+
+
+def test_uninstall_entrypoint_supports_dry_run(tmp_path: Path) -> None:
+    repo_copy = make_setup_repo_copy(tmp_path)
+    home_dir = tmp_path / "home"
+    home_dir.mkdir()
+    env = dict(environ)
+    env["HOME"] = str(home_dir)
+
+    result = subprocess.run(
+        [str(repo_copy / "uninstall"), "--host", "codex", "--dry-run", "--remove-local-tools", "--remove-state"],
+        cwd=repo_copy,
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+
+    assert result.returncode == 0
+    assert "Mode: dry-run" in result.stdout
+    assert "Dry run: would remove bin helpers, .venv, and dashboard node_modules" in result.stdout
+    assert "Dry run: would remove" in result.stdout
+    assert not (home_dir / ".agents").exists()
