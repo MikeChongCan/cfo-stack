@@ -68,6 +68,20 @@ This should crop margins, correct perspective, and iteratively compress to a bou
 `doc-crop` is macOS-only. Do not tell users to install it on Linux or Windows, and do not
 attempt to run it unless the current host is macOS.
 
+On Linux or Windows, if ImageMagick has WebP support, use a conservative fallback such as:
+
+```bash
+magick input.jpg -auto-orient -strip -resize "2000x2000>" -quality 75 output.webp
+```
+
+This will not do document-specific perspective correction like `doc-crop`, but it does
+give a usable cross-platform path for orientation cleanup, metadata stripping, bounded
+resize, and WebP compression.
+
+After conversion, verify that totals, taxes, vendor name, and payment details remain
+readable at 100% zoom. If readability degrades, keep the original and report that
+preprocessing was skipped or only partially applied.
+
 ### Step 4: Handle PDFs conservatively
 
 - **Born-digital PDFs:** keep the original PDF as canonical evidence; do not rasterize it just to save space
