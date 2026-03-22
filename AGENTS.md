@@ -40,7 +40,7 @@ AI-powered accounting, bookkeeping, and tax planning using the C.L.E.A.R. system
 - `/statement-export` — Guided browser export for bank, card, brokerage, and platform statements
 - `/statement-export-private` — Privacy-first manual export plan with official URLs and no browser tools
 - `/capture-dedupe` — Fingerprint sources and suppress duplicate capture reruns
-- `/doc-preprocess` — Normalize receipt photos and oversized PDFs before OCR/archive
+- `/doc-preprocess` — Normalize receipt photos and oversized PDFs before OCR/archive, with `doc-crop` on macOS and ImageMagick fallback elsewhere
 - `/bank-import` — Smart CSV importer with format auto-detection
 - `/receipt-scan` — OCR receipt photos, extract data, generate transactions
 

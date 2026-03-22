@@ -336,7 +336,7 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 | `/statement-export` | Export Clerk | Guided Chrome DevTools MCP export for bank, card, brokerage, and platform statements |
 | `/statement-export-private` | Private Export Planner | Privacy-first manual export checklist with official URLs, date ranges, and no browser tools |
 | `/capture-dedupe` | Import Provenance Clerk | Prevent duplicate imports across repeated capture runs |
-| `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive |
+| `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive, with `doc-crop` on macOS and ImageMagick fallback elsewhere |
 | `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
 | `/receipt-scan` | Receipt Clerk | OCR receipt photos, generate transactions |
 
