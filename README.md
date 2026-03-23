@@ -247,6 +247,14 @@ official-domain web search and download guidance.
 
 ### 2. Set up your ledger
 
+If you are starting from zero and want a plain-language walkthrough first, use:
+
+```
+/cfo-onboarding
+```
+
+If you already understand the intake questions and want to create the ledger directly, use:
+
 ```
 /cfo-setup
 ```
@@ -405,7 +413,8 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 | Skill | Role | What It Does |
 |---|---|---|
 | `/cfo` | Root CFO | Ask the minimum onboarding questions and route to the right next CFO Stack skill |
-| `/cfo-setup` | Onboarding | Initialize new ledger from scratch |
+| `/cfo-onboarding` | Beginner Guide | Explain CFO Stack in plain language and prepare a zero-knowledge user for setup |
+| `/cfo-setup` | Ledger Setup | Initialize new ledger from scratch once scope is clear |
 | `/cfo-snapshot` | Archivist | Git commit with meaningful messages + tags |
 | `/cfo-audit` | Internal Auditor | Comprehensive ledger validation |
 | `/cfo-invoice` | Billing Clerk | Multi-region invoicing (CA, US, TW, CN, EU) |

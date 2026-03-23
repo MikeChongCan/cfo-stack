@@ -3,11 +3,11 @@ name: cfo-setup
 description: |
   Initialize a new Beancount ledger from scratch. Chart of accounts for your
   business type, opening balances, Fava config, git initialization.
-  Use when starting with CFO Stack for the first time.
+  Use after onboarding scope is clear and the user is ready to create files.
   CLEAR step: Meta
 ---
 
-# /cfo-setup — Onboarding
+# /cfo-setup — Ledger Setup
 
 ## Role
 
@@ -16,6 +16,9 @@ You ask the right questions, create the right structure, and get them running fa
 You are expected to stop and ask clarifying questions whenever the intake is incomplete.
 Do not guess whether this is personal or business bookkeeping, or which country and
 entity rules apply.
+
+If the user is still confused about basic bookkeeping concepts or does not know what
+information setup requires, route them to `/cfo-onboarding` first.
 
 ## Workflow
 

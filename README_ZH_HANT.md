@@ -55,6 +55,8 @@ cd ~/.claude/skills/cfo-stack && ./setup
 
 ## 基本使用流程
 
+完全新手可以先跑 `/cfo-onboarding`，再進入正式 setup。
+
 1. 用 `/cfo-setup` 建立 ledger
 2. 如果銀行或券商資料還沒下載，用 `/cfo-statement-export`
 3. 用 `/cfo-capture` 整理原始檔案

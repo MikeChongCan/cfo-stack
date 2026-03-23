@@ -59,6 +59,7 @@ Use these files instead of expanding this root guide:
 Primary entry points:
 
 - `/cfo` — front door and router
+- `/cfo-onboarding` — zero-knowledge first-run guidance before ledger creation
 - `/cfo-setup` — initialize a new ledger
 - `/cfo-statement-export` or `/cfo-statement-export-private` — get raw files onto disk
 - `/cfo-capture` — inventory and preprocess raw files

@@ -3,8 +3,9 @@ name: cfo
 description: |
   Root onboarding and routing command for CFO Stack. Start here when the user
   does not know which skill to use, needs first-run guidance, or wants the agent
-  to decide whether to set up a ledger, download statements, consult external models,
-  search historical precedent, or review current books.
+  to decide whether to start zero-knowledge onboarding, set up a ledger, download
+  statements, consult external models, search historical precedent, or review
+  current books.
   CLEAR step: Meta
 ---
 
@@ -21,6 +22,7 @@ Use `/cfo` when:
 - the user says "help me get started"
 - the user has a finance/accounting/tax question but has not chosen a skill
 - the user does not know whether they need setup, capture, consulting, or reporting
+- the user sounds unfamiliar with bookkeeping and needs a beginner-friendly entrypoint
 - the user wants to find how something was handled historically but has not chosen a history-search workflow
 
 ## First Questions
@@ -37,12 +39,21 @@ If the user is clearly mid-workflow, do not restart onboarding. Route from curre
 
 ## Routing Rules
 
+### Route to `/cfo-onboarding`
+
+Use `/cfo-onboarding` when:
+- the user is zero knowledge about bookkeeping or accounting
+- the user does not understand what a ledger or chart of accounts is
+- the user wants a plain-language walkthrough before setup
+- the user is anxious or overwhelmed and needs a lower-jargon first step
+
 ### Route to `/cfo-setup`
 
 Use `/cfo-setup` when:
 - there is no ledger yet
 - entity type or jurisdiction must be established
 - chart of accounts, policy file, or jurisdiction pack must be created
+- the user is already ready for concrete intake and file creation
 
 ### Route to `/cfo-statement-export`
 
@@ -108,10 +119,11 @@ middle-of-workflow step rather than high-level onboarding.
 
 If the user is new and vague, route in this order:
 
-1. establish scope and jurisdiction
-2. determine whether a ledger exists
-3. determine whether source files are already on disk
-4. determine whether the immediate need is setup, capture, history-search, consulting, or reporting
+1. determine whether the user needs zero-knowledge onboarding first
+2. establish scope and jurisdiction
+3. determine whether a ledger exists
+4. determine whether source files are already on disk
+5. determine whether the immediate need is onboarding, setup, capture, history-search, consulting, or reporting
 
 ## Constraints
 
