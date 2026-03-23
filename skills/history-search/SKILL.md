@@ -1,5 +1,5 @@
 ---
-name: history-search
+name: cfo-history-search
 description: |
   Search prior journals, ledgers, notes, and bookkeeping knowledge quickly with QMD.
   Use when you want historical precedent before classification, reconciliation,
@@ -7,7 +7,7 @@ description: |
   CLEAR step: E (Extract)
 ---
 
-# /history-search — Precedent Finder
+# /cfo-history-search — Precedent Finder
 
 ## CLEAR Step
 
@@ -48,10 +48,10 @@ If `qmd` is unavailable, fall back to `rg`, but treat that as a weaker fallback 
 
 Use this before:
 
-- `/classify` when confidence depends on historical precedent
-- `/consult` when the question depends on prior bookkeeping treatment
-- `/reconcile` when a transaction pattern, memo, or vendor looks familiar
-- `/report` when the user asks for historical examples or prior-period narrative context
+- `/cfo-classify` when confidence depends on historical precedent
+- `/cfo-consult` when the question depends on prior bookkeeping treatment
+- `/cfo-reconcile` when a transaction pattern, memo, or vendor looks familiar
+- `/cfo-report` when the user asks for historical examples or prior-period narrative context
 
 ## Workflow
 
@@ -209,6 +209,6 @@ Use collection names that describe the source clearly:
 
 ## Related Skills
 
-- `/classify` — use precedent to improve categorization confidence
-- `/consult` — use historical context before cross-model analysis
-- `/reconcile` — use prior examples to explain unusual patterns
+- `/cfo-classify` — use precedent to improve categorization confidence
+- `/cfo-consult` — use historical context before cross-model analysis
+- `/cfo-reconcile` — use prior examples to explain unusual patterns

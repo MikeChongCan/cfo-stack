@@ -29,9 +29,9 @@ A realistic US freelancer example managed with CFO Stack.
 ./bin/cfo-fava ./main.beancount 5000
 
 # Run CFO Stack skills
-/report          # see P&L mapped to Schedule C
-/tax-plan        # quarterly estimated tax planning
-/advisor         # FIRE progress tracking
+/cfo-report          # see P&L mapped to Schedule C
+/cfo-tax-plan        # quarterly estimated tax planning
+/cfo-advisor         # FIRE progress tracking
 ```
 
 ## Key Patterns Demonstrated

@@ -1,14 +1,14 @@
 ---
-name: capture-dedupe
+name: cfo-capture-dedupe
 description: |
   Enforce import idempotency and duplicate-source detection across repeated capture runs.
   Fingerprints files, rows, and derived documents so reruns skip exact duplicates, corrected
   reimports are explicit, and duplicate-risk findings surface in import logs and validation.
-  Use before staging entries from /capture, /bank-import, /receipt-scan, or /doc-preprocess.
+  Use before staging entries from /cfo-capture, /cfo-bank-import, /cfo-receipt-scan, or /cfo-doc-preprocess.
   CLEAR step: C (Capture)
 ---
 
-# /capture-dedupe — Import Provenance Clerk
+# /cfo-capture-dedupe — Import Provenance Clerk
 
 ## CLEAR Step
 
@@ -24,10 +24,10 @@ runs stay deterministic instead of silently duplicating the books.
 
 Run this skill before appending anything to staging from:
 
-- `/capture`
-- `/bank-import`
-- `/doc-preprocess`
-- `/receipt-scan`
+- `/cfo-capture`
+- `/cfo-bank-import`
+- `/cfo-doc-preprocess`
+- `/cfo-receipt-scan`
 
 ## Workflow
 
@@ -171,17 +171,17 @@ staging/YYYY-MM-duplicate-risk.md
 
 Only after duplicate handling is complete:
 
-- let `/bank-import` append new staging entries
-- let `/receipt-scan` generate new postings
-- let `/validate` consume duplicate-risk findings as warnings or errors
+- let `/cfo-bank-import` append new staging entries
+- let `/cfo-receipt-scan` generate new postings
+- let `/cfo-validate` consume duplicate-risk findings as warnings or errors
 
 ## Related Skills
 
-- `/capture` — master intake orchestration
-- `/bank-import` — statement-row fingerprint source
-- `/doc-preprocess` — processed derivative provenance
-- `/receipt-scan` — document transaction fingerprint source
-- `/validate` — duplicate-risk reporting after capture
+- `/cfo-capture` — master intake orchestration
+- `/cfo-bank-import` — statement-row fingerprint source
+- `/cfo-doc-preprocess` — processed derivative provenance
+- `/cfo-receipt-scan` — document transaction fingerprint source
+- `/cfo-validate` — duplicate-risk reporting after capture
 
 ## Constraints
 

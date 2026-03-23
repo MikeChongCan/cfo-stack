@@ -1,5 +1,5 @@
 ---
-name: quarterly-tax
+name: cfo-quarterly-tax
 description: |
   Prepare quarterly tax filing data. GST/HST return (Canada), estimated tax
   payments (US), sales tax returns. Generates filing-ready data packets.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: A (Automate)
 ---
 
-# /quarterly-tax — Tax Preparer
+# /cfo-quarterly-tax — Tax Preparer
 
 ## CLEAR Step
 
@@ -31,7 +31,7 @@ Before any computation, check that a jurisdiction pack exists:
 - Look for `tax/jurisdiction.yaml` with filing rules, rates, and deadlines
 - If no jurisdiction pack is found, STOP and tell the user:
   "No jurisdiction pack found. I cannot generate filing data without verified
-   tax rates and deadlines. Run `/setup` to configure your jurisdiction."
+   tax rates and deadlines. Run `/cfo-setup` to configure your jurisdiction."
 
 **Never use hard-coded rates or deadlines.** All values must come from the pack.
 

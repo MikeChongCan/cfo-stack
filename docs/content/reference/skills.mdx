@@ -8,55 +8,55 @@ sidebar_position: 1
 
 | Skill | Role | What it does |
 | --- | --- | --- |
-| `/capture` | Data Clerk | Inventory local files and route them into import/OCR flows |
-| `/statement-export` | Export Clerk | Guided Chrome DevTools MCP export for bank, card, brokerage, and platform statements |
-| `/statement-export-private` | Private Export Planner | Privacy-first manual export checklist with official URLs, date ranges, and no browser tools |
-| `/capture-dedupe` | Import Provenance Clerk | Fingerprint files and rows so repeated capture runs stay idempotent |
-| `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR or archive, with `doc-crop` on macOS and ImageMagick fallback elsewhere |
-| `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
-| `/receipt-scan` | Receipt Clerk | OCR receipt photos and generate transactions |
+| `/cfo-capture` | Data Clerk | Inventory local files and route them into import/OCR flows |
+| `/cfo-statement-export` | Export Clerk | Guided Chrome DevTools MCP export for bank, card, brokerage, and platform statements |
+| `/cfo-statement-export-private` | Private Export Planner | Privacy-first manual export checklist with official URLs, date ranges, and no browser tools |
+| `/cfo-capture-dedupe` | Import Provenance Clerk | Fingerprint files and rows so repeated capture runs stay idempotent |
+| `/cfo-doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR or archive, with `doc-crop` on macOS and ImageMagick fallback elsewhere |
+| `/cfo-bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
+| `/cfo-receipt-scan` | Receipt Clerk | OCR receipt photos and generate transactions |
 
 ## Log
 
 | Skill | Role | What it does |
 | --- | --- | --- |
-| `/log` | Bookkeeper | Transform raw data into Beancount double-entry |
-| `/classify` | Staff Accountant | Categorize transactions and apply tax treatment |
-| `/validate` | Quality Control | Run `bean-check` plus custom validation rules |
+| `/cfo-log` | Bookkeeper | Transform raw data into Beancount double-entry |
+| `/cfo-classify` | Staff Accountant | Categorize transactions and apply tax treatment |
+| `/cfo-validate` | Quality Control | Run `bean-check` plus custom validation rules |
 
 ## Extract
 
 | Skill | Role | What it does |
 | --- | --- | --- |
-| `/extract` | Data Analyst | Analyze patterns, anomalies, and trends |
-| `/reconcile` | Controller | Match bank statements to ledger balances |
-| `/tax-plan` | Tax Strategist | Plan deductions, income splitting, and estimates |
-| `/consult` | Cross-Model Consultant | Use 10x-chat to compare model answers and synthesize a markdown consultation note |
+| `/cfo-extract` | Data Analyst | Analyze patterns, anomalies, and trends |
+| `/cfo-reconcile` | Controller | Match bank statements to ledger balances |
+| `/cfo-tax-plan` | Tax Strategist | Plan deductions, income splitting, and estimates |
+| `/cfo-consult` | Cross-Model Consultant | Use 10x-chat to compare model answers and synthesize a markdown consultation note |
 
 ## Automate
 
 | Skill | Role | What it does |
 | --- | --- | --- |
-| `/automate` | DevOps | Generate reusable scripts and pipelines |
-| `/monthly-close` | Controller | Run the full month-end close workflow |
-| `/quarterly-tax` | Tax Preparer | Prepare GST/HST, sales tax, and estimated tax filings |
+| `/cfo-automate` | DevOps | Generate reusable scripts and pipelines |
+| `/cfo-monthly-close` | Controller | Run the full month-end close workflow |
+| `/cfo-quarterly-tax` | Tax Preparer | Prepare GST/HST, sales tax, and estimated tax filings |
 
 ## Report
 
 | Skill | Role | What it does |
 | --- | --- | --- |
-| `/report` | CFO | Produce P&L, balance sheet, cash flow, and comparisons |
-| `/report-dashboard` | Design-forward CFO | Generate beautiful static HTML dashboards from `bean-query` data |
-| `/fava` | Dashboard | Launch Fava for visual exploration |
-| `/advisor` | Financial Advisor | Assess net worth, scenarios, and financial health |
+| `/cfo-report` | CFO | Produce P&L, balance sheet, cash flow, and comparisons |
+| `/cfo-report-dashboard` | Design-forward CFO | Generate beautiful static HTML dashboards from `bean-query` data |
+| `/cfo-fava` | Dashboard | Launch Fava for visual exploration |
+| `/cfo-advisor` | Financial Advisor | Assess net worth, scenarios, and financial health |
 
 ## Meta
 
 | Skill | Role | What it does |
 | --- | --- | --- |
 | `/cfo` | Root CFO | Ask the minimum onboarding questions and route to the right next skill |
-| `/setup` | Onboarding | Initialize a new ledger from scratch |
-| `/snapshot` | Archivist | Commit meaningful ledger changes and tags |
-| `/audit` | Internal Auditor | Run a comprehensive integrity check |
-| `/invoice` | Billing Clerk | Generate multi-region invoices |
-| `/careful` | Safety Officer | Add guardrails around risky financial edits |
+| `/cfo-setup` | Onboarding | Initialize a new ledger from scratch |
+| `/cfo-snapshot` | Archivist | Commit meaningful ledger changes and tags |
+| `/cfo-audit` | Internal Auditor | Run a comprehensive integrity check |
+| `/cfo-invoice` | Billing Clerk | Generate multi-region invoices |
+| `/cfo-careful` | Safety Officer | Add guardrails around risky financial edits |

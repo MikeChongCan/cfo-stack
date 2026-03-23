@@ -37,16 +37,16 @@ If the user is clearly mid-workflow, do not restart onboarding. Route from curre
 
 ## Routing Rules
 
-### Route to `/setup`
+### Route to `/cfo-setup`
 
-Use `/setup` when:
+Use `/cfo-setup` when:
 - there is no ledger yet
 - entity type or jurisdiction must be established
 - chart of accounts, policy file, or jurisdiction pack must be created
 
-### Route to `/statement-export`
+### Route to `/cfo-statement-export`
 
-Use `/statement-export` when:
+Use `/cfo-statement-export` when:
 - statements or activity CSV/PDF files are not on disk yet
 - the user needs guided browser export from a bank, card, brokerage, or payment platform
 
@@ -56,36 +56,36 @@ When statement export requires live browser help, use:
 
 That workflow stays LLM-driven and human-in-the-loop.
 
-### Route to `/statement-export-private`
+### Route to `/cfo-statement-export-private`
 
-Use `/statement-export-private` when:
+Use `/cfo-statement-export-private` when:
 - statements or activity CSV/PDF files are not on disk yet
 - the user wants a privacy-first manual checklist instead of live browser help
 - the user wants official URLs, candidate date ranges, and a staging directory only
 - the user does not want browser tools or remote-debugging workflows involved
 
-### Route to `/capture`
+### Route to `/cfo-capture`
 
-Use `/capture` when:
+Use `/cfo-capture` when:
 - files already exist locally
 - the user needs inventory, staging, preprocessing, or import handoff
 
-### Route to `/history-search`
+### Route to `/cfo-history-search`
 
-Use `/history-search` when:
+Use `/cfo-history-search` when:
 - the user wants prior examples before making a bookkeeping decision
 - the question is "how did we handle this before?"
 - the answer likely lives in prior ledgers, journals, notes, or memos
 - exact or fuzzy historical retrieval is more useful than immediate freeform reasoning
 
-### Route to `/consult`
+### Route to `/cfo-consult`
 
-Use `/consult` when:
+Use `/cfo-consult` when:
 - the user needs cross-model thinking on bookkeeping treatment
 - the user has an IRS or CRA interpretation question
 - the user wants external-model comparison before deciding on a finance workflow
 
-If the question depends on prior internal precedent, run `/history-search` first or in parallel
+If the question depends on prior internal precedent, run `/cfo-history-search` first or in parallel
 to gather the strongest local examples before asking external models.
 
 For IRS/CRA questions:
@@ -93,13 +93,13 @@ For IRS/CRA questions:
 - include those rules explicitly in the outbound markdown bundle
 - do not treat external model answers as compliance approval
 
-### Route to `/report`
+### Route to `/cfo-report`
 
-Use `/report` when:
+Use `/cfo-report` when:
 - the ledger is already in place
 - the user wants statements, summaries, or current financial health
 
-### Route to `/reconcile`, `/classify`, or `/validate`
+### Route to `/cfo-reconcile`, `/cfo-classify`, or `/cfo-validate`
 
 Use these when the user is already operating an active ledger and needs a specific
 middle-of-workflow step rather than high-level onboarding.
@@ -116,7 +116,7 @@ If the user is new and vague, route in this order:
 ## Constraints
 
 - NEVER guess entity type, country, or household-vs-business scope when those change the workflow
-- NEVER route tax-rule questions directly to freeform opinion when `/consult` plus official-source context is the right path
+- NEVER route tax-rule questions directly to freeform opinion when `/cfo-consult` plus official-source context is the right path
 - NEVER skip human confirmation for ambiguous accounting or export decisions
 - ALWAYS prefer the next most specific skill over bloating `/cfo`
 

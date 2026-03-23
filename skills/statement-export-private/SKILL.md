@@ -1,5 +1,5 @@
 ---
-name: statement-export-private
+name: cfo-statement-export-private
 description: |
   Privacy-first planning-only statement export for banks, cards, brokerages,
   and payment platforms. The LLM builds a manual download checklist with
@@ -9,7 +9,7 @@ description: |
   CLEAR step: C (Capture)
 ---
 
-# /statement-export-private — Private Export Planner
+# /cfo-statement-export-private — Private Export Planner
 
 ## CLEAR Step
 
@@ -82,9 +82,9 @@ The human performs all navigation, login, MFA, and downloads privately.
 ### Step 4: Hand off cleanly
 
 After the human downloads the files, tell them to run:
-- `/capture` to inventory the staged files
-- `/bank-import` for CSVs
-- `/reconcile` for archived PDFs when needed
+- `/cfo-capture` to inventory the staged files
+- `/cfo-bank-import` for CSVs
+- `/cfo-reconcile` for archived PDFs when needed
 
 ## Constraints
 
@@ -102,4 +102,4 @@ After the human downloads the files, tell them to run:
 - Official URLs to open manually
 - Suggested date ranges and export formats to confirm
 - Suggested staging directory, usually `~/Downloads/cfo-staging`
-- Clear next step: `/capture`
+- Clear next step: `/cfo-capture`

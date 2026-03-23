@@ -48,40 +48,40 @@ This is the skeleton of the entire system. Each skill group completes one step o
 
 ```
 C — Capture
-├── /capture        Master orchestrator: import from all sources
-├── /statement-export Guided browser export when source files are not on disk yet
-├── /statement-export-private Privacy-first manual export planning when browser tools are undesired
-├── /capture-dedupe Prevent duplicate imports across repeated capture runs
-├── /doc-preprocess Normalize receipt photos and oversized PDFs before OCR
-├── /bank-import    CSV import with format auto-detection (TD, RBC, BMO, Chase, BoA...)
-└── /receipt-scan   OCR receipt photos, generate Beancount transactions
+├── /cfo-capture        Master orchestrator: import from all sources
+├── /cfo-statement-export Guided browser export when source files are not on disk yet
+├── /cfo-statement-export-private Privacy-first manual export planning when browser tools are undesired
+├── /cfo-capture-dedupe Prevent duplicate imports across repeated capture runs
+├── /cfo-doc-preprocess Normalize receipt photos and oversized PDFs before OCR
+├── /cfo-bank-import    CSV import with format auto-detection (TD, RBC, BMO, Chase, BoA...)
+└── /cfo-receipt-scan   OCR receipt photos, generate Beancount transactions
 
 L — Log
-├── /log            Transform raw data into Beancount entries
-├── /classify       AI-powered categorization with learning
-└── /validate       Run bean-check + custom validation rules
+├── /cfo-log            Transform raw data into Beancount entries
+├── /cfo-classify       AI-powered categorization with learning
+└── /cfo-validate       Run bean-check + custom validation rules
 
 E — Extract
-├── /extract        AI analysis: spending patterns, anomalies, trends
-├── /reconcile      Match bank statements to ledger balances
-└── /tax-plan       Tax strategy: deductions, income splitting, quarterly estimates
+├── /cfo-extract        AI analysis: spending patterns, anomalies, trends
+├── /cfo-reconcile      Match bank statements to ledger balances
+└── /cfo-tax-plan       Tax strategy: deductions, income splitting, quarterly estimates
 
 A — Automate
-├── /automate       Generate reusable processing scripts/pipelines
-├── /monthly-close  Automated monthly close workflow
-└── /quarterly-tax  GST/HST, sales tax, estimated tax filing prep
+├── /cfo-automate       Generate reusable processing scripts/pipelines
+├── /cfo-monthly-close  Automated monthly close workflow
+└── /cfo-quarterly-tax  GST/HST, sales tax, estimated tax filing prep
 
 R — Report
-├── /report         Financial statements: P&L, Balance Sheet, Cash Flow
-├── /fava           Launch Fava web UI for visual exploration
-└── /advisor        Financial health, FIRE planning, net worth tracking
+├── /cfo-report         Financial statements: P&L, Balance Sheet, Cash Flow
+├── /cfo-fava           Launch Fava web UI for visual exploration
+└── /cfo-advisor        Financial health, FIRE planning, net worth tracking
 
 Meta
-├── /setup          Initialize new ledger: chart of accounts, Beancount config
-├── /snapshot       Git commit ledger with meaningful messages & tags
-├── /audit          Comprehensive ledger validation & integrity check
-├── /invoice        Multi-region invoicing (CA, US, TW, CN, EU)
-└── /careful        Safety guardrails for financial data (inherited from gstack)
+├── /cfo-setup          Initialize new ledger: chart of accounts, Beancount config
+├── /cfo-snapshot       Git commit ledger with meaningful messages & tags
+├── /cfo-audit          Comprehensive ledger validation & integrity check
+├── /cfo-invoice        Multi-region invoicing (CA, US, TW, CN, EU)
+└── /cfo-careful        Safety guardrails for financial data (inherited from gstack)
 ```
 
 ### Specialist Roles
@@ -90,30 +90,30 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 
 | Skill | Specialist | CLEAR Step |
 |---|---|---|
-| `/capture` | **Data Clerk** — imports everything | C |
-| `/statement-export` | **Export Clerk** — guides human export from portals | C |
-| `/statement-export-private` | **Private Export Planner** — prepares manual export checklists without browser tools | C |
-| `/capture-dedupe` | **Import Provenance Clerk** — suppress duplicate reruns | C |
-| `/doc-preprocess` | **Document Prep Clerk** — normalize source documents, with `doc-crop` on macOS and ImageMagick fallback elsewhere | C |
-| `/bank-import` | **Bank Specialist** — knows CSV formats | C |
-| `/receipt-scan` | **Receipt Clerk** — OCR + data extraction | C |
-| `/log` | **Bookkeeper** — structured double-entry | L |
-| `/classify` | **Staff Accountant** — categorization + tax treatment | L |
-| `/validate` | **Quality Control** — ledger integrity | L |
-| `/extract` | **Data Analyst** — patterns and anomalies | E |
-| `/reconcile` | **Controller** — match reality to records | E |
-| `/tax-plan` | **Tax Strategist** — proactive planning | E |
-| `/automate` | **DevOps** — scripts and pipelines | A |
-| `/monthly-close` | **Controller** — period close process | A |
-| `/quarterly-tax` | **Tax Preparer** — filing prep | A |
-| `/report` | **CFO** — financial statements | R |
-| `/fava` | **Dashboard** — visual exploration | R |
-| `/advisor` | **Financial Advisor** — health + planning | R |
-| `/setup` | **Onboarding** — new entity setup | Meta |
-| `/snapshot` | **Archivist** — git versioning | Meta |
-| `/audit` | **Internal Auditor** — comprehensive check | Meta |
-| `/invoice` | **Billing Clerk** — multi-region invoices | Meta |
-| `/careful` | **Safety Officer** — guardrails | Meta |
+| `/cfo-capture` | **Data Clerk** — imports everything | C |
+| `/cfo-statement-export` | **Export Clerk** — guides human export from portals | C |
+| `/cfo-statement-export-private` | **Private Export Planner** — prepares manual export checklists without browser tools | C |
+| `/cfo-capture-dedupe` | **Import Provenance Clerk** — suppress duplicate reruns | C |
+| `/cfo-doc-preprocess` | **Document Prep Clerk** — normalize source documents, with `doc-crop` on macOS and ImageMagick fallback elsewhere | C |
+| `/cfo-bank-import` | **Bank Specialist** — knows CSV formats | C |
+| `/cfo-receipt-scan` | **Receipt Clerk** — OCR + data extraction | C |
+| `/cfo-log` | **Bookkeeper** — structured double-entry | L |
+| `/cfo-classify` | **Staff Accountant** — categorization + tax treatment | L |
+| `/cfo-validate` | **Quality Control** — ledger integrity | L |
+| `/cfo-extract` | **Data Analyst** — patterns and anomalies | E |
+| `/cfo-reconcile` | **Controller** — match reality to records | E |
+| `/cfo-tax-plan` | **Tax Strategist** — proactive planning | E |
+| `/cfo-automate` | **DevOps** — scripts and pipelines | A |
+| `/cfo-monthly-close` | **Controller** — period close process | A |
+| `/cfo-quarterly-tax` | **Tax Preparer** — filing prep | A |
+| `/cfo-report` | **CFO** — financial statements | R |
+| `/cfo-fava` | **Dashboard** — visual exploration | R |
+| `/cfo-advisor` | **Financial Advisor** — health + planning | R |
+| `/cfo-setup` | **Onboarding** — new entity setup | Meta |
+| `/cfo-snapshot` | **Archivist** — git versioning | Meta |
+| `/cfo-audit` | **Internal Auditor** — comprehensive check | Meta |
+| `/cfo-invoice` | **Billing Clerk** — multi-region invoices | Meta |
+| `/cfo-careful` | **Safety Officer** — guardrails | Meta |
 
 ---
 
@@ -127,7 +127,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 │         (AI agent executing skills)              │
 ├─────────────────────────────────────────────────┤
 │          CFO Stack Skills (Markdown)             │
-│  /capture /log /extract /automate /report ...    │
+│  /cfo-capture /cfo-log /cfo-extract /cfo-automate /cfo-report ...    │
 ├─────────────────────────────────────────────────┤
 │            Beancount v3 (Core Engine)            │
 │  Plain-text double-entry · Python API · BQL      │
@@ -154,7 +154,7 @@ Each skill embodies a specialist — the same pattern as gstack's "roles, not pr
 | Supports Claude Code + Codex + auto | Same |
 | `VERSION` file for upgrade tracking | Same |
 | Preamble block for session management | Same |
-| Safety skills (/careful, /freeze) | `/careful` adapted for financial data |
+| Safety skills (/cfo-careful, /freeze) | `/cfo-careful` adapted for financial data |
 
 ### What's Different from gstack
 
@@ -185,29 +185,29 @@ cfo-stack/
 ├── setup                          # One-command install
 │
 ├── skills/                        # Slash-command skills (the core)
-│   ├── capture/SKILL.md           # C — /capture
-│   ├── statement-export/SKILL.md  # C — /statement-export
-│   ├── capture-dedupe/SKILL.md    # C — /capture-dedupe
-│   ├── doc-preprocess/SKILL.md    # C — /doc-preprocess
-│   ├── bank-import/SKILL.md       # C — /bank-import
-│   ├── receipt-scan/SKILL.md      # C — /receipt-scan
-│   ├── log/SKILL.md               # L — /log
-│   ├── classify/SKILL.md          # L — /classify
-│   ├── validate/SKILL.md          # L — /validate
-│   ├── extract/SKILL.md           # E — /extract
-│   ├── reconcile/SKILL.md         # E — /reconcile
-│   ├── tax-plan/SKILL.md          # E — /tax-plan
-│   ├── automate/SKILL.md          # A — /automate
-│   ├── monthly-close/SKILL.md     # A — /monthly-close
-│   ├── quarterly-tax/SKILL.md     # A — /quarterly-tax
-│   ├── report/SKILL.md            # R — /report
-│   ├── fava/SKILL.md              # R — /fava
-│   ├── advisor/SKILL.md           # R — /advisor
-│   ├── setup/SKILL.md             # Meta — /setup
-│   ├── snapshot/SKILL.md          # Meta — /snapshot
-│   ├── audit/SKILL.md             # Meta — /audit
-│   ├── invoice/SKILL.md           # Meta — /invoice
-│   └── careful/SKILL.md           # Meta — /careful
+│   ├── capture/SKILL.md           # C — /cfo-capture
+│   ├── statement-export/SKILL.md  # C — /cfo-statement-export
+│   ├── capture-dedupe/SKILL.md    # C — /cfo-capture-dedupe
+│   ├── doc-preprocess/SKILL.md    # C — /cfo-doc-preprocess
+│   ├── bank-import/SKILL.md       # C — /cfo-bank-import
+│   ├── receipt-scan/SKILL.md      # C — /cfo-receipt-scan
+│   ├── log/SKILL.md               # L — /cfo-log
+│   ├── classify/SKILL.md          # L — /cfo-classify
+│   ├── validate/SKILL.md          # L — /cfo-validate
+│   ├── extract/SKILL.md           # E — /cfo-extract
+│   ├── reconcile/SKILL.md         # E — /cfo-reconcile
+│   ├── tax-plan/SKILL.md          # E — /cfo-tax-plan
+│   ├── automate/SKILL.md          # A — /cfo-automate
+│   ├── monthly-close/SKILL.md     # A — /cfo-monthly-close
+│   ├── quarterly-tax/SKILL.md     # A — /cfo-quarterly-tax
+│   ├── report/SKILL.md            # R — /cfo-report
+│   ├── fava/SKILL.md              # R — /cfo-fava
+│   ├── advisor/SKILL.md           # R — /cfo-advisor
+│   ├── setup/SKILL.md             # Meta — /cfo-setup
+│   ├── snapshot/SKILL.md          # Meta — /cfo-snapshot
+│   ├── audit/SKILL.md             # Meta — /cfo-audit
+│   ├── invoice/SKILL.md           # Meta — /cfo-invoice
+│   └── careful/SKILL.md           # Meta — /cfo-careful
 │
 ├── importers/                     # Beancount CSV importers (Python)
 │   ├── __init__.py
@@ -261,40 +261,40 @@ Just like gstack's sprint (Think → Plan → Build → Review → Test → Ship
 ### Monthly Close
 
 ```
-You:    /capture
+You:    /cfo-capture
         → imports all bank/credit card CSVs from ~/Downloads
         → OCRs receipt photos from ~/receipts/2026-03/
         → auto-generates 147 Beancount transactions
 
-You:    /classify
+You:    /cfo-classify
         → AI categorizes each transaction
         → flags 12 transactions needing human review
         → you approve/correct — AI learns from corrections
 
-You:    /reconcile
+You:    /cfo-reconcile
         → matches bank statements to ledger
         → all accounts balanced
         → generates balance assertions for March 2026
 
-You:    /report
+You:    /cfo-report
         → income statement: revenue $X, expenses $Y, net $Z
         → balance sheet: assets, liabilities, equity
         → comparison to prior month + YTD
 
-You:    /snapshot
+You:    /cfo-snapshot
         → git commit: "2026-03 monthly close — all accounts reconciled"
 ```
 
 ### Quarterly Tax
 
 ```
-You:    /quarterly-tax
+You:    /cfo-quarterly-tax
         → GST collected: $X on $Y revenue
         → ITCs claimed: $Z on $W expenses
         → Net remittance: $N — due April 30
         → generates filing-ready data
 
-You:    /tax-plan
+You:    /cfo-tax-plan
         → YTD corporate income: $X
         → projected annual tax: $Y
         → RECOMMENDATIONS:
@@ -345,41 +345,41 @@ The setup script:
 - [x] Project scaffolding (directory structure, CLAUDE.md, setup script)
 - [x] PLAN.md with CLEAR framework and skill architecture
 - [x] Core skill SKILL.md files for all 20 skills
-- [ ] `/setup` skill — initialize ledger with chart of accounts
-- [ ] `/bank-import` skill — TD Bank and generic CSV importers
-- [ ] `/classify` skill — AI-powered transaction categorization
-- [ ] `/validate` skill — bean-check wrapper
-- [ ] `/snapshot` skill — git commit workflow
-- [ ] `/fava` skill — launch Fava
+- [ ] `/cfo-setup` skill — initialize ledger with chart of accounts
+- [ ] `/cfo-bank-import` skill — TD Bank and generic CSV importers
+- [ ] `/cfo-classify` skill — AI-powered transaction categorization
+- [ ] `/cfo-validate` skill — bean-check wrapper
+- [ ] `/cfo-snapshot` skill — git commit workflow
+- [ ] `/cfo-fava` skill — launch Fava
 - [ ] Basic test fixtures
 
 ### Phase 2: Monthly Close (Weeks 3-4)
 
 **Goal:** Complete monthly close workflow.
 
-- [ ] `/capture` — orchestrates bank-import + receipt-scan
-- [ ] `/receipt-scan` — OCR from receipt photos
-- [ ] `/reconcile` — bank reconciliation with auto-matching
-- [ ] `/report` — income statement, balance sheet, cash flow
-- [ ] `/monthly-close` — full close automation
+- [ ] `/cfo-capture` — orchestrates bank-import + receipt-scan
+- [ ] `/cfo-receipt-scan` — OCR from receipt photos
+- [ ] `/cfo-reconcile` — bank reconciliation with auto-matching
+- [ ] `/cfo-report` — income statement, balance sheet, cash flow
+- [ ] `/cfo-monthly-close` — full close automation
 - [ ] Monthly close SOP
 - [ ] More importers: RBC, BMO, Chase, Stripe, PayPal
 
 ### Phase 3: Tax Compliance (Weeks 5-8)
 
-- [ ] GST/HST review workflow + `/quarterly-tax` for Canada
+- [ ] GST/HST review workflow + `/cfo-quarterly-tax` for Canada
 - [ ] US estimated tax support
-- [ ] `/tax-plan` — tax strategy with scenario modeling
-- [ ] `/invoice` — multi-region invoicing
+- [ ] `/cfo-tax-plan` — tax strategy with scenario modeling
+- [ ] `/cfo-invoice` — multi-region invoicing
 - [ ] Verified Canadian filing-code mappings
 - [ ] Schedule C support for US freelancers
 
 ### Phase 4: Intelligence & Advisory (Weeks 9-12)
 
-- [ ] `/extract` — spending pattern analysis, anomaly detection
-- [ ] `/advisor` — FIRE planning, net worth tracking
-- [ ] `/audit` — comprehensive ledger validation
-- [ ] `/automate` — generate reusable scripts
+- [ ] `/cfo-extract` — spending pattern analysis, anomaly detection
+- [ ] `/cfo-advisor` — FIRE planning, net worth tracking
+- [ ] `/cfo-audit` — comprehensive ledger validation
+- [ ] `/cfo-automate` — generate reusable scripts
 - [ ] Year-end close SOP
 - [ ] WeChat Pay / Alipay importers
 

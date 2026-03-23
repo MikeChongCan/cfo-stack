@@ -1,5 +1,5 @@
 ---
-name: reconcile
+name: cfo-reconcile
 description: |
   Match bank statement balances to ledger balances. Find discrepancies, verify
   every account, flag anomalies. Generate balance assertions.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: E (Extract)
 ---
 
-# /reconcile — Controller
+# /cfo-reconcile — Controller
 
 ## CLEAR Step
 

@@ -17,7 +17,7 @@ const stages: Stage[] = [
     name: 'Capture',
     summary: 'Pull every raw money artifact into one reviewable queue.',
     question: 'Where is every piece of evidence of money right now?',
-    skills: ['/capture', '/statement-export', '/statement-export-private', '/capture-dedupe', '/doc-preprocess', '/bank-import', '/receipt-scan'],
+    skills: ['/cfo-capture', '/cfo-statement-export', '/cfo-statement-export-private', '/cfo-capture-dedupe', '/cfo-doc-preprocess', '/cfo-bank-import', '/cfo-receipt-scan'],
     accent: '#15803d',
   },
   {
@@ -25,7 +25,7 @@ const stages: Stage[] = [
     name: 'Log',
     summary: 'Convert evidence into reviewed Beancount entries.',
     question: 'Do I know where every dollar came from and went?',
-    skills: ['/log', '/classify', '/validate'],
+    skills: ['/cfo-log', '/cfo-classify', '/cfo-validate'],
     accent: '#0f766e',
   },
   {
@@ -33,7 +33,7 @@ const stages: Stage[] = [
     name: 'Extract',
     summary: 'Pull patterns, anomalies, and tax signals out of the books.',
     question: 'What are the numbers telling me to do next?',
-    skills: ['/extract', '/reconcile', '/tax-plan', '/consult'],
+    skills: ['/cfo-extract', '/cfo-reconcile', '/cfo-tax-plan', '/cfo-consult'],
     accent: '#b45309',
   },
   {
@@ -41,7 +41,7 @@ const stages: Stage[] = [
     name: 'Automate',
     summary: 'Turn repeated workflows into scripts, pipelines, and checks.',
     question: 'Have I repeated this enough times to automate it?',
-    skills: ['/automate', '/monthly-close', '/quarterly-tax'],
+    skills: ['/cfo-automate', '/cfo-monthly-close', '/cfo-quarterly-tax'],
     accent: '#9333ea',
   },
   {
@@ -49,7 +49,7 @@ const stages: Stage[] = [
     name: 'Report',
     summary: 'Produce decision-ready outputs instead of raw ledger noise.',
     question: 'Can I summarize financial health in one paragraph?',
-    skills: ['/report', '/fava', '/advisor'],
+    skills: ['/cfo-report', '/cfo-fava', '/cfo-advisor'],
     accent: '#2563eb',
   },
 ];

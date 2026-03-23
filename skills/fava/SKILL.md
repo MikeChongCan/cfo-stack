@@ -1,5 +1,5 @@
 ---
-name: fava
+name: cfo-fava
 description: |
   Launch the Fava web UI for visual exploration of your Beancount ledger.
   Interactive charts, account views, queries, and reports in the browser.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: R (Report)
 ---
 
-# /fava — Dashboard
+# /cfo-fava — Dashboard
 
 ## CLEAR Step
 

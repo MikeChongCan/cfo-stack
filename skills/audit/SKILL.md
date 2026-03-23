@@ -1,5 +1,5 @@
 ---
-name: audit
+name: cfo-audit
 description: |
   Comprehensive ledger validation and integrity check. Verifies every transaction,
   checks for common errors, validates completeness, and produces an audit report.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: Meta
 ---
 
-# /audit — Internal Auditor
+# /cfo-audit — Internal Auditor
 
 ## Role
 

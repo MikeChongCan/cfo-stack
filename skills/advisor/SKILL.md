@@ -1,12 +1,12 @@
 ---
-name: advisor
+name: cfo-advisor
 description: |
   Financial health assessment, FIRE planning, net worth tracking, and scenario
   modeling. Use when you want the big picture of your financial life.
   CLEAR step: R (Report)
 ---
 
-# /advisor — Financial Advisor
+# /cfo-advisor — Financial Advisor
 
 ## CLEAR Step
 

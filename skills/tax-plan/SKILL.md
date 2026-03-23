@@ -1,5 +1,5 @@
 ---
-name: tax-plan
+name: cfo-tax-plan
 description: |
   Proactive tax strategy and planning. Quarterly estimates, deduction optimization,
   income splitting scenarios, RRSP/TFSA/401k contribution planning.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: E (Extract)
 ---
 
-# /tax-plan — Tax Strategist
+# /cfo-tax-plan — Tax Strategist
 
 ## CLEAR Step
 
@@ -32,7 +32,7 @@ decisions. Tax rules change. Jurisdictions vary. Your situation is unique.
 Before any computation, check that a jurisdiction pack exists:
 - Look for `tax/jurisdiction.yaml` or tax-related config in the ledger
 - If no jurisdiction pack is found, STOP and tell the user:
-  "No jurisdiction pack found. Run `/setup` to configure your jurisdiction,
+  "No jurisdiction pack found. Run `/cfo-setup` to configure your jurisdiction,
    or create `tax/jurisdiction.yaml` with your tax rates and rules.
    I cannot compute tax estimates without verified source data."
 

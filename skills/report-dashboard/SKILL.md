@@ -1,5 +1,5 @@
 ---
-name: report-dashboard
+name: cfo-report-dashboard
 description: |
   Generate beautiful HTML dashboards from a Beancount ledger without using an LLM.
   Uses Bun + TypeScript + React + Tailwind to render business or household dashboards
@@ -8,7 +8,7 @@ description: |
   CLEAR step: R (Report)
 ---
 
-# /report-dashboard — Traceable HTML Dashboards
+# /cfo-report-dashboard — Traceable HTML Dashboards
 
 ## When to use
 

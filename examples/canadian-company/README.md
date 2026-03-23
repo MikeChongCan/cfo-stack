@@ -28,9 +28,9 @@ A realistic Canadian corporation example managed with CFO Stack.
 ./bin/cfo-fava ./main.beancount 5000
 
 # Run CFO Stack skills
-/report          # see financial statements
-/reconcile       # verify balances
-/quarterly-tax   # prepare Q1 GST return
+/cfo-report          # see financial statements
+/cfo-reconcile       # verify balances
+/cfo-quarterly-tax   # prepare Q1 GST return
 ```
 
 ## Key Patterns Demonstrated

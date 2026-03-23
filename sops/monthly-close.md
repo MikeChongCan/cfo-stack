@@ -17,7 +17,7 @@ statements, and a signed close packet.
 ### 1. Capture (C)
 
 ```
-/capture
+/cfo-capture
 ```
 
 - Import all bank/credit card CSVs
@@ -27,7 +27,7 @@ statements, and a signed close packet.
 ### 2. Classify (L)
 
 ```
-/classify
+/cfo-classify
 ```
 
 - Review AI classifications
@@ -37,7 +37,7 @@ statements, and a signed close packet.
 ### 3. Reconcile (E)
 
 ```
-/reconcile
+/cfo-reconcile
 ```
 
 - Match each account to statement balance
@@ -47,7 +47,7 @@ statements, and a signed close packet.
 ### 4. Validate
 
 ```
-/validate
+/cfo-validate
 ```
 
 - bean-check passes
@@ -57,7 +57,7 @@ statements, and a signed close packet.
 ### 5. Report (R)
 
 ```
-/report
+/cfo-report
 ```
 
 - Review income statement
@@ -67,7 +67,7 @@ statements, and a signed close packet.
 ### 6. Close
 
 ```
-/snapshot
+/cfo-snapshot
 ```
 
 - Git commit: `close: YYYY-MM — all accounts reconciled`

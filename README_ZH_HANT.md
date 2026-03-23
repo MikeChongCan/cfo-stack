@@ -55,13 +55,13 @@ cd ~/.claude/skills/cfo-stack && ./setup
 
 ## 基本使用流程
 
-1. 用 `/setup` 建立 ledger
-2. 如果銀行或券商資料還沒下載，用 `/statement-export`
-3. 用 `/capture` 整理原始檔案
-4. 用 `/classify` 分類交易
-5. 用 `/reconcile` 對帳
-6. 用 `/report` 看報表
-7. 用 `/snapshot` 提交重要變更
+1. 用 `/cfo-setup` 建立 ledger
+2. 如果銀行或券商資料還沒下載，用 `/cfo-statement-export`
+3. 用 `/cfo-capture` 整理原始檔案
+4. 用 `/cfo-classify` 分類交易
+5. 用 `/cfo-reconcile` 對帳
+6. 用 `/cfo-report` 看報表
+7. 用 `/cfo-snapshot` 提交重要變更
 
 ---
 

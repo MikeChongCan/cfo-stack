@@ -1,5 +1,5 @@
 ---
-name: careful
+name: cfo-careful
 description: |
   Safety guardrails for financial data. Warns before destructive operations on
   ledger files, reconciled transactions, or tax-filed data.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: Meta
 ---
 
-# /careful — Safety Officer
+# /cfo-careful — Safety Officer
 
 ## Role
 
@@ -54,7 +54,7 @@ Options:
 - Use adjusting entries instead of modifying historical transactions
 - Use `git revert` instead of `git reset --hard`
 - Back up before any bulk operation
-- Run `/validate` after any manual ledger edit
+- Run `/cfo-validate` after any manual ledger edit
 
 ## Constraints
 

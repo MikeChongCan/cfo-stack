@@ -1,5 +1,5 @@
 ---
-name: statement-export
+name: cfo-statement-export
 description: |
   Human-in-the-loop browser-assisted statement export for banks, cards, brokerages,
   and payment platforms. Uses Chrome DevTools MCP against the user's current Chrome
@@ -8,7 +8,7 @@ description: |
   CLEAR step: C (Capture)
 ---
 
-# /statement-export — Export Clerk
+# /cfo-statement-export — Export Clerk
 
 ## CLEAR Step
 
@@ -22,7 +22,7 @@ browser profile, confirm the right account/date range, and download the raw CSV/
 evidence needed for bookkeeping.
 
 If the user wants a privacy-first checklist without any browser-tool involvement,
-use `/statement-export-private` instead.
+use `/cfo-statement-export-private` instead.
 
 Detailed live-browser guidance for Chrome-session statement downloads lives in:
 
@@ -140,8 +140,8 @@ documents/YYYY/MM/
 ### Step 5: Hand off to import and reconciliation
 
 After downloads complete:
-- CSV exports → `/bank-import`
-- PDF statements → archive, then `/reconcile` as supporting evidence
+- CSV exports → `/cfo-bank-import`
+- PDF statements → archive, then `/cfo-reconcile` as supporting evidence
 - PDF-only institutions → stop and ask whether to archive-only or run a separate
   extraction flow
 
@@ -158,4 +158,4 @@ After downloads complete:
 
 - `capture/YYYY-MM-export-manifest.yaml`
 - Raw downloaded files preserved under `documents/YYYY/MM/`
-- CSV files ready for `/bank-import`
+- CSV files ready for `/cfo-bank-import`

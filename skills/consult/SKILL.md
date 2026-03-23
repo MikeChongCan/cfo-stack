@@ -1,5 +1,5 @@
 ---
-name: consult
+name: cfo-consult
 description: |
   Cross-model accounting and tax self-consulting via 10x-chat. Ask ChatGPT,
   Gemini, Claude, Grok, or NotebookLM a CFO Stack question, compare answers,
@@ -9,7 +9,7 @@ description: |
   CLEAR step: E (Extract)
 ---
 
-# /consult — Cross-Model Consultant
+# /cfo-consult — Cross-Model Consultant
 
 ## CLEAR Step
 
@@ -69,7 +69,7 @@ Run providers sequentially, not in parallel browser sessions.
 - sanity-checking a reporting interpretation before presenting it
 - generating a brief or full markdown research memo from multiple model opinions
 
-If the question depends on your own prior books or internal notes, use `/history-search`
+If the question depends on your own prior books or internal notes, use `/cfo-history-search`
 first to gather the strongest local precedent before consulting external models.
 
 ## Workflow

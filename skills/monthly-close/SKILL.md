@@ -1,5 +1,5 @@
 ---
-name: monthly-close
+name: cfo-monthly-close
 description: |
   Automated monthly close workflow. Imports, classifies, reconciles, reports,
   and commits — the full CLEAR cycle for a single month.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: A (Automate)
 ---
 
-# /monthly-close — Controller (Close Process)
+# /cfo-monthly-close — Controller (Close Process)
 
 ## CLEAR Step
 
@@ -30,14 +30,14 @@ Before starting, verify:
 
 ### Step 1: Capture (C)
 
-Run `/capture` for the closing month:
+Run `/cfo-capture` for the closing month:
 - Import all available CSVs
 - Scan receipts
 - Report: X transactions imported
 
 ### Step 2: Log & Classify (L)
 
-Run `/classify` on new transactions:
+Run `/cfo-classify` on new transactions:
 - Auto-classify high-confidence entries
 - Present medium/low confidence for review
 - Apply tax treatment
@@ -45,7 +45,7 @@ Run `/classify` on new transactions:
 
 ### Step 3: Extract & Reconcile (E)
 
-Run `/reconcile` for each account:
+Run `/cfo-reconcile` for each account:
 - Compare statement balances to ledger
 - Resolve discrepancies
 - Generate balance assertions
@@ -53,7 +53,7 @@ Run `/reconcile` for each account:
 
 ### Step 4: Report (R)
 
-Run `/report` for the month:
+Run `/cfo-report` for the month:
 - Income statement (month + YTD)
 - Balance sheet (as of month-end)
 - Cash flow summary
@@ -61,9 +61,9 @@ Run `/report` for the month:
 
 ### Step 5: Close & Commit
 
-1. Run `/validate` — ensure everything passes
+1. Run `/cfo-validate` — ensure everything passes
 2. Generate close packet (Markdown summary)
-3. Run `/snapshot` with tag:
+3. Run `/cfo-snapshot` with tag:
 
 ```bash
 git commit -m "close: 2026-03 — all accounts reconciled"

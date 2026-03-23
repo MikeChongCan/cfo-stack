@@ -1,5 +1,5 @@
 ;; Chart of Accounts — Canadian Corporation
-;; Default opening date. `/setup` should rewrite this to the entity's actual start date.
+;; Default opening date. `/cfo-setup` should rewrite this to the entity's actual start date.
 
 ;; Assets
 2025-01-01 open Assets:Bank:Operating           CAD

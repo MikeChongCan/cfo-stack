@@ -1,5 +1,5 @@
 ---
-name: log
+name: cfo-log
 description: |
   Transform raw captured data into structured Beancount double-entry records.
   The bridge between messy real-world data and clean accounting entries.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: L (Log)
 ---
 
-# /log — Bookkeeper
+# /cfo-log — Bookkeeper
 
 ## CLEAR Step
 
@@ -25,7 +25,7 @@ is traceable.
 
 ### Step 1: Review staging entries
 
-Read the staging file (from `/capture` or manual input). For each entry:
+Read the staging file (from `/cfo-capture` or manual input). For each entry:
 
 1. Verify it's valid Beancount syntax
 2. Check that postings balance to zero
@@ -84,7 +84,7 @@ Common patterns:
 - Read the threshold from `cfo-stack.yaml` first, then `~/.cfo-stack/config.yaml`
 - ALWAYS show the proposed diff before any ledger mutation
 - ALWAYS run validation after applying an approved patch
-- ALWAYS preserve source metadata from `/capture`
+- ALWAYS preserve source metadata from `/cfo-capture`
 - If unsure about an entry, mark it with `!` (flag) instead of `*` (cleared)
 
 ## Output

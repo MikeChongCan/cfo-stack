@@ -1,5 +1,5 @@
 ---
-name: snapshot
+name: cfo-snapshot
 description: |
   Git commit your ledger with a meaningful message. Tag month-end, quarter-end,
   and year-end closes. Maintains the audit trail.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: Meta
 ---
 
-# /snapshot — Archivist
+# /cfo-snapshot — Archivist
 
 ## Role
 
@@ -18,7 +18,7 @@ every milestone is tagged, and the history tells the story of the books.
 
 ### Step 1: Pre-commit validation
 
-Run `/validate` before committing. If errors exist, stop and report.
+Run `/cfo-validate` before committing. If errors exist, stop and report.
 
 ### Step 2: Determine commit type
 

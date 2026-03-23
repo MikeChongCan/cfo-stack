@@ -1,5 +1,5 @@
 ---
-name: validate
+name: cfo-validate
 description: |
   Run bean-check plus custom validation rules on the ledger. Ensures every entry
   balances, accounts exist, and no common errors are present.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: L (Log)
 ---
 
-# /validate — Quality Control
+# /cfo-validate — Quality Control
 
 ## CLEAR Step
 
@@ -70,11 +70,11 @@ Overall: PASS with warnings
 
 ## Constraints
 
-- Run automatically before every `/snapshot` commit
+- Run automatically before every `/cfo-snapshot` commit
 - Report all issues — never silently ignore
 - Distinguish ERROR (must fix) from WARNING (should fix) from INFO (awareness)
 
 ## Related Skills
 
-- `/capture-dedupe` — emits duplicate-risk findings and import manifests
-- `/snapshot` — blocked until validation results are acceptable
+- `/cfo-capture-dedupe` — emits duplicate-risk findings and import manifests
+- `/cfo-snapshot` — blocked until validation results are acceptable

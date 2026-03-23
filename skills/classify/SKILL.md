@@ -1,13 +1,13 @@
 ---
-name: classify
+name: cfo-classify
 description: |
   AI-powered transaction categorization with learning. Applies rules, pattern matching,
   and AI inference to categorize transactions. Learns from corrections.
-  Use after /capture or /bank-import to categorize uncategorized transactions.
+  Use after /cfo-capture or /cfo-bank-import to categorize uncategorized transactions.
   CLEAR step: L (Log)
 ---
 
-# /classify — Staff Accountant
+# /cfo-classify — Staff Accountant
 
 ## CLEAR Step
 
@@ -40,7 +40,7 @@ Find transactions marked with `classify: pending` or using `Expenses:Uncategoriz
 4. **AI inference:** Analyze payee name, amount, date pattern, narration to suggest account
 
 If the relevant precedent may live outside the current ledger slice or in prior notes,
-use `/history-search` first to pull the strongest historical examples into context.
+use `/cfo-history-search` first to pull the strongest historical examples into context.
 
 When using historical classifications as evidence, extract the reusable rule rather than
 copying private ledger details into shared repo state. Learn from merchant patterns,

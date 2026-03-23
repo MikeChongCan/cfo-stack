@@ -1,5 +1,5 @@
 ---
-name: invoice
+name: cfo-invoice
 description: |
   Generate professional invoices with correct tax treatment. Multi-region support
   for Canada (GST/HST), US, Taiwan, China, and EU VAT. Track accounts receivable.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: Meta
 ---
 
-# /invoice — Billing Clerk
+# /cfo-invoice — Billing Clerk
 
 ## Role
 

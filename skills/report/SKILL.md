@@ -1,5 +1,5 @@
 ---
-name: report
+name: cfo-report
 description: |
   Generate financial statements: Income Statement (P&L), Balance Sheet, Cash Flow.
   Custom queries via BQL. Trend analysis and period comparisons.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: R (Report)
 ---
 
-# /report — CFO
+# /cfo-report — CFO
 
 ## CLEAR Step
 
@@ -22,7 +22,7 @@ financial statements. You present the numbers, explain what they mean,
 and highlight what needs attention.
 
 If the user needs cross-model interpretation of an accounting or tax question that arises
-from reporting, route to `/consult`. External models do not read repo-local instructions
+from reporting, route to `/cfo-consult`. External models do not read repo-local instructions
 automatically, so the outbound markdown bundle must include the relevant consultation rules.
 
 ## Workflow

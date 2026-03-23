@@ -1,5 +1,5 @@
 ---
-name: doc-preprocess
+name: cfo-doc-preprocess
 description: |
   Normalize and compress receipt photos, scanned invoices, and oversized source documents
   before OCR or archival. Use when capture includes JPG/PNG/HEIC/TIFF receipts, camera
@@ -9,7 +9,7 @@ description: |
   step: C (Capture)
 ---
 
-# /doc-preprocess — Document Prep Clerk
+# /cfo-doc-preprocess — Document Prep Clerk
 
 ## CLEAR Step
 
@@ -103,7 +103,7 @@ Use the optimized PDF only as a processed derivative. Keep the original PDF beca
 
 ### Step 5: Hand off to OCR/import
 
-- Pass processed WebP or optimized scanned PDFs to `/capture-dedupe` and then `/receipt-scan`
+- Pass processed WebP or optimized scanned PDFs to `/cfo-capture-dedupe` and then `/cfo-receipt-scan`
 - For born-digital invoice PDFs that are already small and text-selectable, skip preprocessing and extract directly
 - Record both the source path and processed path in the import log when a derivative was created
 
@@ -117,15 +117,15 @@ Use the optimized PDF only as a processed derivative. Keep the original PDF beca
 
 ## Related Skills
 
-- `/capture` — top-level source intake
-- `/capture-dedupe` — provenance and duplicate tracking after derivative creation
-- `/receipt-scan` — OCR and transaction extraction
+- `/cfo-capture` — top-level source intake
+- `/cfo-capture-dedupe` — provenance and duplicate tracking after derivative creation
+- `/cfo-receipt-scan` — OCR and transaction extraction
 
 ## Output
 
 - Archived original in `documents/.../source/`
 - Normalized derivative in `documents/.../processed/` when beneficial
-- Clear handoff note for `/receipt-scan` or the import log with:
+- Clear handoff note for `/cfo-receipt-scan` or the import log with:
   - file type
   - original size
   - processed size

@@ -1,5 +1,5 @@
 ---
-name: extract
+name: cfo-extract
 description: |
   AI-powered financial analysis. Extracts spending patterns, detects anomalies,
   forecasts trends, and surfaces actionable insights from your ledger data.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: E (Extract)
 ---
 
-# /extract — Data Analyst
+# /cfo-extract — Data Analyst
 
 ## CLEAR Step
 
@@ -38,7 +38,7 @@ Extract:
 3. **Recurring charges:** Identify subscriptions and recurring payments
 4. **Income stability:** Variation in income sources, client concentration risk
 
-If `/extract` is being used to produce shared planning, issue text, docs, or skill
+If `/cfo-extract` is being used to produce shared planning, issue text, docs, or skill
 updates, reduce findings to de-identified patterns first. Focus on category movement,
 workflow failures, duplicate types, documentation gaps, and metadata coverage instead
 of exposing personal or business-sensitive transaction details.
@@ -73,7 +73,7 @@ If approaching quarter-end or year-end:
 - Flag missing documentation
 - Estimate tax liability
 
-When turning `/extract` output into shared planning, issue creation, docs, or skill
+When turning `/cfo-extract` output into shared planning, issue creation, docs, or skill
 updates, rewrite examples to remove names, exact identifiers, and unnecessary
 transaction-level detail while preserving the operational lesson.
 

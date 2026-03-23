@@ -5,6 +5,10 @@ from pathlib import Path
 from cfo_stack_setup_data import SetupOptions, UninstallOptions
 
 
+def box_line(content: str = "") -> str:
+    return f"║{content:<40}║"
+
+
 def setup_banner_lines(options: SetupOptions) -> list[str]:
     lines = [
         "╔══════════════════════════════════════════╗",
@@ -41,40 +45,40 @@ def setup_complete_lines(cfo_stack_dir: Path, options: SetupOptions) -> list[str
     lines = [
         "",
         "╔══════════════════════════════════════════╗",
-        "║          Setup Complete!                 ║",
+        box_line("          Setup Complete!"),
         "╠══════════════════════════════════════════╣",
-        "║                                          ║",
-        "║  Quick start:                            ║",
-        "║    1. Run /setup to create your ledger   ║",
+        box_line(),
+        box_line("  Quick start:"),
+        box_line("    1. Run /cfo-setup to start books"),
     ]
     if options.scope == "machine":
         lines.extend(
             [
-                "║    2. Edit ~/.cfo-stack/config.yaml      ║",
-                "║       if you want a different review     ║",
-                "║       threshold than $1,000             ║",
+                box_line("    2. Edit ~/.cfo-stack/config.yaml"),
+                box_line("       if you want a different review"),
+                box_line("       threshold than $1,000"),
             ]
         )
     else:
         lines.extend(
             [
-                "║    2. Create ledger-local cfo-stack.yaml ║",
-                "║       in your target project if you want ║",
-                "║       policy overrides                   ║",
+                box_line("    2. Create ledger-local cfo-stack.yaml"),
+                box_line("       in your target project if you want"),
+                box_line("       policy overrides"),
             ]
         )
     lines.extend(
         [
-            "║    3. Drop bank CSVs in ~/Downloads      ║",
-            "║    4. Run /capture to import them        ║",
-            "║    5. Run /classify to categorize        ║",
-            "║    6. Run /report to see your finances   ║",
-            "║    7. Run cfo-dashboard from this repo   ║",
-            "║                                          ║",
-            "║  The CLEAR cycle:                        ║",
-            "║    Capture → Log → Extract →              ║",
-            "║    Automate → Report                      ║",
-            "║                                          ║",
+            box_line("    3. Drop bank CSVs in ~/Downloads"),
+            box_line("    4. Run /cfo-capture to import"),
+            box_line("    5. Run /cfo-classify to review"),
+            box_line("    6. Run /cfo-report for statements"),
+            box_line("    7. Run cfo-dashboard from this repo"),
+            box_line(),
+            box_line("  The CLEAR cycle:"),
+            box_line("    Capture → Log → Extract →"),
+            box_line("    Automate → Report"),
+            box_line(),
             "╚══════════════════════════════════════════╝",
             "",
             f"Helper scripts live in: {cfo_stack_dir / 'bin'}",

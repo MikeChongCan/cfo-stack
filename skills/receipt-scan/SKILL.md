@@ -1,5 +1,5 @@
 ---
-name: receipt-scan
+name: cfo-receipt-scan
 description: |
   OCR receipt photos and PDFs to extract transaction data.
   Generates Beancount transactions with receipt linkage.
@@ -7,7 +7,7 @@ description: |
   CLEAR step: C (Capture)
 ---
 
-# /receipt-scan — Receipt Clerk
+# /cfo-receipt-scan — Receipt Clerk
 
 ## CLEAR Step
 
@@ -23,7 +23,7 @@ You extract every relevant detail: vendor, date, items, amounts, taxes, payment 
 ### Step 1: Preprocess when needed
 
 If the source is a raw phone photo, HEIC image, skewed scan, or oversized scanned PDF,
-run `/doc-preprocess` before OCR.
+run `/cfo-doc-preprocess` before OCR.
 
 Normalization policy:
 
@@ -48,7 +48,7 @@ Use vision capabilities to analyze the receipt image/PDF. Extract:
 ### Step 3: Generate Beancount transaction
 
 Before drafting a new posting from OCR output, run the normalized document through
-`/capture-dedupe` so reruns of the same receipt, processed derivative, or corrected scan
+`/cfo-capture-dedupe` so reruns of the same receipt, processed derivative, or corrected scan
 do not silently create duplicate expenses.
 
 ```beancount
@@ -109,10 +109,10 @@ copy if compression materially improves OCR or storage.
 
 ## Related Skills
 
-- `/doc-preprocess` — normalize images and scanned PDFs first when needed
-- `/capture-dedupe` — document fingerprinting and rerun control
-- `/capture` — orchestrates archive and staging flow
+- `/cfo-doc-preprocess` — normalize images and scanned PDFs first when needed
+- `/cfo-capture-dedupe` — document fingerprinting and rerun control
+- `/cfo-capture` — orchestrates archive and staging flow
 
 ## Output
 
-Beancount transaction(s) with receipt linkage metadata, ready for `/classify`.
+Beancount transaction(s) with receipt linkage metadata, ready for `/cfo-classify`.

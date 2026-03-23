@@ -1,5 +1,5 @@
 ---
-name: capture
+name: cfo-capture
 description: |
   Master data import orchestrator. Consolidates every "evidence of money" into one place:
   bank CSVs, credit card statements, receipts, invoices, payment platform exports, and
@@ -9,7 +9,7 @@ description: |
   CLEAR step: C (Capture)
 ---
 
-# /capture — Data Clerk
+# /cfo-capture — Data Clerk
 
 ## CLEAR Step
 
@@ -48,23 +48,23 @@ Flag source documents that are likely to need normalization:
 List all found files with dates and sizes. Ask user to confirm which to process.
 
 If the profile declares accounts but there are no fresh files on disk, say so explicitly
-and offer `/statement-export` or `/statement-export-private` before attempting import.
+and offer `/cfo-statement-export` or `/cfo-statement-export-private` before attempting import.
 
 ### Step 2: Route to specialists
 
-Before appending anything to staging, run `/capture-dedupe` on every candidate source
+Before appending anything to staging, run `/cfo-capture-dedupe` on every candidate source
 so repeated capture runs do not silently restage the same file, statement row, or
 document-derived transaction.
 
 For each data source, delegate to the appropriate skill:
 
-- Missing bank, card, or brokerage files for a declared account → `/statement-export` or `/statement-export-private`
-- CSV bank/credit card statements → `/capture-dedupe` → `/bank-import`
-- Brokerage and cash-platform exports on disk → `/capture-dedupe` → `/bank-import`
-- Receipt photos (JPG, PNG, HEIC, TIFF) → `/doc-preprocess` → `/capture-dedupe` → `/receipt-scan`
-- Receipt PDFs or scanned invoice PDFs → `/doc-preprocess` → `/capture-dedupe` → `/receipt-scan`
-- Born-digital PDF invoices → `/capture-dedupe` → extract data directly; only run `/doc-preprocess` first if the file is image-heavy or materially oversized
-- Payment platform exports → `/capture-dedupe` → `/bank-import` with platform-specific format
+- Missing bank, card, or brokerage files for a declared account → `/cfo-statement-export` or `/cfo-statement-export-private`
+- CSV bank/credit card statements → `/cfo-capture-dedupe` → `/cfo-bank-import`
+- Brokerage and cash-platform exports on disk → `/cfo-capture-dedupe` → `/cfo-bank-import`
+- Receipt photos (JPG, PNG, HEIC, TIFF) → `/cfo-doc-preprocess` → `/cfo-capture-dedupe` → `/cfo-receipt-scan`
+- Receipt PDFs or scanned invoice PDFs → `/cfo-doc-preprocess` → `/cfo-capture-dedupe` → `/cfo-receipt-scan`
+- Born-digital PDF invoices → `/cfo-capture-dedupe` → extract data directly; only run `/cfo-doc-preprocess` first if the file is image-heavy or materially oversized
+- Payment platform exports → `/cfo-capture-dedupe` → `/cfo-bank-import` with platform-specific format
 
 ### Step 3: Consolidate results
 
@@ -74,7 +74,7 @@ After all imports complete:
 2. Count exact duplicates skipped and duplicate-risk items blocked for review
 3. List any files that failed to process
 4. Show summary: new transactions by account, date range, total amounts
-5. Suggest next step: "Run `/classify` to categorize these transactions"
+5. Suggest next step: "Run `/cfo-classify` to categorize these transactions"
 
 ### Step 4: Archive source files
 
@@ -91,7 +91,7 @@ documents/YYYY/MM/
     └── processed/
 ```
 
-If `/statement-export` was used, also preserve the export manifest and the raw downloaded
+If `/cfo-statement-export` was used, also preserve the export manifest and the raw downloaded
 filenames before any normalization or renaming.
 
 ## Constraints
@@ -109,12 +109,12 @@ filenames before any normalization or renaming.
 
 ## Related Skills
 
-- `/statement-export` — guided export when source files are not on disk yet
-- `/statement-export-private` — privacy-first manual export planning with no browser tools
-- `/capture-dedupe` — duplicate-source detection and rerun control
-- `/bank-import` — statement and platform imports
-- `/doc-preprocess` — image and PDF normalization
-- `/receipt-scan` — OCR extraction after preprocessing or direct PDF intake
+- `/cfo-statement-export` — guided export when source files are not on disk yet
+- `/cfo-statement-export-private` — privacy-first manual export planning with no browser tools
+- `/cfo-capture-dedupe` — duplicate-source detection and rerun control
+- `/cfo-bank-import` — statement and platform imports
+- `/cfo-doc-preprocess` — image and PDF normalization
+- `/cfo-receipt-scan` — OCR extraction after preprocessing or direct PDF intake
 
 ## Output
 

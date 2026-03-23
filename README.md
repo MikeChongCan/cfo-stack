@@ -233,7 +233,7 @@ Each file should keep the YAML schema comment that points at:
 `https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/statement-export.schema.json`
 
 Use this config to declare institutions such as TD, BMO, Chase, Cheese, Wealthsimple,
-IBKR, Wise, or other portals, then let `/statement-export` guide the human through login,
+IBKR, Wise, or other portals, then let `/cfo-statement-export` guide the human through login,
 account/date confirmation, and CSV/PDF download.
 
 When repeating exports, prefer a small overlap with the prior export window so
@@ -248,7 +248,7 @@ official-domain web search and download guidance.
 ### 2. Set up your ledger
 
 ```
-/setup
+/cfo-setup
 ```
 
 Describe your business. CFO Stack creates your chart of accounts, initial Beancount ledger, and git repo.
@@ -260,7 +260,7 @@ If you want to hand the onboarding task to OpenClaw directly, you can paste a pr
 ```text
 Set up my accounting system using CFO Stack.
 
-Work inside this repo and use the repo's /setup workflow.
+Work inside this repo and use the repo's /cfo-setup workflow.
 Ask me only the minimum blocking intake questions first:
 - whether this is personal, family, or business bookkeeping
 - country
@@ -290,7 +290,7 @@ If you have declared accounts and want guided browser-based export instead of ba
 use:
 
 ```text
-/statement-export
+/cfo-statement-export
 ```
 
 That workflow is human-in-the-loop: current Chrome session with remote debugging enabled,
@@ -303,7 +303,7 @@ treating the last end date as a perfect cutoff.
 If you want more privacy and do not want the agent to touch browser tools at all, use:
 
 ```text
-/statement-export-private
+/cfo-statement-export-private
 ```
 
 That workflow only produces a manual checklist: official institution URLs, candidate date
@@ -315,15 +315,15 @@ risk exists.
 Then run:
 
 ```
-/capture
+/cfo-capture
 ```
 
-`/capture` now routes receipt photos through document preprocessing first, fingerprints candidate sources before staging, prefers bounded-size WebP derivatives for image receipts, uses `doc-crop` on macOS when available, falls back to ImageMagick-based WebP conversion on Linux/Windows, and only creates compressed PDF derivatives when that materially helps OCR or storage.
+`/cfo-capture` now routes receipt photos through document preprocessing first, fingerprints candidate sources before staging, prefers bounded-size WebP derivatives for image receipts, uses `doc-crop` on macOS when available, falls back to ImageMagick-based WebP conversion on Linux/Windows, and only creates compressed PDF derivatives when that materially helps OCR or storage.
 
 ### 4. Classify transactions
 
 ```
-/classify
+/cfo-classify
 ```
 
 AI proposes classifications and tax treatment diffs. You approve the patch, then it learns.
@@ -331,7 +331,7 @@ AI proposes classifications and tax treatment diffs. You approve the patch, then
 ### 5. See your finances
 
 ```
-/report
+/cfo-report
 ```
 
 Income statement, balance sheet, cash flow — your complete financial picture.
@@ -358,74 +358,74 @@ Use `--variant social` for a share-safe graph-first version that redacts values 
 
 | Skill | Role | What It Does |
 |---|---|---|
-| `/capture` | Data Clerk | Inventory local files and route them into import/OCR flows |
-| `/statement-export` | Export Clerk | Guided Chrome DevTools MCP export for bank, card, brokerage, and platform statements |
-| `/statement-export-private` | Private Export Planner | Privacy-first manual export checklist with official URLs, date ranges, and no browser tools |
-| `/capture-dedupe` | Import Provenance Clerk | Prevent duplicate imports across repeated capture runs |
-| `/doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive, with `doc-crop` on macOS and ImageMagick fallback elsewhere |
-| `/bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
-| `/receipt-scan` | Receipt Clerk | OCR receipt photos, generate transactions |
+| `/cfo-capture` | Data Clerk | Inventory local files and route them into import/OCR flows |
+| `/cfo-statement-export` | Export Clerk | Guided Chrome DevTools MCP export for bank, card, brokerage, and platform statements |
+| `/cfo-statement-export-private` | Private Export Planner | Privacy-first manual export checklist with official URLs, date ranges, and no browser tools |
+| `/cfo-capture-dedupe` | Import Provenance Clerk | Prevent duplicate imports across repeated capture runs |
+| `/cfo-doc-preprocess` | Document Prep Clerk | Normalize receipt photos and oversized PDFs before OCR/archive, with `doc-crop` on macOS and ImageMagick fallback elsewhere |
+| `/cfo-bank-import` | Bank Specialist | Smart CSV import with format auto-detection and PDF archive pairing |
+| `/cfo-receipt-scan` | Receipt Clerk | OCR receipt photos, generate transactions |
 
 ### L — Log
 
 | Skill | Role | What It Does |
 |---|---|---|
-| `/log` | Bookkeeper | Transform raw data into Beancount double-entry |
-| `/classify` | Staff Accountant | AI categorization with learning + tax treatment |
-| `/validate` | Quality Control | bean-check + custom validation rules |
+| `/cfo-log` | Bookkeeper | Transform raw data into Beancount double-entry |
+| `/cfo-classify` | Staff Accountant | AI categorization with learning + tax treatment |
+| `/cfo-validate` | Quality Control | bean-check + custom validation rules |
 
 ### E — Extract
 
 | Skill | Role | What It Does |
 |---|---|---|
-| `/extract` | Data Analyst | Spending patterns, anomalies, trends |
-| `/reconcile` | Controller | Match bank statements to ledger balances |
-| `/tax-plan` | Tax Strategist | Deductions, income splitting, quarterly estimates |
-| `/consult` | Cross-Model Consultant | Ask ChatGPT, Gemini, Claude, Grok, or NotebookLM a CFO Stack question and synthesize a markdown answer |
+| `/cfo-extract` | Data Analyst | Spending patterns, anomalies, trends |
+| `/cfo-reconcile` | Controller | Match bank statements to ledger balances |
+| `/cfo-tax-plan` | Tax Strategist | Deductions, income splitting, quarterly estimates |
+| `/cfo-consult` | Cross-Model Consultant | Ask ChatGPT, Gemini, Claude, Grok, or NotebookLM a CFO Stack question and synthesize a markdown answer |
 
 ### A — Automate
 
 | Skill | Role | What It Does |
 |---|---|---|
-| `/automate` | DevOps | Generate reusable scripts/pipelines |
-| `/monthly-close` | Controller | Full month-end close workflow |
-| `/quarterly-tax` | Tax Preparer | GST/HST, sales tax, estimated tax prep |
+| `/cfo-automate` | DevOps | Generate reusable scripts/pipelines |
+| `/cfo-monthly-close` | Controller | Full month-end close workflow |
+| `/cfo-quarterly-tax` | Tax Preparer | GST/HST, sales tax, estimated tax prep |
 
 ### R — Report
 
 | Skill | Role | What It Does |
 |---|---|---|
-| `/report` | CFO | P&L, Balance Sheet, Cash Flow, comparisons |
-| `/report-dashboard` | Design-forward CFO | Beautiful static HTML dashboards from traceable Beancount extracts |
-| `/fava` | Dashboard | Launch Fava web UI for visual exploration |
-| `/advisor` | Financial Advisor | Net worth, FIRE planning, scenario modeling |
+| `/cfo-report` | CFO | P&L, Balance Sheet, Cash Flow, comparisons |
+| `/cfo-report-dashboard` | Design-forward CFO | Beautiful static HTML dashboards from traceable Beancount extracts |
+| `/cfo-fava` | Dashboard | Launch Fava web UI for visual exploration |
+| `/cfo-advisor` | Financial Advisor | Net worth, FIRE planning, scenario modeling |
 
 ### Meta
 
 | Skill | Role | What It Does |
 |---|---|---|
 | `/cfo` | Root CFO | Ask the minimum onboarding questions and route to the right next CFO Stack skill |
-| `/setup` | Onboarding | Initialize new ledger from scratch |
-| `/snapshot` | Archivist | Git commit with meaningful messages + tags |
-| `/audit` | Internal Auditor | Comprehensive ledger validation |
-| `/invoice` | Billing Clerk | Multi-region invoicing (CA, US, TW, CN, EU) |
-| `/careful` | Safety Officer | Guardrails for financial data |
+| `/cfo-setup` | Onboarding | Initialize new ledger from scratch |
+| `/cfo-snapshot` | Archivist | Git commit with meaningful messages + tags |
+| `/cfo-audit` | Internal Auditor | Comprehensive ledger validation |
+| `/cfo-invoice` | Billing Clerk | Multi-region invoicing (CA, US, TW, CN, EU) |
+| `/cfo-careful` | Safety Officer | Guardrails for financial data |
 
 ---
 
 ## Monthly Close with Optional Export
 
 ```
-/statement-export  # Optional: guided export when files are not on disk yet
-/statement-export-private  # Optional: privacy-first manual export planning
-/capture          # Import all bank CSVs + receipts
-/classify         # AI categorizes, you review
-/reconcile        # Match to bank statements
-/report           # See your P&L and balance sheet
-/snapshot         # Git commit: "close: March 2026"
+/cfo-statement-export  # Optional: guided export when files are not on disk yet
+/cfo-statement-export-private  # Optional: privacy-first manual export planning
+/cfo-capture          # Import all bank CSVs + receipts
+/cfo-classify         # AI categorizes, you review
+/cfo-reconcile        # Match to bank statements
+/cfo-report           # See your P&L and balance sheet
+/cfo-snapshot         # Git commit: "close: March 2026"
 ```
 
-**Target: 30 minutes per month.** That's what `/automate` is for.
+**Target: 30 minutes per month.** That's what `/cfo-automate` is for.
 
 ---
 

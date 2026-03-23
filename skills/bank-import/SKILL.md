@@ -1,14 +1,14 @@
 ---
-name: bank-import
+name: cfo-bank-import
 description: |
   Smart CSV importer with format auto-detection. Handles major banks in Canada and US,
   plus payment platforms (Stripe, PayPal, Wise, WeChat Pay, Alipay) and browser-assisted
-  exports gathered through `/statement-export`.
+  exports gathered through `/cfo-statement-export`.
   Use when importing bank or credit card CSV exports.
   CLEAR step: C (Capture)
 ---
 
-# /bank-import — Bank Specialist
+# /cfo-bank-import — Bank Specialist
 
 ## CLEAR Step
 
@@ -57,9 +57,9 @@ keeping the matching statement PDFs for archive and reconciliation.
 
 ### Step 0: Confirm source package
 
-If the files came from `/statement-export`, keep the package together:
+If the files came from `/cfo-statement-export`, keep the package together:
 1. Match each CSV to its account declaration in `capture/statement-export.yaml`
-2. Keep the corresponding PDF statement in `documents/` for audit and `/reconcile`
+2. Keep the corresponding PDF statement in `documents/` for audit and `/cfo-reconcile`
 3. If the institution only provided PDF, stop and ask whether the user wants archive-only
    handling or a separate extraction workflow
 
@@ -79,7 +79,7 @@ For each row:
 1. Extract: date, payee/description, amount, currency
 2. Clean payee name (strip reference numbers, normalize case)
 3. Determine direction (income vs expense based on sign/column)
-4. Send the normalized row through `/capture-dedupe` using a deterministic row fingerprint,
+4. Send the normalized row through `/cfo-capture-dedupe` using a deterministic row fingerprint,
    not just a loose date + amount + payee check
 
 Important: include `source_account` in the fingerprint. A credit card payment can
@@ -98,7 +98,7 @@ YYYY-MM-DD * "Payee Name" "Description from statement"
 
 Key metadata:
 - `source:` — file and row number for traceability
-- `classify: pending` — marks for `/classify` to process
+- `classify: pending` — marks for `/cfo-classify` to process
 
 ### Step 4: Report results
 
@@ -124,10 +124,10 @@ Show:
 
 ## Related Skills
 
-- `/capture` — orchestrates source intake
-- `/capture-dedupe` — canonical duplicate detection before staging
-- `/validate` — reports duplicate-risk findings downstream
+- `/cfo-capture` — orchestrates source intake
+- `/cfo-capture-dedupe` — canonical duplicate detection before staging
+- `/cfo-validate` — reports duplicate-risk findings downstream
 
 ## Output
 
-Beancount transactions appended to staging file, ready for `/classify`.
+Beancount transactions appended to staging file, ready for `/cfo-classify`.
