@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import signal
 import sys
 from pathlib import Path
 from typing import Sequence
@@ -17,12 +18,67 @@ def build_runtime_context() -> RuntimeContext:
     )
 
 
+def _prompt_with_timeout(prompt: str, timeout_seconds: int) -> str:
+    if not hasattr(signal, "SIGALRM"):
+        return input(prompt)
+
+    def _handle_timeout(signum: int, frame: object) -> None:
+        raise TimeoutError
+
+    previous_handler = signal.getsignal(signal.SIGALRM)
+    signal.signal(signal.SIGALRM, _handle_timeout)
+    signal.alarm(timeout_seconds)
+    try:
+        return input(prompt)
+    except TimeoutError:
+        return ""
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, previous_handler)
+
+
+def resolve_setup_options(options: SetupOptions) -> SetupOptions:
+    if options.skill_naming is not None:
+        return options
+    if not sys.stdin.isatty():
+        return SetupOptions(
+            host=options.host,
+            scope=options.scope,
+            project_dir=options.project_dir,
+            dry_run=options.dry_run,
+            skill_naming="namespaced",
+        )
+
+    print("")
+    print("Skill naming: how should CFO Stack skills appear?")
+    print("")
+    print("  1) Short names: /setup, /capture, /report")
+    print("     Use this if CFO Stack is the only skill pack in the workspace.")
+    print("")
+    print("  2) Namespaced: /cfo-setup, /cfo-capture, /cfo-report")
+    print("     Recommended. Avoids collisions with other skill packs.")
+    print("")
+    try:
+        choice = _prompt_with_timeout("Choice [1/2] (default: 2, auto-selects in 10s): ", 10).strip()
+    except EOFError:
+        choice = ""
+    skill_naming = "short" if choice == "1" else "namespaced"
+    return SetupOptions(
+        host=options.host,
+        scope=options.scope,
+        project_dir=options.project_dir,
+        dry_run=options.dry_run,
+        skill_naming=skill_naming,
+    )
+
+
 def main(command: str, argv: Sequence[str] | None = None) -> int:
     context = build_runtime_context()
     args = list(argv or [])
     try:
         if command == "setup":
-            options = validate_common_options(parse_setup_options(args), context)
+            options = resolve_setup_options(parse_setup_options(args))
+            options = validate_common_options(options, context)
             assert isinstance(options, SetupOptions)
             perform_setup(options, context)
             return 0

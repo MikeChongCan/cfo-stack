@@ -32,7 +32,9 @@ Keep these behaviors stable unless the change is intentional and broadly reflect
 - `./setup` defaults to `--host auto`
 - shorthand positional host form is valid: `./setup codex`
 - explicit flag form is also valid: `./setup --host codex`
-- `setup` and `uninstall` behavior should stay symmetric where practical
+- skill naming supports both namespaced (`/cfo-*`) and short aliases (`/setup`, `/capture`, `/report`)
+- interactive `./setup` defaults to namespaced skill names unless the user explicitly chooses short aliases
+- `./uninstall` intentionally sweeps both alias styles for safe cleanup rather than selecting one naming mode
 - machine-scope install must stay path-agnostic
 - `./uninstall --host auto` may intentionally sweep all known host roots so cleanup still works even if a host CLI is no longer installed
 

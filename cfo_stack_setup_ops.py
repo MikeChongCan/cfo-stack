@@ -14,11 +14,17 @@ from cfo_stack_setup_paths import registration_root
 from cfo_stack_setup_system import detect_install_targets, ensure_python_environment
 
 
+def skill_prefix(skill_naming: str | None) -> str:
+    return "" if skill_naming == "short" else "cfo-"
+
+
 def perform_setup(options: SetupOptions, context: RuntimeContext) -> None:
     targets = detect_install_targets(options.host)
     emit_lines(setup_banner_lines(options))
     ensure_python_environment(context, dry_run=options.dry_run)
     ensure_global_state(context, options.scope, dry_run=options.dry_run)
+    active_prefix = skill_prefix(options.skill_naming)
+    legacy_prefixes = [prefix for prefix in ("", "cfo-") if prefix != active_prefix]
 
     linked_roots: set[str] = set()
     host_targets = [
@@ -36,7 +42,9 @@ def perform_setup(options: SetupOptions, context: RuntimeContext) -> None:
         root = registration_root(host_name, options.scope, context, options.project_dir)
         root_key = str(root)
         if root_key not in linked_roots:
-            link_skill_dirs(context.cfo_stack_dir, root, "cfo-", dry_run=options.dry_run)
+            link_skill_dirs(context.cfo_stack_dir, root, active_prefix, dry_run=options.dry_run)
+            for legacy_prefix in legacy_prefixes:
+                remove_skill_links(context.cfo_stack_dir, root, legacy_prefix, dry_run=options.dry_run)
             linked_roots.add(root_key)
         if options.scope == "project":
             print(f"  cfo-stack ready ({host_name} project scope).")
@@ -73,7 +81,8 @@ def perform_uninstall(options: UninstallOptions, context: RuntimeContext) -> Non
             root_key = str(root)
             if root_key in cleaned_roots:
                 continue
-            remove_skill_links(context.cfo_stack_dir, root, "cfo-", dry_run=options.dry_run)
+            for prefix in ("", "cfo-"):
+                remove_skill_links(context.cfo_stack_dir, root, prefix, dry_run=options.dry_run)
             cleaned_roots.add(root_key)
         print("")
 

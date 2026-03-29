@@ -176,6 +176,10 @@ Repo setup supports two install scopes:
 - `./setup` or `./setup --scope machine` — default machine-level install
   - may register skills in home-directory agent paths
   - supports both `./setup --host codex` and the shorthand `./setup codex`
+  - interactive runs ask whether slash skills should be namespaced (`/cfo-setup`) or short (`/setup`)
+  - `./setup --namespaced` keeps the default namespaced aliases
+  - `./setup --short-names` installs short aliases instead
+  - `./uninstall` later removes both alias styles from the selected host root so cleanup is safe after naming-mode changes
   - registers Claude skills in `~/.claude/skills/`
   - registers Codex skills in `~/.agents/skills/`
   - registers OpenClaw skills in `~/.openclaw/skills/`

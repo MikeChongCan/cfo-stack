@@ -92,6 +92,18 @@ git clone https://github.com/MikeChongCan/cfo-stack.git ~/cfo-stack
 cd ~/cfo-stack && ./setup --host auto
 ```
 
+Interactive `./setup` now asks how skill names should be registered:
+
+- `namespaced` (default): `/cfo-setup`, `/cfo-capture`, `/cfo-report`
+- `short`: `/setup`, `/capture`, `/report`
+
+Use flags to skip the prompt:
+
+- `./setup --namespaced`
+- `./setup --short-names`
+- `./setup --skill-naming namespaced`
+- `./setup --skill-naming short`
+
 You can also use the shorthand positional host form:
 
 - `./setup codex`
@@ -150,6 +162,8 @@ To unregister skills later:
 ./uninstall --host auto
 ```
 
+`./uninstall` always removes both namespaced and short CFO Stack aliases from the selected host roots so cleanup is safe even if you switched naming modes between installs.
+
 The same positional shorthand also works for uninstall, for example `./uninstall codex`.
 
 Project-scoped uninstall uses the same target:
@@ -166,7 +180,7 @@ Optional cleanup flags:
 Preview either flow without touching the filesystem:
 
 ```bash
-./setup --host codex --dry-run
+./setup --host codex --namespaced --dry-run
 ./uninstall --host codex --dry-run
 ```
 

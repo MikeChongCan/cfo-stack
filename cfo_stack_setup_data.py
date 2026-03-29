@@ -6,6 +6,7 @@ from pathlib import Path
 
 HOST_CHOICES = ("claude", "codex", "openclaw", "antigravity", "auto")
 SCOPE_CHOICES = ("machine", "project")
+SKILL_NAMING_CHOICES = ("short", "namespaced")
 POLICY_CONFIG_TEXT = """# yaml-language-server: $schema=https://raw.githubusercontent.com/MikeChongCan/cfo-stack/main/schemas/policy.schema.json
 version: 1
 review_policy:
@@ -102,6 +103,7 @@ class CommonOptions:
     scope: str = "machine"
     project_dir: Path | None = None
     dry_run: bool = False
+    skill_naming: str | None = None
 
 
 @dataclass(frozen=True)

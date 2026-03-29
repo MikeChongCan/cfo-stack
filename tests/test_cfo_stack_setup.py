@@ -53,6 +53,7 @@ def test_parse_setup_defaults_to_auto() -> None:
     assert options.scope == "machine"
     assert options.project_dir is None
     assert options.dry_run is False
+    assert options.skill_naming is None
 
 
 def test_parse_setup_positional_host() -> None:
@@ -78,6 +79,14 @@ def test_parse_uninstall_flags() -> None:
     assert options.dry_run is True
     assert options.remove_state is True
     assert options.remove_local_tools is False
+    assert options.skill_naming is None
+
+
+def test_parse_setup_skill_naming_flags() -> None:
+    assert parse_setup_options(["--skill-naming", "short"]).skill_naming == "short"
+    assert parse_setup_options(["--skill-naming=namespaced"]).skill_naming == "namespaced"
+    assert parse_setup_options(["--short-names"]).skill_naming == "short"
+    assert parse_setup_options(["--namespaced"]).skill_naming == "namespaced"
 
 
 def test_unknown_setup_argument_fails() -> None:
@@ -110,6 +119,12 @@ def test_validate_common_options_preserves_dry_run(tmp_path: Path) -> None:
     context = RuntimeContext(cfo_stack_dir=tmp_path / "repo", run_dir=tmp_path, home_dir=tmp_path / "home")
     validated = validate_common_options(SetupOptions(host="codex", scope="machine", dry_run=True), context)
     assert validated.dry_run is True
+
+
+def test_validate_common_options_rejects_unknown_skill_naming(tmp_path: Path) -> None:
+    context = RuntimeContext(cfo_stack_dir=tmp_path / "repo", run_dir=tmp_path, home_dir=tmp_path / "home")
+    with pytest.raises(UserError, match="Unknown --skill-naming value: aliased"):
+        validate_common_options(SetupOptions(skill_naming="aliased"), context)
 
 
 def test_detect_targets_uses_gemini_for_antigravity() -> None:
@@ -156,6 +171,31 @@ def test_link_and_remove_skill_dirs(tmp_path: Path, capsys: pytest.CaptureFixtur
     captured = capsys.readouterr()
     assert "Linked skills: cfo-report cfo-setup" in captured.out
     assert "Removed skills: cfo-report cfo-setup" in captured.out
+
+
+def test_link_and_remove_skill_dirs_with_short_names(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    cfo_root = tmp_path / "repo"
+    skills_root = cfo_root / "skills"
+    target_root = tmp_path / "target"
+    (skills_root / "setup").mkdir(parents=True)
+    (skills_root / "setup" / "SKILL.md").write_text("test", encoding="utf-8")
+    (skills_root / "report").mkdir(parents=True)
+    (skills_root / "report" / "SKILL.md").write_text("test", encoding="utf-8")
+
+    linked = link_skill_dirs(cfo_root, target_root, "")
+    assert linked == ["report", "setup"]
+    assert (target_root / "setup").is_symlink()
+
+    removed = remove_skill_links(cfo_root, target_root, "")
+    assert removed == ["report", "setup"]
+    assert not (target_root / "setup").exists()
+
+    captured = capsys.readouterr()
+    assert "Linked skills: report setup" in captured.out
+    assert "Removed skills: report setup" in captured.out
 
 
 def test_link_skill_dirs_dry_run_has_no_side_effects(
@@ -211,7 +251,7 @@ def test_ensure_global_state_dry_run_has_no_side_effects(
 
 def test_setup_banner_snapshot_for_project_dry_run() -> None:
     assert setup_banner_lines(
-        SetupOptions(scope="project", project_dir=Path("/tmp/project"), dry_run=True)
+        SetupOptions(scope="project", project_dir=Path("/tmp/project"), dry_run=True, skill_naming="namespaced")
     ) == [
         "╔══════════════════════════════════════════╗",
         "║          CFO Stack Setup                 ║",
@@ -219,6 +259,7 @@ def test_setup_banner_snapshot_for_project_dry_run() -> None:
         "╚══════════════════════════════════════════╝",
         "",
         "  Scope: project",
+        "  Skill naming: namespaced",
         "  Project dir: /tmp/project",
         "  Mode: dry-run",
     ]
@@ -242,7 +283,7 @@ def test_uninstall_banner_snapshot_for_project_dry_run() -> None:
 
 
 def test_setup_complete_snapshot_for_machine_scope() -> None:
-    assert setup_complete_lines(Path("/repo"), SetupOptions()) == [
+    assert setup_complete_lines(Path("/repo"), SetupOptions(skill_naming="namespaced")) == [
         "",
         "╔══════════════════════════════════════════╗",
         "║          Setup Complete!               ║",
@@ -257,6 +298,34 @@ def test_setup_complete_snapshot_for_machine_scope() -> None:
         "║    4. Run /cfo-capture to import       ║",
         "║    5. Run /cfo-classify to review      ║",
         "║    6. Run /cfo-report for statements   ║",
+        "║    7. Run cfo-dashboard from this repo ║",
+        "║                                        ║",
+        "║  The CLEAR cycle:                      ║",
+        "║    Capture → Log → Extract →           ║",
+        "║    Automate → Report                   ║",
+        "║                                        ║",
+        "╚══════════════════════════════════════════╝",
+        "",
+        "Helper scripts live in: /repo/bin",
+    ]
+
+
+def test_setup_complete_snapshot_for_short_names() -> None:
+    assert setup_complete_lines(Path("/repo"), SetupOptions(skill_naming="short")) == [
+        "",
+        "╔══════════════════════════════════════════╗",
+        "║          Setup Complete!               ║",
+        "╠══════════════════════════════════════════╣",
+        "║                                        ║",
+        "║  Quick start:                          ║",
+        "║    1. Run /setup to start books        ║",
+        "║    2. Edit ~/.cfo-stack/config.yaml    ║",
+        "║       if you want a different review   ║",
+        "║       threshold than $1,000            ║",
+        "║    3. Drop bank CSVs in ~/Downloads    ║",
+        "║    4. Run /capture to import           ║",
+        "║    5. Run /classify to review          ║",
+        "║    6. Run /report for statements       ║",
         "║    7. Run cfo-dashboard from this repo ║",
         "║                                        ║",
         "║  The CLEAR cycle:                      ║",
@@ -299,6 +368,7 @@ def test_setup_entrypoint_supports_dry_run(tmp_path: Path) -> None:
 
     assert result.returncode == 0
     assert "Mode: dry-run" in result.stdout
+    assert "Skill naming: namespaced" in result.stdout
     assert "Would link skills:" in result.stdout
     assert "Dry run: would create helper scripts" in result.stdout
     assert not (home_dir / ".agents").exists()
@@ -335,6 +405,16 @@ def test_uninstall_entrypoint_supports_dry_run(tmp_path: Path) -> None:
 
     assert result.returncode == 0
     assert "Mode: dry-run" in result.stdout
+    assert "Skill naming:" not in result.stdout
     assert "Dry run: would remove bin helpers, .venv, and dashboard node_modules" in result.stdout
     assert "Dry run: would remove" in result.stdout
     assert not (home_dir / ".agents").exists()
+
+
+def test_uninstall_rejects_setup_only_skill_naming_flags() -> None:
+    with pytest.raises(UserError, match="Unknown argument: --namespaced"):
+        parse_uninstall_options(["--namespaced"])
+    with pytest.raises(UserError, match="Unknown argument: --short-names"):
+        parse_uninstall_options(["--short-names"])
+    with pytest.raises(UserError, match="Unknown argument: --skill-naming"):
+        parse_uninstall_options(["--skill-naming", "short"])
