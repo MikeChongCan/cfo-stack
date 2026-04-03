@@ -33,6 +33,8 @@ Use these files instead of expanding this root guide:
   Setup and uninstall semantics, onboarding intake, and host registration expectations
 - `./.agents/skills/cfo-chrome-download-statements/SKILL.md`
   Browser-assisted statement export workflow
+- `./.agents/skills/cfo-canadian-tax-prep/SKILL.md`
+  Canadian tax-prep workflow anchored in CRA source pages for self-employed, corporate, GST/HST, payroll, and slip-season review
 - `skills/*/SKILL.md`
   Command-specific instructions that should not live here
 

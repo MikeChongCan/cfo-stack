@@ -16,3 +16,4 @@ Current repo-level skills:
 - `cfo-ledger-ops` — canonical workflow, Beancount conventions, and ledger layout
 - `cfo-setup-governance` — setup/uninstall semantics, onboarding intake, and host registration rules
 - `cfo-chrome-download-statements` — browser-assisted statement export workflow
+- `cfo-canadian-tax-prep` — CRA-anchored Canadian tax prep workflow for self-employed, corporate, GST/HST, payroll, and slip-season review packets
